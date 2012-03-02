@@ -45,7 +45,7 @@
 	</ul>
 	<hr>
 	<div id="content" class="commandes">
-		<form action="">
+		<form action="models/commandes.php" method="post">
 			<label>Date </label><input id="datepicker" type="text" name="date_commande" ><br />
 			<label>Clients </label>
 			<select>

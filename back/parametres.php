@@ -29,8 +29,17 @@
 		<li><a href="stock" title="Stock">Stock</a></li>		
 		<li><a href="productivite" title="Productivité">Productivité</a></li>	
 		<li><a href="transport" title="Gestion Transport">Gestion Transport</a></li>
-		<li><a href="parametres" title="Paramétrages" class="config active">Paramétrages</a></li>
+		<li><a href="parametres" title="Paramétrages" class="config active">Paramétrages</a>
+				<ul>
+					<li><a href="config/clients" title="clients">clients</a></li>
+					<li><a href="config/produits" title="produits">produits</a></li>	
+					<li><a href="config/references" title="references">references</a></li>	
+					<li><a href="config/stocks" title="stocks">stocks</a></li>
+					<li><a href="config/vehicules" title="vehicules">vehicules</a></li>
+				</ul>			
+		</li>
 	</ul>
+	
 	
 </div>
 <!-- end:Content -->
