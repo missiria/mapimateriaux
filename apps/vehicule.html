@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+
+            <title>MAPI MATERIAUX - Véhicule</title>
+            <meta http-equiv="pragma" content="no-cache">
+            <meta http-equiv="expires" content="0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
+            <script src="../files/js/jquery.js" type="text/javascript"></script>
+            <script>
+                  $(document).ready(function() {
+                    
+                    var interneV =  'INTERNE !!!';
+                    var externeV =  'EXTERNE !!!';
+                    
+                      /* $('input#Interne').bind('click', function() {
+                          if ($('input#Interne:checked').attr('checked')) {
+                              $("#wrap-Interne").html(interneV);
+                              //$("#wrap-Externe").remove();
+                              
+                          } else {
+                              $("#wrap-Externe").html(externeV);
+                              //$("#wrap-Interne").remove();
+                          }
+                         */     
+                      });
+              
+                    
+                  });
+            </script>
+        </head>
+
+        <body>
+            {Header}
+                  <h2>Ajouté un Véhicule</h2>
+                  <form method="post" action="{FileName}">
+                  
+                        <!--<input id="Interne" type="checkbox" value="Interne" checked>-->
+                        
+                        <!-- PACK INTERNE -->
+                        <h3> PACK INTERNE </h3>
+                        <div id="wrap-Interne"></div>
+                              <label>Le Numéro véhicule :</label><br />
+                              <input type="text" name="libelle"><br />
+                              <label>Matricule :</label><br />
+                              <input type="text" name="matricule"><br />
+                              <label>KM initial :</label><br />
+                              <input type="text" name="km_initial"><br />
+                        <h3> PACK EXTERNE </h3>
+                        <!-- PACK EXTERNE -->
+                           <div id="wrap-Externe"></div>
+                              <label>Numéro de Matricule :</label><br />
+                              <input type="text" name="num_matricule" id="Caracteristique"><br />
+                              <label>societe :</label><br />
+                              <input type="text" name="societe"><br />
+                           
+                        
+                        <input type="submit"> <input type="reset" value="Annuler">
+                  </form>
+            {Footer}
+        </body>
+</html>
+

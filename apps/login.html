@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>MAPI MATERIAUX</title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link type="text/css" rel="stylesheet" href="../../css/css_admin.css" media="screen">
+
+</head>
+
+<body bgcolor="#f2f0e0">
+
+<table width="600" height="518" border="0" align="center" cellpadding="0" cellspacing="20">
+  <tr>
+    <td valign="top"><FIELDSET>
+<br /><br /><p align="center"><br> 
+              &nbsp;<br> 
+              </p>
+          <p class="texte" align="center">Bienvenue sur la plate-forme de
+	<br />MAPI MATERIAUX</p>
+          <p>&nbsp;</p>
+    
+	<!--BeginFormLogin-->
+    <form action="{FileName}" method="POST">
+     <table width="220" class="FormTABLE" align="center">
+      <!--BeginLoginError-->
+      <tr>
+       <td colspan="2" class="DataTD">
+        <font class="FONTERROR">{sLoginErr}</font>
+       </td>
+      </tr>
+      <!--EndLoginError-->
+      
+	  <!--BeginUserInd-->
+      <tr>
+       <td class="DataTD" colspan="2" align="center">
+        <font class="DataFONT">Voulez vous vraiment vous d&eacute;connecter <br><b>"{AdminID}" ?</b><br><br></font>
+        <input type="hidden" name="ret_page" value="{ret_page}"><input type="hidden" name="querystring" value="{querystring}">
+        <input type="hidden" name="FormName" value="Login">
+        <input type="hidden" name="FormAction" value="logout">
+        <input type="submit" value="Logout"  class="btn" onMouseOver="this.className='btnOver'" onMouseOut="this.className='btn'">
+       </td>
+      </tr>
+      <tr><td class="DataTD" colspan="2" align="center"><a href="index.php"><font class="DataFONT">Retour à la console d'administration</font></a></td></tr>
+      <!--EndUserInd-->
+      <!--BeginLoginAct-->
+      <tr>
+		<td class="texte" align="right" width="110" nowrap="nowrap"><font class="DataFONT">Nom d'utilisateur 
+              :&nbsp;</font></td> 
+		<td class="DataTD"  align="right">
+        <input type="hidden" name="ret_page" value="{ret_page}"><input type="hidden" name="querystring" value="{querystring}">
+        <input type="hidden" name="FormName" value="Login">
+        <input type="text" name="Login" value="{Login}" size="20" maxlength="50">
+       </td>
+      </tr>
+      <tr>
+       <td class="texte" align="right" width="110" nowrap="nowrap"><font class="DataFONT">Mot de passe :&nbsp;</font></td>
+       <td class="DataTD" align="right">
+        <input type="password" name="Password" size="20" maxlength="50">
+       </td>
+      </tr>
+						<tr>
+						  <td class="texte" align="right" width="110" nowrap="nowrap"><font class="DataFONT">Code de Securit&eacute;&nbsp;*</font>
+						  </td><td class="DataTD" align="right">{code}</td>
+						  </tr><tr>
+						  <td>&nbsp;</td>
+						  <td class="DataTD" align="right" colspan="3"><input type="text" maxlength="255" size="40" id="code" name="code"/></td>
+						</tr>	  <tr>
+       <td colspan="2" align="right" class="texte">
+        <input type="hidden" name="FormAction" value="login">
+        <input type="submit" value="Login" class="btn" onMouseOver="this.className='btnOver'" onMouseOut="this.className='btn'">
+       </td>
+      </tr>
+      <!--EndLoginAct-->
+     </table>
+	 </form>
+ <!--EndFormLogin-->   
+    </FIELDSET></td>
+  </tr>
+ 
+</table>
+</body>
+</html>
+

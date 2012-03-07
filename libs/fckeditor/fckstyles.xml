@@ -1,0 +1,99 @@
+<?php xml version="1.0" encoding="utf-8" ?>
+<!--
+ * FCKeditor - The text editor for internet
+ * Copyright (C) 2003-2006 Frederico Caldeira Knabben
+ * 
+ * Licensed under the terms of the GNU Lesser General Public License:
+ * 		http://www.opensource.org/licenses/lgpl-license.php
+ * 
+ * For further information visit:
+ * 		http://www.fckeditor.net/
+ * 
+ * "Support Open Source software. What about a donation today?"
+ * 
+ * File Name: fckstyles.xml
+ * 	This is the sample style definitions file. It makes the styles combo
+ * 	completely customizable.
+ * 	See FCKConfig.StylesXmlPath in the configuration file.
+ * 
+ * File Authors:
+ * 		Frederico Caldeira Knabben (fredck@fckeditor.net)
+-->
+<Styles>							
+	<Style name="numbervert" element="span">
+		<Attribute name="class" value="numbervert" />
+	</Style>
+	<Style name="titreblanc" element="span">
+		<Attribute name="class" value="titreblanc" />
+	</Style>
+	<Style name="prixttc" element="span">
+		<Attribute name="class" value="prixttc" />
+	</Style>
+	<Style name="prixht" element="span">
+		<Attribute name="class" value="prixht" />
+	</Style>
+	<Style name="titre1" element="span">
+		<Attribute name="class" value="titre1" />
+	</Style>
+	<Style name="titre2" element="span">
+		<Attribute name="class" value="titre2" />
+	</Style>
+	<Style name="titre3" element="span">
+		<Attribute name="class" value="titre3" />
+	</Style>
+	<Style name="txt_rose" element="span">
+		<Attribute name="class" value="txt_rose" />
+	</Style>
+	<Style name="somme_rose" element="span">
+		<Attribute name="class" value="somme_rose" />
+	</Style>
+	<Style name="titre_rose" element="span">
+		<Attribute name="class" value="titre_rose" />
+	</Style>
+	<Style name="titre_bleu" element="span">
+		<Attribute name="class" value="titre_bleu" />
+	</Style>
+	<Style name="txt_prix_bleu" element="span">
+		<Attribute name="class" value="txt_prix_bleu" />
+	</Style>
+	<Style name="txt_petit_bleu" element="span">
+		<Attribute name="class" value="txt_petit_bleu" />
+	</Style>
+	<Style name="txt_prix_bleu2" element="span">
+		<Attribute name="class" value="txt_prix_bleu2" />
+	</Style>
+	<Style name="txtb" element="span">
+		<Attribute name="class" value="txtb" />
+	</Style>
+	<Style name="txtbold" element="span">
+		<Attribute name="class" value="txtbold" />
+	</Style>
+	<Style name="txtbold18" element="span">
+		<Attribute name="class" value="txtbold18" />
+	</Style>
+	<Style name="txt2_bland" element="span">
+		<Attribute name="class" value="txt2_bland" />
+	</Style>
+	<Style name="txt" element="span">
+		<Attribute name="class" value="txt" />
+	</Style>	
+	
+	<Style name="txtblack" element="span">
+		<Attribute name="class" value="txtblack" />
+	</Style>
+	<Style name="txtred" element="span">
+		<Attribute name="class" value="txtred" />
+	</Style>
+	<Style name="link" element="span">
+		<Attribute name="class" value="link" />
+	</Style>
+	<Style name="linkg" element="span">
+		<Attribute name="class" value="linkg" />
+	</Style>
+	<Style name="selected_img" element="img">
+		<Attribute name="class" value="selected_img" />
+	</Style>
+	<Style name="link_white" element="span">
+		<Attribute name="class" value="link_white" />
+	</Style>	
+</Styles>
