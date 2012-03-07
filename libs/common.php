@@ -19,7 +19,7 @@ $treeThemeXML = "<?xml version='1.0' encoding='iso-8859-1'?><tree id='0'>";
 
 include("db_mysql.php");
 
-define("DATABASE_NAME","pro_mapim");
+define("DATABASE_NAME","pro_mapi");
 define("DATABASE_USER","root");
 define("DATABASE_PASSWORD","321");
 define("DATABASE_HOST","localhost");
@@ -823,9 +823,9 @@ function check_security()
 	$currentURL = $_SERVER['PHP_SELF'];
 	$adminString = "/admin/";
 	if (strpos($currentURL, $adminString) === FALSE){
-		$redirectPage = "../console/login.php";
+		$redirectPage = "../apps/login.php";
 	} else {
-		$redirectPage = "../console/login.php";
+		$redirectPage = "../apps/login.php";
 	}
 	$allAuthorizedPages = constructList_AuthorizedPages();
 	if (!strlen(get_session("capid_user"))) {
@@ -833,10 +833,10 @@ function check_security()
 		exit;
 	}
 	if (strpos($allAuthorizedPages, $currentPage) === FALSE and $pWindow == "main") {
-		header("Location: ../console/errorpermission.php");
+		header("Location: ../apps/errorpermission.php");
 		exit;
 	} elseif (strpos($allAuthorizedPages, $currentPage) === FALSE and $pWindow == "popup") {
-		header("Location: ../console/poupnopermission.html");
+		header("Location: ../apps/poupnopermission.html");
 		exit;
 	}
 }

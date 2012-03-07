@@ -1,8 +1,46 @@
 /* CODING BY Younes MISSIRIA */
-
+body {
+      background-color:#f9f9f9;
+}
 #wrapper {
         width: 960px;
         margin: 0 auto;
         background-color: white;
         padding: 10px;
+}
+h1,h2,h3 {
+      text-transform:uppercase;
+      font-family:arial;
+      color:#08C;
+      text-shadow:1px 1px 1px #000;
+}
+ul {
+      padding:0;
+      margin:0;
+      list-style:none;
+}
+#header {
+      padding:5px 5px 0 5px;
+      background-color:#eee;
+}
+#menu ul {
+      width:100%;
+      overflow:hidden;
+}
+#menu ul li {
+      float:left;
+      margin:0 5px;
+}
+#menu ul li a {
+      padding:5px;
+      background-color:#ddd;
+      border-radius:10px 0;
+      box-shadow:1px 1px 4px #666;
+      display:block;
+      color:#08C;
+}
+#menu ul li a:hover {
+      background-color:#08C;
+      text-decoration:none;
+      color:#fff;
 }

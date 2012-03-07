@@ -17,40 +17,59 @@
       $tpl->parse("Footer", false);
 
       $tpl->set_var("FileName", $filename);
-      $tpl->set_var("vehicule", $vehicule);
-      $lookup_vehicule = db_fill_array("SELECT * FROM  suivi_gasoil");
-      while (list($key, $value) = each($lookup_vehicule)) {
-            echo "test" .$value;
+      global $tpl;
+	global $db;
+      //check_security();
+
+      $sql = mysql_query("SELECT libelle FROM  vehicules");
+      $vehiculeSql = mysql_fetch_array($sql);
+      echo "<pre>";
+      var_dump($vehiculeSql);
+      echo "</pre>";
+      
+      
+     
+     
+     
+     
+     
+     
+     
+      $tpl->set_var("libelle_vehicules", "");
+
+      if(is_array($vehiculeSql)) {
+            reset($vehiculeSql);
+            while(list($key, $value) = each($vehiculeSql)) {
+                  $tpl->set_var("ID", $key);
+                  $tpl->set_var("Value", $value);
+                  $tpl->parse("libelle_vehicule", true);
+            }
       }
+      
+      
+      
+      
+      
+      
+      
+      
       $tpl->pparse("gestion_gasoil", false);
 
-      $nom_resp = get_param("nom_resp");
-      $prenom_resp = get_param("prenom_resp");
-      
-      $raison_social = get_param("raison_social");
-      $email = get_param("email");
-      
-      $tel = get_param("tel");
-      $adresse = get_param("adresse");
-      
-      $ville = get_param("ville");
+      $ref_vehicule = get_param("ref_vehicule");
+      $date = get_param("date");
+      $qt_littre = get_param("qt_littre");
+      $km = get_param("km");
       
       $sSQL = "INSERT INTO clients (" . 
-                  "nom_resp," . 
-                  "prenom_resp," . 
-                  "raison_social," . 
-                  "email," . 
-                  "tel," . 
-                  "adresse," .
-                  "ville)" . 
+                  "ref_vehicule," . 
+                  "date," . 
+                  "qt_littre," . 
+                  "km" . 
             " VALUES (" . 
-                  tosql($nom_resp, "Text") . "," . 
-                  tosql($prenom_resp, "Text") . "," . 
-                  tosql($raison_social, "Text") . "," .
-                  tosql($email, "Text") . "," .
-                  tosql($tel, "Text") . "," .
-                  tosql($adresse, "Text") . "," .
-                  tosql($ville, "Text") . 
+                  tosql($ref_vehicule, "Text") . "," .
+                  tosql($date, "Text") . "," .
+                  tosql($qt_littre, "Text") . "," .
+                  tosql($km, "Text") . 
       ")";
       
       if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
