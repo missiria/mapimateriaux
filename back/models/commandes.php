@@ -10,9 +10,7 @@
 			$results_date_commande = $query->execute(array(
 				":date_commande" => $date_commande			
 			));
-			print_r($results_date_commande);
 		}
-		
 		// Table of clients
 		$query_client = "SELECT * FROM clients";
 		$results_clients = $odb->query($query_client);
