@@ -17,51 +17,73 @@
       $tpl->parse("Footer", false);
 
       $tpl->set_var("FileName", $filename);
-      //$tpl->set_var("vehicule", $vehicule);
-      $lookup_vehicule = db_fill_array("SELECT * FROM  suivi_gasoil");
-      echo $db->f('qt_littre');
       
-print_r($lookup_vehicule);      
+      $lookup_vehicule = db_fill_array("SELECT * FROM  vehicules");
       
- 	if(is_array($lookup_vehicule)){
+      if(is_array($lookup_vehicule)) {
       reset($lookup_vehicule);
-      while(list($key, $value) = each($lookup_vehicule))
-      {
-        $tpl->set_var("ID", $key);
-        $tpl->set_var("Value", $value);
-        if($key == $fldref_vehicule)
-          $tpl->set_var("Selected", "SELECTED" );
-        else
-          $tpl->set_var("Selected", "");
-        $tpl->parse("select_vehicule", true);
+            while(list($value, $key) = each($lookup_vehicule)) {
+              $tpl->set_var("Value_vehicule", $value);
+              $tpl->set_var("id_vehicule", $key);
+              $tpl->parse("select_vehicule", true);
+            }
       }
-    }
-     
-
-      $nom_resp = get_param("nom_resp");
-      $prenom_resp = get_param("prenom_resp");
       
-      $raison_social = get_param("raison_social");
-      $email = get_param("email");
-      
-      $tel = get_param("date");
+      $num_bon = get_param("num_bon");
+      $ref_vehicule = get_param('ref_vehicule');
+      $date = get_param("date");
       $qt_littre = get_param("qt_littre");
       $km = get_param("km");
       
-      $ville = get_param("ville");
-      
-      $sSQL = "INSERT INTO clients (" . 
-                  "nom_resp," . 
-                  "ville)" . 
+      //var_dump($_POST);
+
+      $sSQL = "INSERT INTO suivi_gasoil (" . 
+                  "num_bon," . 
+                  "ref_vehicule," . 
+                  "date," . 
+                  "qt_littre," . 
+                  "km)" . 
             " VALUES (" . 
-                  tosql($nom_resp, "Text") . "," .
-                  tosql($ville, "Text") . 
+                  tosql($num_bon, "Number") . "," .
+                  tosql($ref_vehicule, "Number") . "," .
+                  tosql($date, "Text") . "," .
+                  tosql($qt_littre, "Number") . "," .
+                  tosql($km, "Number") . 
       ")";
       
-      if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
+      if ($num_bon && $ref_vehicule && $date && $qt_littre && $km) {
                   $db->query($sSQL);
-                  echo '<script>alert("Vous avez ajouté le client : '. $nom_resp .'")</script>';
-            } 
+                  echo '<script>alert("Vous avez saisie le bon numéro : '. $num_bon .'")</script>';
+            }
+      $keyword = get_param("keyword");
+      
+      if (!$keyword) {
+            //echo '<script>alert("il faut saisie qq chose pour cherche !");</script>';
+            //echo '<script>$("table").addClass("hide");</script>';
+            //$tpl->pparse("block_Search", false);      
+      }
+      
+      if ($keyword){
+            $tpl->set_var("keyword", $keyword);
+            $sql = "SELECT * 
+                    FROM  suivi_gasoil 
+                    WHERE  num_bon LIKE " . tosql("%".trim($keyword) ."%", "Text");
+            
+            db_fill_array($sql);
+            $Ssql = $db->query($sql);
+            if(is_array($Ssql)) {
+                  reset($Ssql);
+                  while(list($value, $key) = each($Ssql)) {
+                    $fldnum_bon = $db->f("s_num_bon");
+                    $fldid = $db->f("s_id");
+                    $tpl->set_var("Value", $fldnum_bon);
+                    $tpl->set_var("id", $fldid);
+                    $tpl->parse("block_search", false);
+                  }
+            }
+
+      }
+      
    $tpl->pparse("gestion_gasoil", false);      
 
 ?>

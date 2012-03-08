@@ -1,14 +1,14 @@
  <?php
       include ("header.php");
-      $pWindow = "clients";
-      $filename = "clients.php";
-      $template_filename = "clients.html";
+      $pWindow = "gestion_batteries";
+      $filename = "gestion_batteries.php";
+      $template_filename = "gestion_batteries.html";
 
       $sAction = get_param("FormAction");
       $sForm = get_param("FormName");
 
       $tpl = new Template($app_path);
-      $tpl->load_file($template_filename, "clients");
+      $tpl->load_file($template_filename, "gestion_batteries");
 
       $tpl->load_file("../apps/footer.html", "Footer");
 
@@ -17,45 +17,50 @@
       $tpl->parse("Footer", false);
 
       $tpl->set_var("FileName", $filename);
+      
+      $lookup_vehicule = db_fill_array("SELECT * FROM  vehicules");
+      
+      if(is_array($lookup_vehicule)) {
+      reset($lookup_vehicule);
+            while(list($value, $key) = each($lookup_vehicule)) {
+              $tpl->set_var("Value_vehicule", $value);
+              $tpl->set_var("id_vehicule", $key);
+              $tpl->parse("select_vehicule", true);
+            }
+      }
+      
+      $num_bon = get_param("num_bon");
+      $ref_vehicule = get_param('ref_vehicule');
+      $date = get_param("date");
+      $marque_baterie = get_param("marque_baterie");
+      $nbr_batrie = get_param("nbr_batrie");
+      $km = get_param("km");
+      $observation = get_param("observation");
+      
+      var_dump($_POST);
 
-      $tpl->pparse("clients", false);
-
-      $nom_resp = get_param("nom_resp");
-      $prenom_resp = get_param("prenom_resp");
-      
-      $raison_social = get_param("raison_social");
-      $email = get_param("email");
-      
-      $tel = get_param("tel");
-      $adresse = get_param("adresse");
-      
-      $ville = get_param("ville");
-      
-      $sSQL = "INSERT INTO clients (" . 
-                  "nom_resp," . 
-                  "prenom_resp," . 
-                  "raison_social," . 
-                  "email," . 
-                  "tel," . 
-                  "adresse," .
-                  "ville)" . 
+      $sSQL = "INSERT INTO suivie_baterie (" . 
+                  "num_bon," .
+                  "ref_vehicule," .
+                  "date," . 
+                  "marque_baterie," . 
+                  "nbr_batrie," . 
+                  "km," . 
+                  "observation)" .
             " VALUES (" . 
-                  tosql($nom_resp, "Text") . "," . 
-                  tosql($prenom_resp, "Text") . "," . 
-                  tosql($raison_social, "Text") . "," .
-                  tosql($email, "Text") . "," .
-                  tosql($tel, "Text") . "," .
-                  tosql($adresse, "Text") . "," .
-                  tosql($ville, "Text") . 
+                  tosql($num_bon, "Number") . "," .
+                  tosql($ref_vehicule, "Number") . "," .
+                  tosql($date, "Text") . "," .
+                  tosql($marque_baterie, "Text") . "," .
+                  tosql($nbr_batrie, "Number") . "," .
+                  tosql($km, "Number") . "," .
+                  tosql($observation, "Text") . 
       ")";
       
-      if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
+      if ($num_bon && $ref_vehicule && $date && $marque_baterie && $nbr_batrie && $km) {
                   $db->query($sSQL);
-                  echo '<script>alert("Vous avez ajouté le client : '. $nom_resp .'")</script>';
-            } else {
-                  echo '<script>alert("Vous avez obliez quelque champs !")</script>';
-            }
-        
-        
+                  echo '<script>alert("Vous avez saisie la marque : '. $marque_baterie .' et QT : '. $nbr_batrie .' !")</script>';
+            } 
+   $tpl->pparse("gestion_batteries", false);      
 
-?>
+?>    

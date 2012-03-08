@@ -32,20 +32,45 @@
                   <h3>Gestion de Gasoil</h3>
 
                   <form method="post" action="{FileName}">
+                  
+                        <label>Numéro de bon :</label><br />
+                        <input type="text" name="num_bon"><br />
+                        
                         <label>Numéro de véhicule :</label><br />
-                        <select><!--Beginselect_vehicule--><option value="{ID}" {Selected}>{Value}</option><!--Endselect_vehicule--></select><br />
+                        <select name="ref_vehicule">
+                        <!--Beginselect_vehicule-->
+                        <option value="{Value_vehicule}" {Selected}>{id_vehicule}</option>
+                        <!--Endselect_vehicule--></select><br />
+
 
                         <label>Date :</label><br />
                         <input type="text" name="date" id="datepicker"><br />
                         
                         <label>Quantité litres :</label><br />
-                        <input type="text" name="prenom_resp" id="prenom_resp"><br />
+                        <input type="text" name="qt_littre"><br />
                         
                         <label>Kilométrage :</label><br />
-                        <input type="text" name="adresse"><br />
+                        <input type="text" name="km"><br />
                         
                         <input type="submit" value="Valider"> <input type="reset" value="Annuler">
                   </form>
+                                    
+                  <h3>Recherche</h3>
+                  <form action="{FileName}">
+                  
+                        <label>Numéro de bon :</label><br />
+                        <input type="text" name="keyword" value="{keyword}">
+                        <input type="submit" value="Search !">
+
+                  </form>
+                  <!--Beginblock_search-->
+                  <table id="result" border=1>
+                        <tr>
+                              <td>{Value}</td>
+                              <td>{id}</td>
+                        </tr>
+                  </table>
+                  <!--Beginblock_search-->
             {Footer}
         </body>
 </html>

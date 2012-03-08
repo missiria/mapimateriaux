@@ -1,14 +1,14 @@
  <?php
       include ("header.php");
-      $pWindow = "clients";
-      $filename = "clients.php";
-      $template_filename = "clients.html";
+      $pWindow = "gestion_vidanges";
+      $filename = "gestion_vidanges.php";
+      $template_filename = "gestion_vidanges.html";
 
       $sAction = get_param("FormAction");
       $sForm = get_param("FormName");
 
       $tpl = new Template($app_path);
-      $tpl->load_file($template_filename, "clients");
+      $tpl->load_file($template_filename, "gestion_vidanges");
 
       $tpl->load_file("../apps/footer.html", "Footer");
 
@@ -17,45 +17,47 @@
       $tpl->parse("Footer", false);
 
       $tpl->set_var("FileName", $filename);
+      
+      $lookup_vehicule = db_fill_array("SELECT * FROM  vehicules");
+      
+      if(is_array($lookup_vehicule)) {
+      reset($lookup_vehicule);
+            while(list($value, $key) = each($lookup_vehicule)) {
+              $tpl->set_var("Value_vehicule", $value);
+              $tpl->set_var("id_vehicule", $key);
+              $tpl->parse("select_vehicule", true);
+            }
+      }
+      
+      $ref_vehicule = get_param('ref_vehicule');
+      $num_bon = get_param("num_bon");
+      $date = get_param("date");
+      $type_vidange = get_param("type_vidange");
+      $km = get_param("km");
+      $observations = get_param("observations");
+      
+      //var_dump($_POST);
 
-      $tpl->pparse("clients", false);
-
-      $nom_resp = get_param("nom_resp");
-      $prenom_resp = get_param("prenom_resp");
-      
-      $raison_social = get_param("raison_social");
-      $email = get_param("email");
-      
-      $tel = get_param("tel");
-      $adresse = get_param("adresse");
-      
-      $ville = get_param("ville");
-      
-      $sSQL = "INSERT INTO clients (" . 
-                  "nom_resp," . 
-                  "prenom_resp," . 
-                  "raison_social," . 
-                  "email," . 
-                  "tel," . 
-                  "adresse," .
-                  "ville)" . 
+      $sSQL = "INSERT INTO suivi_vidange (" . 
+                  "ref_vehicule," .
+                  "num_bon," . 
+                  "date," . 
+                  "type_vidange," . 
+                  "km," . 
+                  "observations)" .
             " VALUES (" . 
-                  tosql($nom_resp, "Text") . "," . 
-                  tosql($prenom_resp, "Text") . "," . 
-                  tosql($raison_social, "Text") . "," .
-                  tosql($email, "Text") . "," .
-                  tosql($tel, "Text") . "," .
-                  tosql($adresse, "Text") . "," .
-                  tosql($ville, "Text") . 
+                  tosql($ref_vehicule, "Number") . "," .
+                  tosql($num_bon, "Number") . "," .
+                  tosql($date, "Text") . "," .
+                  tosql($type_vidange, "Number") . "," .
+                  tosql($km, "Number") . "," .
+                  tosql($observations, "Text") . 
       ")";
       
-      if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
+      if ($num_bon && $ref_vehicule && $date && $type_vidange && $km) {
                   $db->query($sSQL);
-                  echo '<script>alert("Vous avez ajouté le client : '. $nom_resp .'")</script>';
-            } else {
-                  echo '<script>alert("Vous avez obliez quelque champs !")</script>';
-            }
-        
-        
+                  echo '<script>alert("Vous avez saisie le bon numéro : '. $num_bon .'")</script>';
+            } 
+   $tpl->pparse("gestion_vidanges", false);      
 
 ?>

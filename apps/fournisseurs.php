@@ -46,9 +46,9 @@
                   tosql($prenom_resp, "Text") . "," . 
                   tosql($raison_social, "Text") . "," .
                   tosql($email, "Text") . "," .
-                  tosql($tel, "Text") . "," .
+                  tosql($tel, "Number") . "," .
                   tosql($adresse, "Text") . "," .
-                  tosql($num_compte_bancaire, "Text") . "," .
+                  tosql($num_compte_bancaire, "Number") . "," .
                   tosql($ville, "Text") . 
       ")";
       
