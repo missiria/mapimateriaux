@@ -19,17 +19,32 @@ ul {
       margin:0;
       list-style:none;
 }
+.hide {display:none;}
+.right {float:right;}
+.left {float:left;}
+.clear {clear:both;}
 #header {
-      padding:5px 5px 0 5px;
+      padding:5px;
       background-color:#eee;
 }
 #menu ul {
       width:100%;
       overflow:hidden;
 }
+#menu ul ul {
+      position:absolute;
+      width:15%;
+      display:none;
+}
 #menu ul li {
       float:left;
       margin:0 5px;
+}
+#menu ul li:hover ul {
+      display:block;
+}
+#menu ul ul li {
+      float:none;
 }
 #menu ul li a {
       padding:5px;
@@ -43,4 +58,7 @@ ul {
       background-color:#08C;
       text-decoration:none;
       color:#fff;
+}
+td {
+      padding:5px;
 }

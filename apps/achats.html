@@ -17,6 +17,18 @@
                   $( "#datepicker" ).datepicker();
             });
             </script>
+             <script>
+                  function regelement(){
+                        alert('Vous avez choisi réglé l\'achat');
+                        var htmlRegelement = "<div id='modeRegelement'><hr><label>Mode de régelement :</label><select name='mode_regelement'><option>N° chéque</option><option>N° Effet</option><option>N° opération</option></select><br /></div>";
+                        $("#wrap-modeRegelement").html(htmlRegelement)
+                        
+                  }
+                  function noRegelement(){
+                        alert('NON REGLÉ');
+                        $("div#modeRegelement").remove();
+                  }
+            </script>
         </head>
 
         <body>
@@ -38,18 +50,21 @@
                         <option value="{id_fournisseurs}">{Value_fournisseurs}</option>
                         <!--Endselect_fournisseurs--></select><br />
                         <hr>
-                        <Input type='radio' name='gender' value= 'regle'>Réglé
-                        <Input type='radio' name='gender' value= 'non_regle'>NON réglé<br />
-                        <div id="modeRegelement">
-                              <hr>
-                              <label>Mode de régelement :</label>
-                              <select name="mode_regelement">
-                                    <option>N° chéque</option>
-                                    <option>N° Effet</option>
-                                    <option>N° opération</option>
-                              </select><br />
-                              <hr>
-                        </div>
+                        <input onClick="regelement()" type="radio" name="reglement" value="regle">Réglé
+                        <input onClick="noRegelement()" type="radio" name="reglement" value= "non_regle">NON réglé<br />
+                        <div id="wrap-modeRegelement">
+                              <div id="modeRegelement">
+                                    <hr>
+                                    <label>Mode de régelement :</label>
+                                    <select name="mode_regelement">
+                                          <option>N° chéque</option>
+                                          <option>N° Effet</option>
+                                          <option>N° opération</option>
+                                    </select><br />
+                                    
+                              </div>
+                        </div><!-- wrap-modeRegelement --> 
+                        <hr>
                         <input type="submit" value="Valider"> <input type="reset" value="Annuler">
                   </form>
             {Footer}

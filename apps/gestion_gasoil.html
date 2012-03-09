@@ -21,49 +21,69 @@
 
         <body>
             {Header}
+                  <div id="col1" class="left">
+                        <h3>Gestion de Gasoil</h3>
 
-                  <h3>Gestion de Gasoil</h3>
+                        <form method="post" action="{FileName}">
+                           <!--Beginrow_edit-->
+                              <label>Numéro de bon :</label><br />
+                              <input type="text" name="num_bon" value="{num_bon}"><br />
+                              
+                              <label>Numéro de véhicule :</label><br />
+                              <select name="ref_vehicule" >
+                              <!--Beginselect_vehicule-->
+                              <option value="{Value_vehicule}" {Selected}>{id_vehicule}</option>
+                              <!--Endselect_vehicule--></select><br />
 
-                  <form method="post" action="{FileName}">
-                  
-                        <label>Numéro de bon :</label><br />
-                        <input type="text" name="num_bon"><br />
+
+                              <label>Date :</label><br />
+                              <input type="text" name="date" id="datepicker" value="{date}"><br />
+                              
+                              <label>Quantité litres :</label><br />
+                              <input type="text" name="qt_littre" value="{qt_littre}"><br />
+                              
+                              <label>Kilométrage :</label><br />
+                              <input type="text" name="km" value="{km}"><br />
+                              
+                              <input type="submit" value="Valider"> <input type="reset" value="Annuler">
+                            <!--Endrow_edit-->
+                        </form>
+                  </div>
+                  <div id="col2" class="right">                  
+                        <h3>Recherche</h3>
+                        <form action="{ActionPage}">
                         
-                        <label>Numéro de véhicule :</label><br />
-                        <select name="ref_vehicule">
-                        <!--Beginselect_vehicule-->
-                        <option value="{Value_vehicule}" {Selected}>{id_vehicule}</option>
-                        <!--Endselect_vehicule--></select><br />
+                              <label>Numéro de bon :</label><br />
+                              <input type="text" name="keyword" value="{keyword}">
+                              <input type="submit" value="Search !">
 
-
-                        <label>Date :</label><br />
-                        <input type="text" name="date" id="datepicker"><br />
+                        </form>
+                        <!--Beginblock_search-->
                         
-                        <label>Quantité litres :</label><br />
-                        <input type="text" name="qt_littre"><br />
-                        
-                        <label>Kilométrage :</label><br />
-                        <input type="text" name="km"><br />
-                        
-                        <input type="submit" value="Valider"> <input type="reset" value="Annuler">
-                  </form>
-                                    
-                  <h3>Recherche</h3>
-                  <form action="{FileName}">
-                  
-                        <label>Numéro de bon :</label><br />
-                        <input type="text" name="keyword" value="{keyword}">
-                        <input type="submit" value="Search !">
-
-                  </form>
-                  <!--Beginblock_search-->
-                  <table id="result" border=1>
-                        <tr>
-                              <td>{Value}</td>
-                              <td>{id}</td>
-                        </tr>
-                  </table>
-                  <!--Beginblock_search-->
+                              <table id="result" border=1>
+                                    <thead>
+                                          <td>Date</td>
+                                          <td>Numéro bon</td>
+                                          <td>km</td>
+                                          <td>QT Littre</td>
+                                          <td>Vehicule</td>
+                                          <td>Edit</td>
+                                          <td>Delete</td>
+                                    </thead>
+                                    <!--Beginrow_result-->
+                                    <tr>
+                                          <td>{date}</td>
+                                          <td>{num_bon}</td>
+                                          <td>{km}</td>
+                                          <td>{qt_littre}</td>
+                                          <td>{ref_vehicule}</td>
+                                          <td><a href="?edit={id}" class="edit">{id}</a></td>
+                                          <td><a href="?delete={id}" class="delete">{id}</a></td>
+                                    </tr>
+                                    <!--Endrow_result-->
+                              </table>
+                        <!--Endblock_search-->
+                  </div>
             {Footer}
         </body>
 </html>
