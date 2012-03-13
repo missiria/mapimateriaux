@@ -823,9 +823,9 @@ function check_security()
 	$currentURL = $_SERVER['PHP_SELF'];
 	$adminString = "/admin/";
 	if (strpos($currentURL, $adminString) === FALSE){
-		$redirectPage = "../apps/login.php";
+		$redirectPage = "../console/login.php";
 	} else {
-		$redirectPage = "../apps/login.php";
+		$redirectPage = "../console/login.php";
 	}
 	$allAuthorizedPages = constructList_AuthorizedPages();
 	if (!strlen(get_session("capid_user"))) {
@@ -833,10 +833,10 @@ function check_security()
 		exit;
 	}
 	if (strpos($allAuthorizedPages, $currentPage) === FALSE and $pWindow == "main") {
-		header("Location: ../apps/errorpermission.php");
+		header("Location: ../console/errorpermission.php");
 		exit;
 	} elseif (strpos($allAuthorizedPages, $currentPage) === FALSE and $pWindow == "popup") {
-		header("Location: ../apps/poupnopermission.html");
+		header("Location: ../console/poupnopermission.html");
 		exit;
 	}
 }

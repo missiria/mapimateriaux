@@ -23,6 +23,13 @@ ul {
 .right {float:right;}
 .left {float:left;}
 .clear {clear:both;}
+.delete {background:url(../files/images/delete-icon.png) no-repeat}
+.edit {background:url(../files/images/edit-icon.png) no-repeat}
+.delete, .edit {
+      display:block;
+      height:32px;width:32px;
+      text-indent:-9999px;
+}
 #header {
       padding:5px;
       background-color:#eee;

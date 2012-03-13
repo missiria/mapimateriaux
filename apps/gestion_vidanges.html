@@ -2,56 +2,133 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
 
-            <title>MAPI MATERIAUX - Produit</title>
+            <title>MAPI MATERIAUX - Gestion de vidanges</title>
             <meta http-equiv="pragma" content="no-cache">
             <meta http-equiv="expires" content="0">
             <meta http-equiv="cache-control" content="no-cache">
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
             <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
             <link rel="stylesheet" href="../files/themes/base/jquery.ui.all.css">
+		<link rel="stylesheet" href="../files/themes/base/validationEngine.jquery.css" type="text/css" media="screen" />      
             <script src="../files/js/jquery.js" type="text/javascript"></script>
             <script src="../files/js/jquery-ui-1.8.18.custom.min"></script>
-	      <script src="../files/js/ui/jquery.ui.datepicker.js"></script>
-            <script>
+		<script src="../files/js/ui/jquery.ui.datepicker.js"></script>
+		<script src="../files/js/jquery.validationEngine-fr.js" type="text/javascript"></script>  
+		<script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>	      
+            <script type="text/javascript" >
             $(function() {
-                  $( "#datepicker" ).datepicker();
+                  $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
             });
+				function deleteBonBatterie(id, num_bon){
+					if (confirm("Vous etes sur de vouloir supprimer le bon de batterie num " + num_bon)) { // Clic sur OK
+           			document.location.href="?delete="+id;
+       			      }									
+				}
+				function prepareToEdite(rowTable, id){
+					var row = document.getElementById('result').rows[rowTable].cells;
+					document.getElementById('nameBon').value = row[0].innerHTML;
+					document.getElementById('datepicker').value = row[1].innerHTML;
+					document.getElementById('km_depart').value = row[2].innerHTML;
+					document.getElementById('km_arrive').value = row[3].innerHTML;
+					$("#typeVidange option").each(function(){
+ 						if ($(this).text() == row[4].innerHTML)
+    						$(this).attr("selected","selected");
+    						return;
+						});
+					document.getElementById('observations').value = row[5].innerHTML;
+					document.getElementById('id').value = id;
+					$("#ref_vehicule option").each(function(){
+ 						if ($(this).text() == row[6].innerHTML)
+    						$(this).attr("selected","selected");
+    						return;
+						});
+				}          
             </script>
         </head>
 
         <body>
             {Header}
-            
+                  <div id="col1" class="left">
                   <h3>Gestion de vidanges</h3>
-
-                  <form method="post" action="{FileName}">
+                  <!--BeginBlockForm-->
+                  <form method="post" action="{FileName}" id="formID">
                   
+                        <label>Numéro de bon :</label><br />
+                        <input type="text" name="num_bon" id="nameBon" class="validate[required,custom[onlyNumber]] text-input"><br />
+                        
                         <label>Numéro de véhicule :</label><br />
-                        <select name="ref_vehicule">
+                        <select name="ref_vehicule" id="ref_vehicule" class="validate[required]">
+                        <option value="">S&eacute;l&eacute;ctionnez un v&eacute;hicule</option>
                         <!--Beginselect_vehicule-->
                         <option value="{Value_vehicule}" {Selected}>{id_vehicule}</option>
                         <!--Endselect_vehicule--></select><br />
-
-                        <label>Numéro de bon :</label><br />
-                        <input type="text" name="num_bon"><br />
-                        
+                       
                         <label>Date :</label><br />
-                        <input type="text" name="date" id="datepicker"><br />
+                        <input type="text" name="date" id="datepicker" class="validate[required]"><br />
                         
                         <label>Type Vidanges :</label><br />
-                        <select name="type_vidange">
-                              <option>Simple</option>
-                              <option>Complete</option>
+                        <select id="typeVidange" name="type_vidange" class="validate[required]">
+                              <option value="Simple">Simple</option>
+                              <option value="Complete">Complete</option>
                         </select><br />
                         
-                        <label>Kilométrage :</label><br />
-                        <input type="text" name="km"><br />
+                        <label>KM depart :</label><br />
+                        <input type="text" name="km_depart" value="{km_depart}" id="km_depart" class="validate[required,custom[onlyNumber]] text-input"><br />
+                        <label>KM arrive :</label><br />
+                        <input type="text" name="km_arrive" value="{km_arrive}" id="km_arrive" class="validate[required,custom[onlyNumber]] text-input"><br />
                         
                         <label>Observation :</label><br />
-                        <textarea name="observations"></textarea><br />
+                        <textarea name="observations" value="{observations}" id="observations"></textarea><br />
                         
                         <input type="submit" value="Valider"> <input type="reset" value="Annuler">
+                        <input type="hidden" name="id" id="id" value="" />
                   </form>
+                  <!--EndBlockForm-->  
+                   </div><!-- #col1 -->
+                   <div id="col2" class="right">                  
+                        <h3>Recherche</h3>
+                        <form action="{ActionPage}">
+                        
+                              <label>Numéro de bon :</label><br />
+                              <input type="text" name="keyword" value="{keyword}">
+                              <input type="submit" value="Search !">
+
+                        </form>
+                        <!--Beginblock_search-->
+                        
+                  <table id="result" border=1>
+                        <thead>
+                              <td>Numéro bon</td>
+                              <td>Date</td>
+                              <td>KM depart</td>
+                              <td>KM arrive</td>
+                              <td>Type vidange</td>
+                              <td>Observation</td>
+                              <td>Vehicule</td>
+                              <td>Edit</td>
+                              <td>Delete</td>
+                        </thead>
+                        <!--Beginrow_result-->
+                        <tr>
+                              <td>{num_bon}</td>
+                              <td>{date}</td>
+                              <td>{km_depart}</td>
+                              <td>{km_arrive}</td>
+                              <td>{type_vidange}</td>
+                              <td>{observations}</td>
+                              <td>{ref_vehicule}</td>
+                              <td><a onClick="prepareToEdite({ordrRow},{id})" href="javascript:;" class="edit">{id}</a></td>
+                              <td><a onClick="deleteBonBatterie({id}, {num_bon})" href="javascript:;" class="delete">{id}</a></td>
+                        </tr>
+                        <!--Endrow_result-->
+                        <!--BeginNorow_result-->
+                        <tr>
+                              <td colspan="9">Pas d'enregistrement</td>
+                        </tr>
+                        <!--EndNorow_result-->                                    
+                  </table>
+                        <!--Endblock_search-->
+                  </div>
             {Footer}
         </body>
 </html>
