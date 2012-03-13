@@ -32,7 +32,14 @@
       $num_compte_bancaire = get_param("num_compte_bancaire");
       $ville = get_param("ville");
       
-      $sSQL = "INSERT INTO fournisseurs (" . 
+      if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
+          
+          $num_bon_existe = dlookup("fournisseurs", "count(*)", "nom_resp=".tosql($nom_resp, "TEXT"));
+
+          	if ($nom_resp_existe > 0) {
+          		echo "<script>alert('Vous essayer de saisir un bon numéro $nom_resp qui éxiste déja !!!')</script>";  
+          	} else {   	          	
+          		$sSQL = "INSERT INTO fournisseurs (" . 
                   "nom_resp," . 
                   "prenom_resp," . 
                   "raison_social," . 
@@ -50,14 +57,12 @@
                   tosql($adresse, "Text") . "," .
                   tosql($num_compte_bancaire, "Number") . "," .
                   tosql($ville, "Text") . 
-      ")";
-      
-      if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
-                  $db->query($sSQL);
-                  echo '<script>alert("Vous avez ajouté le fournisseurs : '. $nom_resp .'")</script>';
-            } else {
-                  echo '<script>alert("Vous avez obliez quelque champs !")</script>';
-            }
+            ")";         	
+          		$db->query($sSQL);
+          		echo '<script>alert("Vous avez saisie le fournisseurs : '. $nom_resp .'")</script>';
+          	}
+                  
+      }
         
         
 

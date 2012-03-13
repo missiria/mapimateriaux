@@ -4,9 +4,6 @@
       $filename = "commandes.php";
       $template_filename = "commandes.html";
 
-      $sAction = get_param("FormAction");
-      $sForm = get_param("FormName");
-
       $tpl = new Template($app_path);
       $tpl->load_file($template_filename, "commandes");
 
@@ -41,30 +38,32 @@
       
       
       // $_POST TRAITEMENT
-      $ref_vehicule = get_param('ref_vehicule');
-      $num_bon = get_param("num_bon");
-      $date = get_param("date");
-      
-      $prix_unitaire = get_param("prix_unitaire");
-      $qt_commande = get_param("qt_commande");
+      $date = get_param('date');
+      $ref_client = get_param("ref_client");
       $ref_produit = get_param("ref_produit");
+      $qt_produit = get_param("qt_produit");
+      $prix_uni = get_param("prix_uni");
       
       //var_dump($_POST);
-
-      $dcSQL = "INSERT INTO detail_commande (" . 
-                  "prix_unitaire," .
-                  "qt_commande," . 
-                  "ref_produit)" .
-            " VALUES (" . 
-                  tosql($prix_unitaire, "Number") . "," .
-                  tosql($qt_commande, "Number") . "," .
-                  tosql($ref_produit, "Number") . 
-      ")";
       
-      if ($prix_unitaire && $qt_commande && $ref_produit) {
-                  $db->query($sSQL);
-                  echo '<script>alert("merci")</script>';
-            } 
+      if ($date && $ref_client && $ref_produit && $qt_produit && $prix_uni) {
+       	          	
+	                  $sSQL = "INSERT INTO commandes (" . 
+                        "date," . 
+                        "ref_client," . 
+                        "ref_produit," . 
+                        "qt_produit," . 
+                        "prix_uni)" .
+	                  " VALUES (" . 
+                        tosql($date, "Text") . "," .
+                        tosql($ref_client, "Number") . "," .
+                        tosql($ref_produit, "Number") . "," .
+                        tosql($qt_produit, "Number") . "," .
+                        tosql($prix_uni, "Number") . 
+		                  ")";          	
+	                  $db->query($sSQL);
+	                  echo '<script>alert("Vous avez saisie : '. $qt_produit .'")</script>';
+      } 
    $tpl->pparse("commandes", false);      
 
 ?>

@@ -31,31 +31,36 @@
       
       $ville = get_param("ville");
       
-      $sSQL = "INSERT INTO clients (" . 
-                  "nom_resp," . 
-                  "prenom_resp," . 
-                  "raison_social," . 
-                  "email," . 
-                  "tel," . 
-                  "adresse," .
-                  "ville)" . 
-            " VALUES (" . 
-                  tosql($nom_resp, "Text") . "," . 
-                  tosql($prenom_resp, "Text") . "," . 
-                  tosql($raison_social, "Text") . "," .
-                  tosql($email, "Text") . "," .
-                  tosql($tel, "Number") . "," .
-                  tosql($adresse, "Text") . "," .
-                  tosql($ville, "Text") . 
-      ")";
-      
       if ($nom_resp && $raison_social && $tel && $adresse && $ville) {
-                  $db->query($sSQL);
-                  echo '<script>alert("Vous avez ajouté le client : '. $nom_resp .'")</script>';
-            } else {
-                  echo '<script>alert("Vous avez obliez quelque champs !")</script>';
-            }
-        
-        
+      
+          if (strlen(trim($id))==0) {
+          	$num_bon_existe = dlookup("clients", "count(*)", "nom_resp=".tosql($nom_resp, "NUMBER"));
+
+                	if ($num_bon_existe > 0) {
+                		echo "<script>alert('Vous essayer de saisir un bon numéro $nom_resp qui éxiste déja !!!')</script>";  
+                	} else {   	          	
+                		$sSQL = "INSERT INTO clients (" . 
+                              "nom_resp," . 
+                              "prenom_resp," . 
+                              "raison_social," . 
+                              "email," . 
+                              "tel," . 
+                              "adresse," .
+                              "ville)" . 
+                        " VALUES (" . 
+                              tosql($nom_resp, "Text") . "," . 
+                              tosql($prenom_resp, "Text") . "," . 
+                              tosql($raison_social, "Text") . "," .
+                              tosql($email, "Text") . "," .
+                              tosql($tel, "Number") . "," .
+                              tosql($adresse, "Text") . "," .
+                              tosql($ville, "Text") . 
+                        ")";          	
+                		$db->query($sSQL);
+                		echo '<script>alert("Vous avez saisie le bon numéro : '. $nom_resp .'")</script>';
+                	}
+                }
+                  
+            } 
 
 ?>

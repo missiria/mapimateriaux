@@ -2,13 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
 
-        <title>MAPI MATERIAUX - Produit</title>
-        <meta http-equiv="pragma" content="no-cache">
-        <meta http-equiv="expires" content="0">
-        <meta http-equiv="cache-control" content="no-cache">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
-
+            <title>MAPI MATERIAUX - Produit</title>
+            <meta http-equiv="pragma" content="no-cache">
+            <meta http-equiv="expires" content="0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
+            <link rel="stylesheet" href="../files/themes/base/validationEngine.jquery.css" type="text/css" media="screen" />         
+            <!-- ALL JAVASCRIPT -->
+            <script src="../files/js/jquery.js" type="text/javascript"></script>
+            <script src="../files/js/ui/jquery.ui.datepicker.js"></script>
+            <script src="../files/js/jquery.validationEngine-fr.js" type="text/javascript"></script>  
+            <script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>
         </head>
 
         <body>
@@ -16,23 +21,23 @@
                   <h2>Ajouté un client</h2>
                   <form method="post" action="{FileName}">
                         <label>Le nom de responsable :</label><br />
-                        <input type="text" name="nom_resp" id="nom_resp"><br />
+                        <input type="text" name="nom_resp" id="nom_resp" class="validate[required]"><br />
                         <label>Le prenom de responsable :</label><br />
                         <input type="text" name="prenom_resp" id="prenom_resp"><br />
                         
                         <label>Raison social :</label><br />
-                        <input type="text" name="raison_social" id="raison_social"><br />
+                        <input type="text" name="raison_social" id="raison_social" class="validate[required]"><br />
                         <label>E-mail :</label><br />
                         <input type="text" name="email" class="email"><br />
                         
                         <label>Tel :</label><br />
-                        <input type="text" name="tel" class="tel" value="(+212)">
+                        <input type="text" name="tel" class="tel" value="(+212)" class="validate[required]">
                         <span>example : +212 06 56 56 05 52</span><br />
                         <label>Adresse :</label><br />
-                        <input type="text" name="adresse"><br />
+                        <input type="text" name="adresse" class="validate[required]"><br />
 
                         <label>Ville :</label><br />
-                        <input type="text" name="ville" class="ville"><br />
+                        <input type="text" name="ville" class="ville" class="validate[required]"><br />
                         
                         <input type="submit"> <input type="reset" value="Annuler">
                   </form>

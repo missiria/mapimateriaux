@@ -37,7 +37,7 @@
       $km_arrive = get_param("km_arrive");
       $id = $_POST["id"];
       
-      var_dump($_POST);
+      //var_dump($_POST);
            
       if ($num_bon && $ref_vehicule && $date && $qt_littre && $km_depart && $km_arrive) {
           if (strlen(trim($id))==0){
@@ -97,9 +97,9 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
 				
-				$sSQL = "SELECT * FROM suivi_gasoil GROUP BY date";			
+				$sSQL = "SELECT * FROM suivi_gasoil ";			
 				if (strlen(trim($keyword)) > 0)
-					$sSQL .= "where num_bon like '$keyword%'";
+					$sSQL .= "WHERE num_bon LIKE '$keyword%'";
 				
 				$db->query($sSQL);
 				$next_record = $db->next_record();
