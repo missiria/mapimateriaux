@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+
+            <title>MAPI MATERIAUX - traitement commandes</title>
+            <meta http-equiv="pragma" content="no-cache">
+            <meta http-equiv="expires" content="0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
+            <link rel="stylesheet" href="../files/themes/base/jquery.ui.all.css">
+            <link rel="stylesheet" href="../files/themes/base/validationEngine.jquery.css" type="text/css" media="screen" /> 
+            
+            <!-- ALL JAVASCRIPT HERE -->
+            <script src="../files/js/jquery.js" type="text/javascript"></script>
+        </head>
+
+        <body>
+            {Header}
+            
+                  <h3>traitement commandes</h3>
+
+                  <!--Beginblock_search-->
+                  <table id="result" border=1>
+                        <thead>
+                              <td>Bon Info</td>
+                              <td>Date</td>
+                              <td>Clients</td>
+                              <td>QT produit</td>
+                              
+                              
+                              <td>QT livraison</td>
+                              <td>km arrive</td>
+                              <td>Parcours</td>
+                              <td>consommation</td>
+                        </thead>
+                        <!--Beginrow_result-->
+                        <tr>
+                              <td>{id}</td>
+                              <td>{date}</td>
+                              <td>{ref_client}</td>
+                              <td>{qt_produit}</td>
+                              
+                              
+                              <td><input type="text" value="{qt_}" class="validate[required,custom[onlyNumber]] text-input"></td>
+                              <td>{km_arrive}</td>
+                              <td>{parcours}</td>
+                              <td>{consommation} (L/100)</td>
+                        </tr>
+                        <!--Endrow_result-->
+                        <!--BeginNorow_result-->
+                        <tr>
+                              <td colspan="7">Pas d'enregistrement</td>
+                        </tr>
+                        <!--EndNorow_result-->                                    
+                  </table>
+                  <!--Endblock_search-->
+            {Footer}
+        </body>
+</html>
+

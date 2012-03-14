@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+
+            <title>MAPI MATERIAUX - batteries</title>
+            <meta http-equiv="pragma" content="no-cache">
+            <meta http-equiv="expires" content="0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen">
+            <link rel="stylesheet" href="../files/themes/base/jquery.ui.all.css">
+		<link rel="stylesheet" href="../files/themes/base/validationEngine.jquery.css" type="text/css" media="screen" />      
+            <script src="../files/js/jquery.js" type="text/javascript"></script>
+            <script src="../files/js/jquery-ui-1.8.18.custom.min"></script>
+		<script src="../files/js/ui/jquery.ui.datepicker.js"></script>
+		<script src="../files/js/jquery.validationEngine-fr.js" type="text/javascript"></script>  
+		<script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>	      
+            <script type="text/javascript" >
+            $(function() {
+                  $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+            }); 
+            </script>
+        </head>
+
+        <body>
+            {Header}
+
+                        <h3>Journal de pneumatique</h3>
+                        
+                   <div id="col2" class="left">                  
+                        <h3>Recherche</h3>
+                        <form action="{ActionPage}">
+                        
+                              <label>Numéro de bon :</label><br />
+                              <input type="text" name="keyword" value="{keyword}">
+                              <input type="submit" value="Search !">
+
+                        </form>
+                        <!--Beginblock_search-->
+                        
+                  <table id="result" border=1>
+                        <thead>
+                              <td>Date</td>
+                              <td>Vehicule</td>
+                              <td>Numéro bon</td>
+                              <td>Marque</td>
+                              <td>Nombre</td>
+                              
+                              <td>km depart</td>
+                              <td>km arrive</td>
+                              
+                              <td>parcours</td>
+                              <td>Observation</td>
+                              
+                        </thead>
+                        <!--Beginrow_result-->
+                        <tr>
+                              <td>{date}</td>
+                              <td>{ref_vehicule}</td>
+                              <td>{num_bon}</td>
+                              <td>{marque_pneu}</td>
+                              <td>{nbr_pneu}</td>
+                              
+                              <td>{km_depart}</td>
+                              <td>{km_arrive}</td>
+                              
+                              <td>{parcours}</td>
+                              
+                              <td>{observation}</td>
+                              
+                        </tr>
+                        <!--Endrow_result-->
+                        <!--BeginNorow_result-->
+                        <tr>
+                              <td colspan="9">Pas d'enregistrement</td>
+                        </tr>
+                        <!--EndNorow_result-->                                    
+                  </table>
+                        <!--Endblock_search-->
+                  </div>
+            {Footer}
+        </body>
+</html>
+
