@@ -63,6 +63,7 @@
 		                  ")";          	
 	                  $db->query($sSQL);
 	                  echo '<script>alert("Vous avez saisie : '. $qt_produit .'")</script>';
+	                  header("location: traitement_commandes.php");
       } 
    $tpl->pparse("commandes", false);      
 

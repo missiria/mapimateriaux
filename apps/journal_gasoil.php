@@ -35,7 +35,7 @@
       $from = get_param("from");
       $to = get_param("to");
       
-      var_dump($_POST);
+      //var_dump($_POST);
       
       search();
       //==============================
@@ -46,8 +46,8 @@
             global $sForm;
             $sActionFileName = "journal_gasoil.php";
             $tpl->set_var("ActionPage", $sActionFileName);
-            $keyword = strip(get_param("keyword"));
-            $tpl->set_var("keyword", tohtml($keyword));
+            $ref_vehicule = strip(get_param("ref_vehicule"));
+            $tpl->set_var("ref_vehicule", tohtml($ref_vehicule));
             
             $from = strip(get_param("from"));
             $to = strip(get_param("to"));

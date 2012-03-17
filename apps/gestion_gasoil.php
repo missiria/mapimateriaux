@@ -51,7 +51,7 @@
                   "ref_vehicule," . 
                   "date," . 
                   "qt_littre," . 
-                  "km_depart" . 
+                  "km_depart," . 
                   "km_arrive)" .
             	" VALUES (" . 
                   tosql($num_bon, "Number") . "," .
