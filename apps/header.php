@@ -1,4 +1,4 @@
- <?php
+<?php
         include ("../libs/common.php");
         $template_filename = "../apps/header.html";
         $tplheader = new Template($app_path);

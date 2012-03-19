@@ -19,10 +19,10 @@ $treeThemeXML = "<?xml version='1.0' encoding='iso-8859-1'?><tree id='0'>";
 
 include("db_mysql.php");
 
-define("DATABASE_NAME","pro_mapi");
-define("DATABASE_USER","root");
-define("DATABASE_PASSWORD","321");
-define("DATABASE_HOST","localhost");
+define("DATABASE_NAME","mapi");
+define("DATABASE_USER","mapi");
+define("DATABASE_PASSWORD","med1982aga");
+define("DATABASE_HOST","mysql1095.servage.net");
 
 $rootFR = 1;
 $rootAR = 2;
@@ -84,13 +84,13 @@ function dateTime($time , $mode = 'long') {
 		break;
 				
 		case 'ar' : 
-			DEFINE("JANVIER","جانفي"); DEFINE("FEVRIER","فيفري");	DEFINE("MARS","مارس");
-			DEFINE("AVRIL","أفريل"); DEFINE("MAI","ماي"); DEFINE("JUIN","جوان");
-			DEFINE("JUILLET","جويلية"); DEFINE("AOUT","أوت");DEFINE("SEPTEMBRE","سبتمبر");
-			DEFINE("OCTOBRE","أكتوبر");DEFINE("NOVEMBRE","نوفمبر");DEFINE("DECEMBRE","ديسمبر");
-			DEFINE("LUNDI","الاثنين"); DEFINE("MARDI","الثلاثاء");	DEFINE("MERCREDI","الاربعاء");
-			DEFINE("JEUDI","الخميس"); DEFINE("VENDREDI","جمعة");DEFINE("SAMEDI","السبت");
-			DEFINE("DIMANCHE","الاحد");
+			DEFINE("JANVIER","?????"); DEFINE("FEVRIER","?????");	DEFINE("MARS","????");
+			DEFINE("AVRIL","?????"); DEFINE("MAI","???"); DEFINE("JUIN","????");
+			DEFINE("JUILLET","??????"); DEFINE("AOUT","???");DEFINE("SEPTEMBRE","??????");
+			DEFINE("OCTOBRE","??????");DEFINE("NOVEMBRE","??????");DEFINE("DECEMBRE","??????");
+			DEFINE("LUNDI","???????"); DEFINE("MARDI","????????");	DEFINE("MERCREDI","????????");
+			DEFINE("JEUDI","??????"); DEFINE("VENDREDI","????");DEFINE("SAMEDI","?????");
+			DEFINE("DIMANCHE","?????");
 		break;
 		
 		case 'en' : 

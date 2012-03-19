@@ -17,67 +17,78 @@
             <script src="../files/js/jquery.validationEngine-fr.js" type="text/javascript"></script>  
             <script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>
             <script type="text/javascript">
-            function Cloturer(rowTable, id){
+            function Cloturer(rowTable, sid, prod){
 		      var row = document.getElementById('result').rows[rowTable].cells;
-		      var Qt_liv = document.getElementById(id).value;
-		      var id = document.getElementById('id').value = id;
-		      alert(id);
+		      var Qt_liv = document.getElementById(sid).value;
+		      var id = document.getElementById(sid).value;
 		      var QTProduct = row[3].innerHTML;
-		      if (QTProduct == Qt_liv) {
-		            alert("THATS TRUE !");
-		            var linkToSend = document.location.href="?send="+id;
-		            alert(linkToSend);
+		      if (Qt_liv > 0) {
+				$.ajax({
+					type: "POST",
+					url: "traitement_commandes.php",
+					data: "action=send&id="+sid+"&qt="+Qt_liv+"&prd="+prod,
+					success: function(response){
+						rspDecoded = JSON.parse(response);
+						if (rspDecoded.success == 0){
+							alert("La quantité à livrér ("+rspDecoded.stresp+") dépasse la quantité commandée.");
+							return;
+						}
+						if (rspDecoded.success == 1){
+							document.getElementById(sid).value = rspDecoded.stresp;
+							alert("La commande est mise à jour.");
+							return;
+						}
+						if (rspDecoded.success == 2){
+							row[8].innerHTML = "Cloturé";
+							document.getElementById(sid).value = rspDecoded.stresp;
+							alert("La commande à été cloturée.");
+							return;
+						}
+						if (rspDecoded.success == -1){
+							alert("Problème lors de l'opération.");
+							return;
+						}
+						if (rspDecoded.success == -2){
+							alert("La quantité ("+Qt_liv+") que vous voulez livrer n'est pas disponible en stock.");
+							return;
+						}
+					}
+				});
 		      } else {
-		            alert("THATS FALSE !");
+				alert("La quantité n'est pas valide");
 		      }
 		      //alert(id + " table :" + rowTable);
 		}
-		function Verifie(rowTable, id) {
-		      var row = document.getElementById('result').rows[rowTable].cells;
-		      var Qt_liv = document.getElementById(id).value;
-		      var id = document.getElementById('id').value = id;
-		      var QTProduct = row[3].innerHTML;
-		      if (QTProduct == Qt_liv) {
-		            alert("THATS TRUE !");
-		            var linkToSend = document.location.href="?verfie="+id;
-		            alert(linkToSend);
-		      } else {
-		            alert("THATS FALSE !");
-		      }
+		function Verifie(rowTable, id, prod) {
+			var row = document.getElementById('result').rows[rowTable].cells;
+			var Qt_liv = document.getElementById(id).value;
+			var QTProduct = row[3].innerHTML;
+			if (Qt_liv > 0 ) {
+				$.ajax({
+					type: "POST",
+					url: "traitement_commandes.php",
+					data: "action=verif&prd="+prod,
+					success: function(response){
+						rspDecoded = JSON.parse(response);
+						if (rspDecoded.sumqt < Qt_liv){
+							alert("La quantité ("+Qt_liv+") que vous voulez livrer n'est pas disponible en stock. Celle qui est disponinble est : " + rspDecoded.sumqt);
+							return;
+						} else{
+							alert("La quantité que vous voulez livrer est disponible en stock.");
+							return;
+						}
+					}
+				});
+			} else {
+				alert("La quantité n'est pas valide");
+			}
 		}
-            </script>
-            <script type="text/javascript">
-                  function Content(id){
-                        var htmlID = $(id).html();
-                        alert(htmlID);
-                        var url = "{FileName}";
-                        $.post(
-                              url, {contentVar :id},
-                              function(data){
-                                    $("#{id}").html(data).show();
-                              }
-                        );
-                  }
-            </script>
-            <script type="text/javascript">
-                  function Content(id){
-                        var htmlID = $(id).html();
-                        alert(htmlID);
-                        var url = "{FileName}";
-                        $.post(
-                              url, {contentVar :id},
-                              function(data){
-                                    $("#{id}").html(data).show();
-                              }
-                        );
-                  }
-                  
-            </script>
-            <script type="text/javascript">
-                  $().ready(function() {
-                    $('#dialog').jqm();
-                  });
-            </script>
+		</script>
+		<script type="text/javascript">
+			  $().ready(function() {
+				$('#dialog').jqm();
+			  });
+		</script>
         </head>
 
         <body>
@@ -91,10 +102,10 @@
                               <td>Bon Info</td>
                               <td>Date</td>
                               <td>Clients</td>
-                              <td>QT produit</td>
+                              <td>QT commandée</td>
                               
                               
-                              <td>QT livraison</td>
+                              <td>QT livrée</td>
                               <td>Transporteur</td>
                               <td>l'Heure départ</td>
                               <td>Imperimer</td>
@@ -112,7 +123,7 @@
                                     <form name="form{id}" mehod="GET" action="{FileName}">
                                     <input id="{id}" type="text" size="4" name="qt_liv" value="{qt_liv}" class="validate[required,custom[onlyNumber]] text-input">
                                     <input type="hidden" name="id" id="id" value="{id}" />
-                                    <a href="javascript:" Onclick="Content({id})">Verifie</a>
+                                    <a href="javascript:" Onclick="Verifie({ordrRow}, {id}, {ref_prod})">Verifie</a>
                                     </form>
                               </td>
                               <td>
@@ -134,9 +145,9 @@
                               
                               </td>
                               <td><input type="text" size="7" value="09:00"></td>
-                              <td><div class="print"><input type="submit" value="Print!" /></div> 
+                              <td><div class="print"><input type="button" value="Print!" /></div> 
                               </td>
-                              <td><a href="javascript:" Onclick="Cloturer({ordrRow}, {id})">Cloturer</a></td>
+                              <td><!--BeginEstCloturable--><a href="javascript:" Onclick="Cloturer({ordrRow}, {id}, {ref_prod})">Cloturer</a><!--EndEstCloturable--><!--BeginEstNonCloturable-->Cloturé<!--EndEstNonCloturable--></td>
                         </tr>
                         <!--Endrow_result-->
                         <!--BeginNorow_result-->

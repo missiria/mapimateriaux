@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
-
             <title>MAPI MATERIAUX - achats</title>
             <meta http-equiv="pragma" content="no-cache">
             <meta http-equiv="expires" content="0">
@@ -100,7 +99,17 @@
                               <hr>
                               <label>References :</label><br />
                               <input type="text" name="ref_bank" id="ref_bank"><br />
-                              
+							  
+							  <hr>
+							  <label>Produit :</label><br />
+                              <select name="ref_produit" id="ref_produit">
+                              <option value="">Selectionez un produit</option>
+                              <!--Beginselect_produit-->
+                              <option value="{id_produit}">{Value_produit}</option>
+                              <!--Endselect_produit--></select><br />							  
+                               <label>Quantité :</label><br />
+                              <input type="text" name="qt_prod" id="qt_prod" ><br />
+                             
                               <input type="submit" value="Valider"> <input type="reset" value="Annuler">
                               <input type="hidden" name="id" id="id" value="" />
                         </form>

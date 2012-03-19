@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "achats";
       $filename = "achats.php";
@@ -18,6 +18,17 @@
 
       $tpl->set_var("FileName", $filename);
       
+      $lookup_produits = db_fill_array("SELECT libelle,id FROM  produits");
+      
+      if(is_array($lookup_produits)) {
+      reset($lookup_produits);
+            while(list($value, $key) = each($lookup_produits)) {
+              $tpl->set_var("Value_produit", $value);
+              $tpl->set_var("id_produit", $key);
+              $tpl->parse("select_produit", true);
+            }
+      }
+ 
       $lookup_fournisseurs = db_fill_array("SELECT nom_resp,id FROM  fournisseurs");
       
       if(is_array($lookup_fournisseurs)) {
@@ -28,21 +39,21 @@
               $tpl->parse("select_fournisseur", true);
             }
       }
-      
+	  
       // $_POST TRAITEMENT
       $num_facture_achat = get_param('num_facture_achat');
       $date_regelement = get_param('date_regelement');
       $ref_fournisseur = get_param("ref_fournisseur");
       $montant_achat = get_param("montant_achat");
+      $ref_produit = get_param("ref_produit");
+      $qt_prod = get_param("qt_prod");
       
       $etat_reglement = get_param("etat_reglement");
       
       $mode_reglement = get_param("mode_reglement");
       $ref_bank = get_param("ref_bank");
       $id = $_POST["id"];
-      
-      var_dump($_POST);
-      
+     
       if ($num_facture_achat && $date_regelement && $ref_fournisseur && $montant_achat && $etat_reglement && $mode_reglement && $ref_bank ) {
             if (strlen(trim($id))==0){
                 	$num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER"));
@@ -57,19 +68,29 @@
                         "montant_achat," . 
                         "etat_reglement," .
                         "mode_reglement," . 
+                        "ref_produit," . 
+                        "qt_prod," . 
                         "ref_bank)" .
-                  " VALUES (" . 
+						" VALUES (" . 
                         tosql($num_facture_achat, "Number") . "," .
                         tosql($date_regelement, "Text") . "," .
                         tosql($ref_fournisseur, "Number") . "," .
                         tosql($montant_achat, "Number") . "," .
                         tosql($etat_reglement, "Text") . "," . 
                         tosql($mode_reglement, "Text") . "," .
+                        tosql($ref_produit, "Number") . "," .
+                        tosql($qt_prod, "Number") . "," .
                         tosql($ref_bank, "Text") .
-                        
-                  ")";       	
+						")";  
                 		$db->query($sSQL);
-                		echo '<script>alert("Vous avez saisie le bon numéro : '. $num_facture_achat .' \n et cest réglé ")</script>';
+						$lastId = mysql_insert_id();
+						$sql = "insert into operation_produit (ref_produit, ref_achat, qt_operation, ref_user) values (";
+						$sql .= tosql($ref_produit, "NUMBER") . ", ";
+						$sql .= tosql($lastId, "NUMBER") . ", ";
+						$sql .= tosql($qt_prod, "NUMBER") . ", ";
+						$sql .= "1)";
+						$db->query($sql);
+                		echo '<script>alert("Vous avez saisie le bon numéro : '. $num_facture_achat .'")</script>';
                 	}
                 } else {
 				      $num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER")." and id <> ".tosql($id, "Number"));
@@ -86,7 +107,7 @@
                   	$sSQL .= ",ref_bank =" . tosql($ref_bank, "Text");
                   	$sSQL .= " WHERE id=" .tosql($id, "Number") ."";        	
                 		$db->query($sSQL);
-                		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_bon .'")</script>';
+                		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_facture_achat .'")</script>';
                 	}
                 }
             
