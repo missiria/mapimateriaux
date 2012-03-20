@@ -13,7 +13,6 @@
             
             <!-- ALL JAVASCRIPT HERE -->
             <script src="../files/js/jquery.js" type="text/javascript"></script>
-            <script src="../files/js/popup.js" type="text/javascript"></script>
             <script src="../files/js/jquery.validationEngine-fr.js" type="text/javascript"></script>  
             <script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>
             <script type="text/javascript">
@@ -145,7 +144,7 @@
                               
                               </td>
                               <td><input type="text" size="7" value="09:00"></td>
-                              <td><div class="print"><input type="button" value="Print!" /></div> 
+                              <td><a href="print_commandes.php?id={id}&date={date}&client={ref_client}&qt_produit={qt_produit}&qt_liv={qt_liv}" class="print">print</a> 
                               </td>
                               <td><!--BeginEstCloturable--><a href="javascript:" Onclick="Cloturer({ordrRow}, {id}, {ref_prod})">Cloturer</a><!--EndEstCloturable--><!--BeginEstNonCloturable-->Cloturé<!--EndEstNonCloturable--></td>
                         </tr>
@@ -156,43 +155,8 @@
                         </tr>
                         <!--EndNorow_result-->                                    
                   </table>
-                  <div id="popupContact"> 
-                  <a href="#" id="popupContactClose">x</a>
-                        <!--BegPrint-->
-                              <table>
-                                    <thead>
-                                          <td>Bon Info</td>
-                                          <td>Date</td>
-                                          <td>Clients</td>
-                                          <td>QT produit</td>
-                                          <td>QT livraison</td>
-                                          <td>Transporteur</td>
-                                          <td>l'Heure départ</td>
-                                          <td>QT reste a livrer</td>
-                                    </thead>
-                                    <!--Beginrow_result-->
-                                    <tr>
-                                          <td>{id}</td>
-                                          <td>{date}</td>
-                                          <td>{ref_client}</td>
-                                          <td>{qt_produit}</td>
-                                          <td>{qt_liv}</td>
-                                          <td>{ref_vehicule}</td>
-                                          <td>{time_depart}</td>
-                                          <td>{qt_reste}</td>
-                                    </tr>
-                                    <tr>
-                                          <td colspan="8">Numéro de Téléphone : {tel}</td>       
-                                    </tr>
-                                     <tr>
-                                          <td colspan="8">l'adresse : {adresse} </td>       
-                                    </tr>
-                              </table>
-                              
-                              <a href="print" class="print right" onClick="window.print()">Imperimer</a>
-                        <!--EndPrint-->
-                  </div><!-- #popupContact -->
-                  <div id="backgroundPopup"></div>  
+                  
+                  
                   <!--Endblock_search-->
             {Footer}
         </body>

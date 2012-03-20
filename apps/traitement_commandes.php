@@ -43,13 +43,6 @@
       $sActionFileName = "traitement_commandes.php";
       $tpl->set_var("ActionPage", $sActionFileName);
       $id = $_GET["id"];
-      
-      if (strlen(trim($id))) {
-            foreach($_GET as $key => $value){
-            echo "<li>$key: $value</li>";
-            }
-          echo '<script>alert("IT\'S DONE FOR ' .$id. '!")</script>';
-      }
 			
 	$sSQL = "SELECT * FROM commandes";			
 	$db->query($sSQL);
@@ -62,7 +55,7 @@
       	//WE DISPLAY THE RESULTS
        	$id = $db->f("id");
        	$date = $db->f("date"); 
-        $ref_client = $db->f("ref_client");
+            $ref_client = $db->f("ref_client");
        	$qt_produit = $db->f("qt_produit");
        	$qt_liv = $db->f("qt_liv");
        	$ref_prod = $db->f("ref_produit");
