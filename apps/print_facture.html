@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <title>MAPI MATERIAUX - l'imprimante</title>
+            <meta http-equiv="pragma" content="no-cache">
+            <meta http-equiv="expires" content="0">
+            <meta http-equiv="cache-control" content="no-cache">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <link type="text/css" rel="stylesheet" href="../files/bo_style.css" media="screen"> 
+            <link rel="stylesheet" media="screen and (max-width: 640px)" href="../files/smart.css" type="text/css" />
+            <script src="../files/js/jquery.js" type="text/javascript"></script>
+        </head>
+
+        <body>
+                  <h2>MAPI MATERIAUX - l'imprimante</h2>
+                  
+                  <div id="popupContact"> 
+                        <a href="#" id="popupContactClose">x</a>
+                              <!--BegPrint-->
+                                    <h3>{client}</h3>
+                                    <h4 class=" date">{date}</h4>
+                                    <table>
+                                          <thead>
+                                                <td>Désignation</td>
+                                                <td>Numéro de bon de commande</td>
+                                                <td>QT produit</td>
+                                                <td>Prix Unitaire</td>
+                                                <td>Montant</td>
+                                          </thead>
+                                          <!--Beginrow_result-->
+                                          <tr>
+                                                <td width="160px">{libproduits}<br>{libreferences}</td>
+                                                <td>{id}</td>
+                                                <td>{qt_produit}</td>
+                                                <td>{prix_uni}</td>
+                                                <td>{montant}</td>
+                                          </tr>
+                                          <tr>
+                                                <td colspan="3"></td> 
+                                                <td>TVA 20%</td>
+                                                <td>{tva}</td>      
+                                          </tr>
+                                          <tr>
+                                                <td colspan="3"></td> 
+                                                <td>Montant TTC</td>
+                                                <td>{ttc}</td>      
+                                          </tr>
+                                    </table>
+                                    <a href="#print" class="print right" onClick="window.print()">Imperimer</a>
+                                    <a href="?send={id}&produit={libproduits}&reference={libreferences}&num_commande={id}&qt_produit={qt_produit}&prix_uni={prix_uni}&montant={montant}&tva={tva}&ttc={ttc}&client={ref_client}" class="left" onClick="send({id})">Soldé</a>
+                                                                   
+                              <!--EndPrint-->
+                        </div><!-- #popupContact -->
+        </body>
+</html>
+

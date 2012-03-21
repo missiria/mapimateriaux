@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
 
-            <title>MAPI MATERIAUX - visite technique</title>
+            <title>MAPI MATERIAUX - stock</title>
             <meta http-equiv="pragma" content="no-cache">
             <meta http-equiv="expires" content="0">
             <meta http-equiv="cache-control" content="no-cache">
@@ -20,73 +20,74 @@
             $(function() {
                   $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
             });
-				function Delete(id, date){
-					if (confirm("Vous etes sur de vouloir supprimer cette carte visite ")) { // Clic sur OK
+				function Delete(id){
+					if (confirm("Vous etes sur de vouloir supprimer !!")) { // Clic sur OK
            			document.location.href="?delete="+id;
        			      }									
 				}
 				function prepareToEdite(rowTable, id){
 					var row = document.getElementById('result').rows[rowTable].cells;
-					document.getElementById('datepicker').value = row[0].innerHTML;
+					document.getElementById('beton').value = row[0].innerHTML;
+					document.getElementById('sable_1').value = row[1].innerHTML;
+					document.getElementById('sable_2').value = row[2].innerHTML;
 					document.getElementById('id').value = id;
-					$("#ref_vehicule option").each(function(){
- 						if ($(this).text() == row[1].innerHTML)
-    						$(this).attr("selected","selected");
-    						return;
-						});
 				}          
             </script>
         </head>
 
         <body>
             {Header}
-                  
                   <div id="col1" class="left">
-                        <h3>Gestion visite technique</h3>
-                        <!--BeginBlockForm-->
-                        <form method="post" action="{FileName}">
-                              
-                              <label>Numéro de véhicule :</label><br />
-                              <select name="ref_vehicule" id="ref_vehicule">
-                              <option value="">S&eacute;l&eacute;ctionnez un v&eacute;hicule</option>
-                              <!--Beginselect_vehicule-->
-                              <option value="{Value_vehicule}" {Selected}>{id_vehicule}</option>
-                              <!--Endselect_vehicule--></select><br />
-                              
-                              <label>Date :</label><br />
-                              <input type="text" name="date" id="datepicker"><br />
-                              
-                              <input type="submit" value="Valider"> <input type="reset" value="Annuler">
-                              <input type="hidden" name="id" id="id" value="" />
-                        </form>
-                        <!--EndBlockForm--> 
-                  </div>
-                  <div id="col2" class="right">                  
+                  <h3>stock</h3>
+                  <!--BeginBlockForm-->
+                  <form method="post" action="{FileName}" id="formID">
+                  
+                         <label>beton :</label><br />
+                        <input type="text" name="beton" id="beton" class="validate[custom[onlyNumber]] text-input"><br />
+                         <label>sable 1 :</label><br />
+                        <input type="text" name="sable_1" id="sable_1" class="validate[custom[onlyNumber]] text-input"><br />
+                         <label>sable 2 :</label><br />
+                        <input type="text" name="sable_2" id="sable_2" class="validate[custom[onlyNumber]] text-input"><br />
+                        <input type="submit" value="Valider"> <input type="reset" value="Annuler">
+                        <input type="hidden" name="id" id="id" value="" />
+                  </form>
+                  <!--EndBlockForm-->  
+                   </div><!-- #col1 -->
+                   <div id="col2" class="right">                  
                         <h3>Recherche</h3>
-                        <!--<form action="{ActionPage}">
+                        <form action="{ActionPage}">
                         
                               <label>Numéro de bon :</label><br />
                               <input type="text" name="keyword" value="{keyword}">
                               <input type="submit" value="Search !">
 
-                        </form> -->
+                        </form>
                         <!--Beginblock_search-->
                         
                   <table id="result" border=1>
                         <thead>
-                              <td>Date</td>
-                              <td>Vehicule</td>
+                              <td>Beton</td>
+                              <td>Sable 1</td>
+                              <td>Sable 2</td>
                               <td>Edit</td>
                               <td>Delete</td>
                         </thead>
                         <!--Beginrow_result-->
                         <tr>
-                              <td>{date}</td>
-                              <td>{ref_vehicule}</td>
+                              <td>{beton}</td>
+                              <td>{sable_1}</td>
+                              <td>{sable_2}</td>
                               <td><a onClick="prepareToEdite({ordrRow},{id})" href="javascript:;" class="edit">{id}</a></td>
-                              <td><a onClick="Delete({id}, {date})" href="javascript:;" class="delete">{id}</a></td>
+                              <td><a onClick="Delete({id})" href="javascript:;" class="delete">{id}</a></td>
                         </tr>
                         <!--Endrow_result-->
+                        <!--BeginTotal-->
+                        <tr>
+                              <td>{total_beton}</td>
+                              <td>{total_sable1}</td>
+                              <td>{total_sable2}</td>
+                        </tr>
+                        <!--EndTotal-->
                         <!--BeginNorow_result-->
                         <tr>
                               <td colspan="9">Pas d'enregistrement</td>

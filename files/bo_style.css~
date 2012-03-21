@@ -5,6 +5,10 @@
             font-family:Helvetica, Arial, Verdana, sans-serif;
             padding:5px;
       }
+      #wrapper {
+            width: 460px;
+            background-color: red;
+      }   
 }
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen
