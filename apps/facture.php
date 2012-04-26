@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "facture";
       $filename = "facture.php";
@@ -18,55 +18,17 @@
       global $db;
       global $tpl;
       global $sForm;
-      $sSQL = "SELECT * FROM commandes";			
-	$db->query($sSQL);
-	$next_record = $db->next_record();
+      $sSQL = "SELECT * FROM commandes WHERE facturation=1";			
+      $db->query($sSQL);
+      $next_record = $db->next_record();
 
-	if ($_GET['send']) {
-	      $client = get_param("client");
-	      $produit = get_param("produit");
-	      $reference = get_param("reference");
-	      $num_commande = get_param("num_commande");
-	      $date_save = date("Y/m/d");
-	      $qt_produit = get_param("qt_produit");
-	      $prix_uni = get_param("prix_uni");
-	      $montant = get_param("montant");
-	      $tva = get_param("tva");
-	      $ttc = get_param("ttc");
-	      
-	      $sSQL = "INSERT INTO fact_save (" . 
-                        "clients," .
-                        "produit," .
-                        "reference," . 
-                        "num_commande," .
-                        "date_save,". 
-                        "qt_produit," . 
-                        "prix_uni," . 
-                        "montant," . 
-                        "tva," .
-                        "ttc)" .
-                  " VALUES (" . 
-                        tosql($client, "Text") . "," .
-                        tosql($produit, "Text") . "," .
-                        tosql($reference, "Text") . "," .
-                        tosql($num_commande, "Number") . "," .
-                        tosql($date_save, "Text") . "," .
-                        tosql($qt_produit, "Number") . "," .
-                        tosql($prix_uni, "Number") . "," .
-                        tosql($montant, "Number") . "," .
-                        tosql($tva, "Number") . "," .
-                        tosql($ttc, "Number") . 
-                  ")";       	
-            $db->query($sSQL);
-            echo '<script>alert("Vous avez soldé le bon numéro : '. $num_commande .'")</script>';
-            
-	}
+	
       $i = 1;
       while($next_record){ 
       	//WE DISPLAY THE RESULTS
        	$id = $db->f("id");
        	$date = $db->f("date"); 
-            $ref_client = $db->f("ref_client");
+        $ref_client = $db->f("ref_client");
        	$qt_produit = $db->f("qt_produit");
        	$ref_produit = $db->f("ref_produit");
        	$prix_uni = $db->f("prix_uni");
@@ -80,30 +42,28 @@
        	$next_record = $db->next_record();
        	$tpl->set_var("id",$id);
        	$tpl->set_var("date",$date);
-		$tpl->set_var("ref_client",$libclients);
-		
-		$tpl->set_var("qt_liv",$qt_liv);
-		
-		// WE CALCUL THE TOTAL
-		$prix = $qt_produit * $prix_uni;
-		
-		$tpl->set_var("montant",$prix);
-		$tpl->set_var("prix_uni",$prix_uni);
-		$tva = $prix * 0.8;
-		$ttc = $prix + $tva;
-		$date = date("Y/m/d");
-		
-		
-		$tpl->set_var("tva",$tva);
-		$tpl->set_var("ttc",$ttc);
-		
-		$tpl->set_var("qt_produit",$qt_produit);
-		$tpl->set_var("libproduits",$libproduits);
-		$tpl->set_var("libreferences",$libreferences);
-		$tpl->set_var("consommation",$consommation);
-		$tpl->set_var("ref_vehicule",$libVehicule);
-		$tpl->set_var("date",$date);
-		$tpl->set_var("ordrRow",$i);
+	$tpl->set_var("ref_client",$libclients);
+	
+	$tpl->set_var("qt_liv",$qt_liv);
+	
+	// WE CALCUL THE TOTAL
+	$prix = $qt_produit * $prix_uni;
+	
+	$tpl->set_var("montant",$prix);
+	$tpl->set_var("prix_uni",$prix_uni);
+	$tva = $prix * 20/100;
+	$ttc = $prix + $tva;
+	
+	$tpl->set_var("tva",$tva);
+	$tpl->set_var("ttc",$ttc);
+	
+	$tpl->set_var("qt_produit",$qt_produit);
+	$tpl->set_var("libproduits",$libproduits);
+	$tpl->set_var("libreferences",$libreferences);
+	$tpl->set_var("consommation",$consommation);
+	$tpl->set_var("ref_vehicule",$libVehicule);
+	$tpl->set_var("date",$date);
+	$tpl->set_var("ordrRow",$i);
             
       	$tpl->parse("row_result", true);
       	$i++;

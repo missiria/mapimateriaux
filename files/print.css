@@ -1,0 +1,47 @@
+body {
+	background: white;
+	font-size: 18pt;
+}
+table {
+	border-collapse: collapse;
+	width:100%;
+}
+td {
+	padding:7px;
+	text-align:center;
+}
+table thead {
+	background-color: #DDD;
+}
+.botton,thead {
+	display:none;
+}
+#header {display:none;}
+#wrapper-print  table,
+#wrapper-print  tr,
+#wrapper-print  td {border:none!important;}
+#wrapper-print  {
+	margin:100px 0 0;
+	position:relative;
+	left:-50px;
+}
+#wrapper-print  #id {
+	position:absolute;
+	right: 205px;
+	top: -130px;
+	font-size: 32px;
+}
+#wrapper-print table#result {
+	margin:205px 0 0 0;
+}
+.wrap-tel-ad {position:relative;top:350px;left:350px;}
+
+.tel {margin:0 0 20px;}
+
+.print_date {width:140px;text-align:right;}
+.print_client {width:180px;}
+.print_qt_produit {width:150px;}
+.print_qt_liv {width:170px;}
+.print_vehicule {width:70px;text-align:right;}
+.print_time_depart {width:120px;}
+.print_qt_reste {width:120px;}

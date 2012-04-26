@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "gestion_vidanges";
       $filename = "gestion_vidanges.php";
@@ -99,10 +99,10 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
 				
-				$sSQL = "SELECT * FROM suivi_vidange ";			
+				$sSQL = "SELECT * FROM suivi_vidange ";
 				if (strlen(trim($keyword)) > 0)
-					$sSQL .= "WHERE num_bon LIKE '$keyword%'";
-				
+					$sSQL .= "WHERE num_bon LIKE '$keyword%' ";
+				$sSQL .= "ORDER BY num_bon DESC LIMIT 10 ";
 				$db->query($sSQL);
 				$next_record = $db->next_record();
      
@@ -120,8 +120,8 @@
              	
              	$next_record = $db->next_record();
              	
-                         	$tpl->set_var("id",$id);
-                         	$tpl->set_var("date",$date);
+					$tpl->set_var("id",$id);
+					$tpl->set_var("date",$date);
 					$tpl->set_var("num_bon",$num_bon);
 					$tpl->set_var("km_depart",$km_depart);
 					$tpl->set_var("km_arrive",$km_arrive);

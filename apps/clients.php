@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "clients";
       $filename = "clients.php";
@@ -25,7 +25,13 @@
       $raison_social = get_param("raison_social");
       $email = get_param("email");
       $tel = get_param("tel");
+      
       $adresse = get_param("adresse");
+      $adresse2 = get_param("adresse2");
+      $adresse3 = get_param("adresse3");
+      $adresse4 = get_param("adresse4");
+      $adresse5 = get_param("adresse5");
+      
       $ville = get_param("ville");
       $id = get_param("id");
       
@@ -37,13 +43,17 @@
                 	if ($num_bon_existe > 0) {
                 		echo "<script>alert('Vous essayer de saisir un bon numéro $nom_resp qui éxiste déja !!!')</script>";  
                 	} else {   	          	
-                		$sSQL = "INSERT INTO clients (" . 
+                	$sSQL = "INSERT INTO clients (" . 
                               "nom_resp," . 
                               "prenom_resp," . 
                               "raison_social," . 
                               "email," . 
                               "tel," . 
                               "adresse," .
+                              "adresse2," .
+                              "adresse3," .
+                              "adresse4," .
+                              "adresse5," .
                               "ville)" . 
                         " VALUES (" . 
                               tosql($nom_resp, "Text") . "," . 
@@ -52,6 +62,10 @@
                               tosql($email, "Text") . "," .
                               tosql($tel, "Number") . "," .
                               tosql($adresse, "Text") . "," .
+                              tosql($adresse2, "Text") . "," .
+                              tosql($adresse3, "Text") . "," .
+                              tosql($adresse4, "Text") . "," .
+                              tosql($adresse5, "Text") . "," .
                               tosql($ville, "Text") . 
                         ")";          	
                 		$db->query($sSQL);
@@ -67,6 +81,10 @@
             	$sSQL .= ", email = " . tosql($email, "Text");
             	$sSQL .= ", tel = " . tosql($tel, "Text");
             	$sSQL .= ", adresse = " . tosql($adresse, "Text");
+            	$sSQL .= ", adresse2 = " . tosql($adresse2, "Text");
+            	$sSQL .= ", adresse3 = " . tosql($adresse3, "Text");
+            	$sSQL .= ", adresse4 = " . tosql($adresse4, "Text");
+            	$sSQL .= ", adresse5 = " . tosql($adresse5, "Text");
             	$sSQL .= ", ville = " . tosql($ville, "Text");
             	$sSQL .= " where id=" .tosql($id, "Number") ."";        	
           		$db->query($sSQL);
@@ -86,7 +104,7 @@
                    	
 		$sSQL = "SELECT * FROM clients ";			
 		if (strlen(trim($keyword)) > 0)
-					$sSQL .= "WHERE nom_resp LIKE '$keyword%'";
+		$sSQL .= "WHERE nom_resp LIKE '$keyword%'";
 					
 		$db->query($sSQL);
 		$next_record = $db->next_record();
@@ -103,6 +121,11 @@
              	$email = $db->f("email");
              	$tel = $db->f("tel");
              	$adresse = $db->f("adresse");
+             	$adresse2 = $db->f("adresse2");
+             	$adresse3 = $db->f("adresse3");
+             	$adresse4 = $db->f("adresse4");
+             	$adresse5 = $db->f("adresse5");
+             	
              	$ville = $db->f("ville");
              	
              	$next_record = $db->next_record();
@@ -115,6 +138,11 @@
 			$tpl->set_var("email",$email);
 			$tpl->set_var("tel",$tel);
 			$tpl->set_var("adresse",$adresse);
+			$tpl->set_var("adresse2",$adresse2);
+			$tpl->set_var("adresse3",$adresse3);
+			$tpl->set_var("adresse4",$adresse4);
+			$tpl->set_var("adresse5",$adresse5);
+			
                   $tpl->set_var("ville",$ville);
 
 			

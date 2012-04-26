@@ -70,16 +70,18 @@ body {
       background-color:#f9f9f9;
 }
 #wrapper {
-        width: 960px;
-        margin: 0 auto;
-        background-color: white;
-        padding: 10px;
-		border: 7px solid #DDDDDD;
+      width: 1024px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 10px;
+      border: 7px solid #DDD;
+      position:relative;
+	  	  font-family: Century Gothic;
 }
 h1,h2,h3 {
       text-transform:uppercase;
       font-family:arial;
-      color:#08C;
+      color:#87AE53;
       text-shadow:1px 1px 1px #000;
 }
 ul {
@@ -88,16 +90,53 @@ ul {
       list-style:none;
 }
 
+/*
+        TEEEEEEEEEEEEST PRINT
+*/
+
+
+#wrapper-print {
+      width: 1094px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 10px;
+
+      position:relative;
+}
+
+.print_date {width:120px;}
+.print_client {width:120px;}
+.print_qt_produit {width:120px;}
+.print_qt_liv {width:120px;}
+.print_vehicule {width:120px;}
+.print_time_depart {width:120px;}
+.print_qt_reste {width:120px;}
+
+
+
+/*
+        TEEEEEEEEEEEEST PRINT
+*/
+
 .hide {display:none;}
 .right {float:right;}
 .left {float:left;}
 .clear {clear:both;}
 .delete {background:url(../files/images/delete-icon.png) no-repeat;}
 .edit {background:url(../files/images/edit-icon.png) no-repeat;}
-.print {background:url(../files/images/print-icon.png) no-repeat;}
+.botton {padding:5px 10px;border:1px solid #ccc;margin:5px;background-color:#ddd;color:#333;text-decoration:none;display: block;}
+.botton:hover {text-decoration:underline;background-color:#87AE53;color:#fff;}
+.logout {position: absolute;top: 30px;right: 50px;}
+.list {
+      display: block;
+      padding: 5px 10px;
+      background-color: #DDD;
+      margin: 5px;
+      color: #87AE53;
+}
+.list:hover {background-color: #87AE53;color:#fff;}
 .delete, 
-.edit,
-.print {
+.edit {
       display:block;
       height:32px;width:32px;
       text-indent:-9999px;
@@ -107,12 +146,13 @@ ul {
       background-color:#eee;
 }
 #menu ul {
-      width:100%;
-      overflow:hidden;
+      width: auto;
+      background-color: #DDD;
+      padding: 10px;
 }
 #menu ul ul {
       position:absolute;
-      width:15%;
+      width:20%;
       display:none;
 }
 #menu ul li {
@@ -126,75 +166,51 @@ ul {
       float:none;
 }
 #menu ul li a {
-      padding:5px;
-      background-color:#ddd;
-      border-radius:10px 0;
-      box-shadow:1px 1px 4px #666;
-      display:block;
-      color:#08C;
+      padding: 5px 10px;
+      background-color: #CCC;
+      box-shadow: 1px 1px 4px #666;
+      display: block;
+      color: #666;
+      font: bold 13px arial;
+      text-transform: uppercase;
+      
+      -webkit-transition: all 0.5s ease; 
+      -moz-transition: all 0.5s ease;  
+      -o-transition: all 0.5s ease;  
+      transition: all 0.5s ease;
 }
 #menu ul li a:hover {
-      background-color:#08C;
+      background-color:#87AE53;
       text-decoration:none;
       color:#fff;
+      
+      -webkit-transform: scale(1.2);
+      -moz-transform: scale(1.2);
+      -o-transform: scale(1.2);
+      transform: scale(1.2); 
+      
+      -webkit-transition: all 0.5s ease; 
+      -moz-transition: all 0.5s ease;  
+      -o-transition: all 0.5s ease;  
+      transition: all 0.5s ease; 
+}
+table {
+	border-collapse:collapse;
+	width: 100%;
 }
 td {
       padding:5px;
 }
+ 
+table,tr,td {
+	border:2px solid #ccc;
+}
 
+table thead {
+	background-color:#ddd;
+}
 
-#backgroundPopup{  
-      display:none;  
-      position:fixed;  
-      _position:absolute; /* hack for internet explorer 6*/  
-      height:100%;  
-      width:100%;  
-      top:0;  
-      left:0;  
-      background:#000000;  
-      border:1px solid #cecece;  
-      z-index:1;  
-}  
-#popupContact{  
-      display:none;  
-      position:fixed;  
-      _position:absolute; /* hack for internet explorer 6*/  
-      height:384px;  
-      width:670px;  
-      background:#FFFFFF;  
-      border:2px solid #cecece;  
-      z-index:2;  
-      padding:12px;  
-      font-size:13px;  
-}
-#popupContact table,
-#popupContact tr,
-#popupContact td {
-      border:2px solid black;
-}
-#popupContact table thead {
-      background-color:#ddd;
-}
-#popupContact h1{  
-      text-align:left;  
-      color:#6FA5FD;  
-      font-size:22px;  
-      font-weight:700;  
-      border-bottom:1px dotted #D3D3D3;  
-      padding-bottom:2px;  
-      margin-bottom:20px;  
-}  
-#popupContactClose{  
-      font-size:14px;  
-      line-height:14px;  
-      right:6px;  
-      top:4px;  
-      position:absolute;  
-      color:#6fa5fd;  
-      font-weight:700;  
-      display:block;  
-}  
-#button{  
+#button {  
       text-align:center;  
       margin:100px;  
 }  
@@ -213,3 +229,46 @@ td {
 
 	  margin-bottom: 13px;
 }
+
+#wrapper-print #result tbody tr td {
+	font-size: 22px;
+	font-weight: normal ;
+}
+
+#result tbody tr td {
+	font-size: 12px;
+	font-weight: normal ;
+}
+
+#result thead  tr{
+	font-size: 12px;
+    font-weight: bold;
+}
+.traitement form span {
+	font-weight: bold ;
+	color: red ;
+} 
+form label {
+	font-size: 12px ;
+	font-weight: bold ;
+}
+.radio {
+	font-weight: bold ;
+	font-size: 12px ;
+}
+#ref_client {
+	margin-bottom: 15px !important ;
+} 
+#ref_reference {
+	margin-bottom: 15px !important ;
+} 
+#ref_produit {
+	margin-bottom: 15px !important ;
+}
+.traitement tbody  tr{
+	border-bottom: 1px dashed #BBBBBB !important ;
+} 
+.Cloturer {
+	color: green ;
+}
+

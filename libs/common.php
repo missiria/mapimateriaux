@@ -2,7 +2,6 @@
 session_start();
 error_reporting (E_ALL ^ E_NOTICE);
 
-header('Content-type: text/html; charset=utf-8');
 include("template.php");
 
 define("_DEFAULTLANG","fr");
@@ -35,6 +34,11 @@ $db->User     = DATABASE_USER;
 $db->Password = DATABASE_PASSWORD;
 $db->Host     = DATABASE_HOST;
 
+$db2 = new DB_Sql();
+$db2->Database = DATABASE_NAME;
+$db2->User     = DATABASE_USER;
+$db2->Password = DATABASE_PASSWORD;
+$db2->Host     = DATABASE_HOST;
 
 $app_path = "."; 
 
@@ -74,23 +78,23 @@ function dateTime($time , $mode = 'long') {
 	
 	switch ($lang){
 		case 'fr' : 
-			DEFINE("JANVIER","Janvier"); DEFINE("FEVRIER","Février");	DEFINE("MARS","Mars");
+			DEFINE("JANVIER","Janvier"); DEFINE("FEVRIER","F�vrier");	DEFINE("MARS","Mars");
 			DEFINE("AVRIL","Avril"); DEFINE("MAI","Mai"); DEFINE("JUIN","Juin");
-			DEFINE("JUILLET","Juillet"); DEFINE("AOUT","Août");DEFINE("SEPTEMBRE","Septembre");
-			DEFINE("OCTOBRE","Octobre");DEFINE("NOVEMBRE","Novembre");DEFINE("DECEMBRE","Décembre");
+			DEFINE("JUILLET","Juillet"); DEFINE("AOUT","Ao�t");DEFINE("SEPTEMBRE","Septembre");
+			DEFINE("OCTOBRE","Octobre");DEFINE("NOVEMBRE","Novembre");DEFINE("DECEMBRE","D�cembre");
 			DEFINE("LUNDI","Lundi"); DEFINE("MARDI","Juin");	DEFINE("MERCREDI","Mercredi");
 			DEFINE("JEUDI","Jeudi"); DEFINE("VENDREDI","Vendredi");DEFINE("SAMEDI","Samedi");
 			DEFINE("DIMANCHE","Dimanche");
 		break;
 				
 		case 'ar' : 
-			DEFINE("JANVIER","جانفي"); DEFINE("FEVRIER","فيفري");	DEFINE("MARS","مارس");
-			DEFINE("AVRIL","أفريل"); DEFINE("MAI","ماي"); DEFINE("JUIN","جوان");
-			DEFINE("JUILLET","جويلية"); DEFINE("AOUT","أوت");DEFINE("SEPTEMBRE","سبتمبر");
-			DEFINE("OCTOBRE","أكتوبر");DEFINE("NOVEMBRE","نوفمبر");DEFINE("DECEMBRE","ديسمبر");
-			DEFINE("LUNDI","الاثنين"); DEFINE("MARDI","الثلاثاء");	DEFINE("MERCREDI","الاربعاء");
-			DEFINE("JEUDI","الخميس"); DEFINE("VENDREDI","جمعة");DEFINE("SAMEDI","السبت");
-			DEFINE("DIMANCHE","الاحد");
+			DEFINE("JANVIER","?????"); DEFINE("FEVRIER","?????");	DEFINE("MARS","????");
+			DEFINE("AVRIL","?????"); DEFINE("MAI","???"); DEFINE("JUIN","????");
+			DEFINE("JUILLET","??????"); DEFINE("AOUT","???");DEFINE("SEPTEMBRE","??????");
+			DEFINE("OCTOBRE","??????");DEFINE("NOVEMBRE","??????");DEFINE("DECEMBRE","??????");
+			DEFINE("LUNDI","???????"); DEFINE("MARDI","????????");	DEFINE("MERCREDI","????????");
+			DEFINE("JEUDI","??????"); DEFINE("VENDREDI","????");DEFINE("SAMEDI","?????");
+			DEFINE("DIMANCHE","?????");
 		break;
 		
 		case 'en' : 
@@ -122,7 +126,7 @@ function dateTime($time , $mode = 'long') {
 	}
 	// Recuperation du jour
 	$mor1 = strftime( "%d " , strtotime( $time ) );
-	// Recuperation de l'année
+	// Recuperation de l'ann�e
 	$mor2 = strftime( "%Y" , strtotime( $time ) );
 	if ( $mode == 'long' ) {
 		// Recuperation de l'heure+minute+seconde
@@ -259,7 +263,7 @@ function tospace($strValue){
 function removeaccents($string)   
 {    
  $string= strtr($string,    
-"Ã€ÃÃ‚ÃƒÃ„Ã…Ã Ã¡Ã¢Ã£Ã¤Ã¥Ã’Ã“Ã”Ã•Ã–Ã˜Ã²Ã³Ã´ÃµÃ¶Ã¸ÃˆÃ‰ÃŠÃ‹Ã¨Ã©ÃªÃ«Ã‡Ã§ÃŒÃÃŽÃÃ¬Ã­Ã®Ã¯Ã™ÃšÃ›ÃœÃ¹ÃºÃ»Ã¼Ã¿Ã‘Ã±",   
+"ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ",   
 "aaaaaaaaaaaaooooooooooooeeeeeeeecciiiiiiiiuuuuuuuuynn");    
  
  $string= str_replace("/", "+", $string);
@@ -649,11 +653,11 @@ function NormalizeURL($str){
 	//$str=str_replace(";","",$str);
 	//$str=str_replace("/","",$str);
 	//$str=str_replace("\\","",$str);
-	//$str=str_replace("Ã©","e",$str);
-	//$str=str_replace("Ã¨","e",$str);
-	//$str=str_replace("Ã ","a",$str);
-	//$str=str_replace("Ãª","e",$str);
-	//$str=str_replace("Ã¢","a",$str);
+	//$str=str_replace("é","e",$str);
+	//$str=str_replace("è","e",$str);
+	//$str=str_replace("à","a",$str);
+	//$str=str_replace("ê","e",$str);
+	//$str=str_replace("â","a",$str);
 	$str=ereg_replace("<\/?[^>]*>","",$str);	
 	$str=str_replace("<","",$str);
 	$str=str_replace(">","",$str);
@@ -684,16 +688,16 @@ function chrClean($chaine){
 
 
 	//$chaine = strtr($chaine, 
-	//'Å ?Å¡?Å¸Ã€ÃÃ‚ÃƒÃ„Ã…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã¼Ã¿.:!?Â¿,Â°_?%`Â´/&+" ',
+	//'Š?š?ŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜàáâãäåçèéêëìíîïñòóôõöøùúûüÿ.:!?¿,°_?%`´/&+" ',
 	//'SZszYAAAAAACEEEEIIIINOOOOOOUUUUaaaaaaceeeeiiiinoooooouuuuy----------------');  
 	$chaine = strtr($chaine, 
-	'Å ?Å¡?Å¸Ã€ÃÃ‚ÃƒÃ„Ã…Ã‡ÃˆÃ‰ÃŠÃ‹ÃŒÃÃŽÃÃ‘Ã’Ã“Ã”Ã•Ã–Ã˜Ã™ÃšÃ›ÃœÃ Ã¡Ã¢Ã£Ã¤Ã¥Ã§Ã¨Ã©ÃªÃ«Ã¬Ã­Ã®Ã¯Ã±Ã²Ã³Ã´ÃµÃ¶Ã¸Ã¹ÃºÃ»Ã¼Ã¿.:!?Â¿,Â°_?%`Â´/+"',
+	'Š?š?ŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖØÙÚÛÜàáâãäåçèéêëìíîïñòóôõöøùúûüÿ.:!?¿,°_?%`´/+"',
 	'SZszYAAAAAACEEEEIIIINOOOOOOUUUUaaaaaaceeeeiiiinoooooouuuuy---------------');  
-	$chaine = strtr($chaine, array('('=>'', ')'=>'', ' '=>'-', 'Â«'=>'', 
-		'Â»'=>'', 'Â¡'=>'', '!'=>'', 'Â¤'=>'', 'Â²'=>'', 'Â©'=>'', "'"=>'', 
-		'"'=>'', 'G'=>'DH',  'ÃŸ'=>'ss', 
-		'Å’'=>'OE', 'Å“'=>'oe', 'Ã†'=>'AE', 'Ã¦'=>'ae', 'Âµ'=>'u', 'Å“'=>'oe', 
-		'Â¼'=>'', 'Â¨'=>'', '?'=>''));
+	$chaine = strtr($chaine, array('('=>'', ')'=>'', ' '=>'-', '«'=>'', 
+		'»'=>'', '¡'=>'', '!'=>'', '¤'=>'', '²'=>'', '©'=>'', "'"=>'', 
+		'"'=>'', 'G'=>'DH',  'ß'=>'ss', 
+		'Œ'=>'OE', 'œ'=>'oe', 'Æ'=>'AE', 'æ'=>'ae', 'µ'=>'u', 'œ'=>'oe', 
+		'¼'=>'', '¨'=>'', '?'=>''));
 	$chaine = strtr($chaine, array('---' => '-', '--' => '-'));
 	$chaine = eregi_replace("^-", "", $chaine);
 	$chaine = eregi_replace("-$", "", $chaine); 
@@ -719,7 +723,7 @@ function GetDescription($str){
 function setLength($phrase, $longueur) {
 	//on verifie que la phrase est trop longue 
 	if(strlen($phrase)>$longueur){ 
-		//on la coupe Ã  la longueur choisie 
+		//on la coupe à la longueur choisie 
 		$phrase=substr($phrase,0,$longueur); 
 		//on cherche le dernier espace 
 		$espace=strrpos($phrase," "); 
@@ -809,7 +813,7 @@ function getIdentAjax($pTreeDepth){
   	$identString .= $identString;			  
   }
 
-  $identString .= "» ";
+  $identString .= "� ";
   
   return $identString;	
 }
@@ -981,7 +985,7 @@ function getRSS($slang) {
 	$fullrss = "";
 	global $db;
 	
-		//*** Actualités
+		//*** Actualit�s
 		$sSQL = "select id, titre, description, date_maj, date_publication from cnt_actualite where est_actif = 1 and ref_langue=".tosql($slang, "Text") . " Order by date_maj";
 		$db->query($sSQL);
 		$next_record = $db->next_record();
@@ -992,7 +996,7 @@ function getRSS($slang) {
 			$flddate_maj = $db->f("date_maj");
 			$flddate_publication = $db->f("date_publication");
 			
-			$mois_fr = Array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+			$mois_fr = Array("", "janvier", "f�vrier", "mars", "avril", "mai", "juin", "juillet", "ao�t", "septembre", "octobre", "novembre", "d�cembre");
 			list($annee, $mois, $jour) = explode('-', $flddate_publication);
 			$flddate_publication = $jour.' '.$mois_fr[intval($mois)].' '.$annee; 
 			
@@ -1002,7 +1006,7 @@ function getRSS($slang) {
 			$xml .= "<guid>http://". $_SERVER['HTTP_HOST'] ."/onmp/actualites/actualite.php?lang=".$slang."&id=".$fldid."</guid>";
 			$xml .= "<pubDate>".$flddate_maj."</pubDate>"; 
 			$xml .= "<description><![CDATA[".$flddescription." <br> Publier le : ".$flddate_publication."]]></description>";
-			$xml .= "<category>Actualités</category>";
+			$xml .= "<category>Actualit�s</category>";
 			$xml .= "</item>";	
 			$next_record = $db->next_record();
 		}
@@ -1018,7 +1022,7 @@ function getRSS($slang) {
 			$fldtype = $db->f("ref_type");
 			$flddate_publication = $db->f("date_publication");
 			
-			$mois_fr = Array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+			$mois_fr = Array("", "janvier", "f�vrier", "mars", "avril", "mai", "juin", "juillet", "ao�t", "septembre", "octobre", "novembre", "d�cembre");
 			list($annee, $mois, $jour) = explode('-', $flddate_publication);
 			$flddate_publication = $jour.' '.$mois_fr[intval($mois)].' '.$annee; 
 			
@@ -1035,7 +1039,7 @@ function getRSS($slang) {
 			$next_record = $db->next_record();
 		}
 
-		//*** Réglementations
+		//*** R�glementations
 		$db2 = new DB_Sql();
 		$db2->Database = DATABASE_NAME;
 		$db2->User     = DATABASE_USER; 
@@ -1060,7 +1064,7 @@ function getRSS($slang) {
 					$flddate_maj = $db->f("date_maj");
 					$flddate_publication = $db->f("date_publication");
 					
-					$mois_fr = Array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+					$mois_fr = Array("", "janvier", "f�vrier", "mars", "avril", "mai", "juin", "juillet", "ao�t", "septembre", "octobre", "novembre", "d�cembre");
 					list($annee, $mois, $jour) = explode('-', $flddate_publication);
 					$flddate_publication = $jour.' '.$mois_fr[intval($mois)].' '.$annee; 
 					
@@ -1088,7 +1092,7 @@ function getRSS($slang) {
 		$xmlHeader .= "<channel>"; 
 		$xmlHeader .= "<title>ONMP</title>";
 		$xmlHeader .= "<link>http://www.onmp.com</link>";
-		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des Marchés Publics</description>";
+		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des March�s Publics</description>";
 		$fullrss = $xmlHeader.$xml;
 		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/onmp/rss/rss-fr.xml", 'w+');
 		fputs($fp, $fullrss);
@@ -1099,7 +1103,7 @@ function getRSS($slang) {
 		$xmlHeader .= "<channel>"; 
 		$xmlHeader .= "<title>ONMP</title>";
 		$xmlHeader .= "<link>http://www.onmp.com</link>";
-		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des Marchés Publics</description>";
+		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des March�s Publics</description>";
 		$fullrss = $xmlHeader.$xml;
 		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/onmp/rss/rss-en.xml", 'w+');
 		fputs($fp, $fullrss);
@@ -1111,7 +1115,7 @@ function getRSS($slang) {
 		$xmlHeader .= "<language>ar</language>"; 
 		$xmlHeader .= "<title>ONMP</title>";
 		$xmlHeader .= "<link>http://www.onmp.com</link>";
-		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des Marchés Publics</description>";
+		$xmlHeader .= "<description>Flux RSS du l'Observatoire National des March�s Publics</description>";
 		$fullrss = $xmlHeader.$xml;
 		$fp = fopen($_SERVER['DOCUMENT_ROOT']."/onmp/rss/rss-ar.xml", 'w+');
 		fputs($fp, $fullrss);

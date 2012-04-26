@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "gestion_batteries";
       $filename = "gestion_batteries.php";
@@ -74,7 +74,7 @@
           	if ($num_bon_existe > 0) {
           		echo "<script>alert('Vous essayer de saisir un bon numéro $num_bon qui éxiste déja !!!')</script>";          	
 				} else {          	    	
-          		$sSQL = "UPDATE suivie_baterie SET "; 
+          	$sSQL = "UPDATE suivie_baterie SET "; 
             	$sSQL .= "num_bon = " . tosql($num_bon, "Number");
             	$sSQL .= ",ref_vehicule = " .  tosql($ref_vehicule, "Number");
             	$sSQL .=",date =" . tosql($date, "Text");
@@ -84,8 +84,8 @@
             	$sSQL .= ",km_arrive =". tosql($km_arrive, "Number");
             	$sSQL .=",observation =" . tosql($observation, "Text");
             	$sSQL .= " where id=" .tosql($id, "Number") ."";        	
-          		$db->query($sSQL);
-          		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_bon .'")</script>';
+  		$db->query($sSQL);
+  		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_bon .'")</script>';
           	}
           }  
       }
@@ -102,7 +102,7 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
 				
-				$sSQL = "SELECT * FROM suivie_baterie GROUP BY date";			
+				$sSQL = "SELECT * FROM suivie_baterie ORDER BY num_bon DESC LIMIT 10";			
 				if (strlen(trim($keyword)) > 0)
 					$sSQL .= "WHERE num_bon LIKE '$keyword%'";
 				

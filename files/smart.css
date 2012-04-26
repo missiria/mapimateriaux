@@ -1,16 +1,19 @@
 /* CODING BY Younes MISSIRIA (ELITE WEB INGENIERIE) */
 
-#wrapper {width: 602px;padding:0;}
-header:before {content: "Vous ete sur la version smartphone !";}
+#wrapper {width: 602px;padding:0;overflow:auto;}
+#header:before {content: "Vous ete sur la version smartphone !";}
+h1 {text-align:center;}
 #menu {width: 485px;}
-#menu ul li {margin:5px;}
-#menu ul li a {padding:5px 10px;font-size:20px;}
-#menu ul ul {width: 25%;}
+#menu ul li {margin:5px;width: 215px;}
+#menu ul li li {width:auto;}
+#menu ul li a {padding:5px 10px;font-size:20px;width: auto;}
+#menu ul li li a {color:#fff;background-color:#666;}
+#menu ul ul {width: 465px;left: 20px;}
 #copyright,#col2, #col1 {text-align:center;}
 form {margin: 10px;}
 #col1 {width: 250px;margin: 0 auto 0 30%;}
 #col2 {width:100%;}
 input,select {padding:10px;font-size:18px;}
-strong, label {font-size:20px;}
+strong, label {font-size:19px;}
 label {margin:15px 0 0;display: block;}
 h1,h2,h3 {padding:0 0 0 15px;}

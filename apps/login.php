@@ -1,9 +1,7 @@
- <?php
+<?php
         include ("../libs/common.php");
         $cryptinstall="../libs/crypt/cryptographp.fct.php";
         include $cryptinstall;
-
-
 
         $filename = "login.php";
         $template_filename = "login.html";
@@ -20,6 +18,9 @@
                         
         switch ($sForm) {
                 case "Login":
+                        Login_action($sAction);
+                break;
+                case "Logout":
                         Login_action($sAction);
                 break;
         }
@@ -44,7 +45,6 @@ function Login_action($sAction) {
                         $sLogin = get_param("Login");
                         $sPassword = get_param("Password");
                         $fldcode = get_param("code");
-                        
                         $db->query("SELECT id FROM users WHERE nom =" . tosql($sLogin, "Text") . " AND password =" . tosql(md5($sPassword), "Text"). " AND est_actif=1");
                         $is_passed = $db->next_record();
                         
@@ -66,13 +66,10 @@ function Login_action($sAction) {
                                         return;
                                 }
                                                                 
-                                //$sid = dlookup("users", "id", "nom =" . tosql($sLogin, "Text") . " AND password =" . tosql(md5($sPassword), "Text"));
-                                //$sRole = dlookup("users", "ref_role", "nom =" . tosql($sLogin, "Text") . " AND password =" . tosql(md5($sPassword), "Text"));
-                                set_session("capid_user", $sid);
-                                //set_session("ref_role", $sRole);
+                                set_session("capid_user", $is_passed);
                                 
                                 $_SESSION['counter']=0;
-                                header("Location: " . "config.php");
+								header("Location:" . "traitement_commandes.php");
                                 exit;
                         }else {
                                 $sLoginErr .= "Login ou mot de passe incorrect.<br>";
@@ -92,8 +89,8 @@ function Login_action($sAction) {
                 break;
                 
                 case "logout":
-                        session_unregister("capid_user");
-                        session_unregister("ref_role");
+						unset($_SESSION["capid_user"]);
+						unset($_SESSION["ref_role"]);
                         header("Location:" . "login.php");
                         exit;
                 break;
@@ -125,11 +122,11 @@ function Login_show()
                 }
                 $tpl->parse("LoginAct", false);
         } else {
-                $db->query("SELECT login FROM users WHERE id =". tosql(get_session("capid_user"), "Number"));
+                $db->query("SELECT nom FROM users WHERE id =". tosql(get_session("capid_user"), "Number"));
                 $db->next_record();
                 $tpl->set_var("LoginError", "");
                 $tpl->set_var("LoginAct", "");
-                $tpl->set_var("AdminID", $db->f("login"));
+                $tpl->set_var("AdminID", $db->f("nom"));
                 $tpl->parse("UserInd", false);
         }
         $tpl->parse("FormLogin", false);

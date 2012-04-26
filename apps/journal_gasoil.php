@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "journal_gasoil";
       $filename = "journal_gasoil.php";

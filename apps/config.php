@@ -1,4 +1,4 @@
- <?php
+<?php
         include ("header.php");
         $pWindow = "main";
         $filename = "config.php";

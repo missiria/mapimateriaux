@@ -35,9 +35,10 @@
 					document.getElementById('ml_beton').value = row[2].innerHTML;
 					document.getElementById('ml_sable1').value = row[3].innerHTML;
 					document.getElementById('ml_sable2').value = row[4].innerHTML;
+					document.getElementById('ml_sable3').value = row[5].innerHTML;
 					
-					document.getElementById('produit_total').value = row[5].innerHTML;
-					document.getElementById('produit_casse').value = row[6].innerHTML;
+					document.getElementById('produit_total').value = row[6].innerHTML;
+					document.getElementById('produit_casse').value = row[7].innerHTML;
 					
 					document.getElementById('id').value = id;
 				}          
@@ -51,9 +52,12 @@
                   
                   <hr>
                   
-                  <span>Total Beton : <strong>{total_beton}</strong></span><br>
-                  <span>Total Sable 1 : <strong>{total_sable1}</strong></span><br>
-                  <span>Total Sable 2 : <strong>{total_sable2}</strong></span>
+                  <!--BeginBlockProduitPrimaire-->
+					<span>{LibelleProd}: <strong>{total_beton}</strong></span><br>
+                  <!--EndBlockProduitPrimaire-->
+                  <!--BeginBlockNoProduitPrimaire-->
+					<span>Productivité Impossible, pas de produits primaires renseignés</span>
+                  <!--EndBlockNoProduitPrimaire-->
                   <hr>
                   <!--BeginBlockForm-->
                   <form method="post" action="{FileName}" id="formID">
@@ -61,17 +65,15 @@
                         <label>Date :</label><br />
                         <input type="text" name="date" id="date" value="{date}" class="validate[required]"><br />
                          
-                        <label>beton :</label><br />
-                        <input type="text" name="ml_beton" id="ml_beton" value="{total_beton}" class="validate[custom[onlyNumber]]"><br />
+					<!--BeginBlockProduitPrimaireForm-->
+                        <label>{LibelleProd} :</label><br />
+                        <input type="text" name="{LibelleProdForm}" id="{LibelleProdForm}" class="validate[custom[onlyNumber]]"><br />
+					<!--EndBlockProduitPrimaireForm-->
+					<!--BeginBlockNoProduitPrimaireForm-->
+						<span>Productivité Impossible, pas de produits primaires renseignés</span>
+					<!--EndBlockNoProduitPrimaireForm-->
                         
                          
-                         <label>sable 1 :</label><br />
-                         
-                        <input type="text" name="ml_sable1" id="ml_sable1" value="{total_sable1}" class="validate[custom[onlyNumber]]"><br />
-                        
-                        
-                         <label>sable 2 :</label><br />
-                        <input type="text" name="ml_sable2" id="ml_sable2" value="{total_sable2}" class="validate[custom[onlyNumber]]"><br />
                         
                         <label>Produits :</label><br />
                         <select name="ref_produit" id="produit" class="validate[required]">
@@ -79,6 +81,14 @@
                         <!--Beginselect_produits-->
                         <option value="{id_produit}">{Value_produit}</option>
                         <!--Endselect_produits--></select><br />
+                        
+                        <label>Machine :</label><br />
+                        <select name="machine" id="machine" class="validate[required]">
+                        <option value="">Selectioné la machine</option>
+                        <!--Begin_machine-->
+                        <option value="A">VP100</option>
+                        <option value="B">PROFIT</option>
+                        <!--End_machine--></select><br />
                         
                         <label>Total produit :</label><br />
                         <input type="text" name="produit_total" id="produit_total" class="validate[custom[onlyNumber]]"><br />
@@ -108,13 +118,15 @@
                         <thead>
                               <td>date</td>
                               <td>produits</td>
-                              <td>reste beton</td>
-                              <td>reste sable1</td>
-                              <td>reste sable2</td>
-                              <td>ML beton</td>
-                              <td>ML sable1</td>
-                              <td>ML sable2</td>
-                              <td>TL produit</td>
+                              <td>reste Ciment</td>
+                              <td>reste G0</td>
+                              <td>reste naturel</td>
+                              <td>reste concassé</td>
+                              <td>ML Ciment</td>
+                              <td>ML G0</td>
+                              <td>ML naturel</td>
+                              <td>ML concassé</td>
+                              <td>TL Produit</td>
                               <td>TL casse</td>
                               <td>TL reel</td>
                               <td>Edit</td>
@@ -127,9 +139,11 @@
                               <td>{reste_beton}</td>
                               <td>{reste_sable1}</td>
                               <td>{reste_sable2}</td>
+                              <td>{reste_sable3}</td>
                               <td>{ml_beton}</td>
                               <td>{ml_sable1}</td>
                               <td>{ml_sable2}</td>
+                              <td>{ml_sable3}</td>
                               <td>{produit_total}</td>
                               <td>{produit_casse}</td>
                               <td>{produit_reel}</td>
@@ -139,7 +153,7 @@
                         <!--Endrow_result-->
                         <!--BeginNorow_result-->
                         <tr>
-                              <td colspan="13">Pas d'enregistrement</td>
+                              <td colspan="15">Pas d'enregistrement</td>
                         </tr>
                         <!--EndNorow_result-->                                    
                   </table>

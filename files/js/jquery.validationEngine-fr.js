@@ -29,6 +29,11 @@
 					"date":{
                          "regex":"/^[0-9]{4}\-\[0-9]{1,2}\-\[0-9]{1,2}$/",
                          "alertText":"* Date invalide, format YYYY-MM-DD requis"},
+					"number": {
+                    // Number, including positive, negative, and floating decimal. credit: orefalo
+                    "regex": /^[\-\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
+                    "alertText": "* Nombre décimal invalide"
+					},						 
 					"onlyNumber":{
 						"regex":"/^[0-9\ ]+$/",
 						"alertText":"* Chiffres seulement accepté"},	

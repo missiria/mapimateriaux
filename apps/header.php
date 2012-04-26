@@ -1,5 +1,9 @@
 <?php
         include ("../libs/common.php");
+		if (strlen(trim(get_session("capid_user"))) == 0){
+			header("Location: " . "login.php");
+			exit;
+		}
         $template_filename = "../apps/header.html";
         $tplheader = new Template($app_path);
         $tplheader->load_file($template_filename, "Header");

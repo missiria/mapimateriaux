@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "gestion_gasoil";
       $filename = "gestion_gasoil.php";
@@ -97,10 +97,10 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
 				
-				$sSQL = "SELECT * FROM suivi_gasoil ";			
+				$sSQL = "SELECT * FROM suivi_gasoil ";	
 				if (strlen(trim($keyword)) > 0)
-					$sSQL .= "WHERE num_bon LIKE '$keyword%'";
-				
+					$sSQL .= "WHERE num_bon LIKE '$keyword%' ";
+				$sSQL .= "ORDER BY num_bon DESC LIMIT 10";
 				$db->query($sSQL);
 				$next_record = $db->next_record();
      

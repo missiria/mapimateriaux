@@ -18,15 +18,18 @@
             <script src="../files/js/jquery.validationEngine.js" type="text/javascript"></script>
             <script type="text/javascript">
             function Cloturer(rowTable, sid, prod){
-		      var row = document.getElementById('result').rows[rowTable].cells;
-		      var Qt_liv = document.getElementById(sid).value;
-		      var id = document.getElementById(sid).value;
-		      var QTProduct = row[3].innerHTML;
+                var row = document.getElementById('result').rows[rowTable].cells;
+                var Qt_liv = document.getElementById(sid).value;
+                var id = document.getElementById(sid).value;
+                var adr = document.getElementById("ref_adresse_"+sid).value;
+                var hor = document.getElementById("horaire_"+sid).value;
+                var trans = ( document.getElementById("ref_vehiculeIn_"+sid).value.length > 0) ? document.getElementById("ref_vehiculeIn_"+sid).value : document.getElementById("ref_vehiculeEx_"+sid).value;
+		var QTProduct = row[3].innerHTML;
 		      if (Qt_liv > 0) {
 				$.ajax({
 					type: "POST",
 					url: "traitement_commandes.php",
-					data: "action=send&id="+sid+"&qt="+Qt_liv+"&prd="+prod,
+					data: "action=send&id="+sid+"&qt="+Qt_liv+"&prd="+prod+"&ard="+adr+"&h="+hor+"&trans="+trans,
 					success: function(response){
 						rspDecoded = JSON.parse(response);
 						if (rspDecoded.success == 0){
@@ -34,13 +37,15 @@
 							return;
 						}
 						if (rspDecoded.success == 1){
-							document.getElementById(sid).value = rspDecoded.stresp;
+							document.getElementById("lbl_livre_"+sid).innerHTML = rspDecoded.stresp;
+							document.getElementById(sid).value = 0;
 							alert("La commande est mise à jour.");
 							return;
 						}
 						if (rspDecoded.success == 2){
-							row[8].innerHTML = "Cloturé";
-							document.getElementById(sid).value = rspDecoded.stresp;
+							row[11].innerHTML = "Cloturé";
+							document.getElementById("lbl_livre_"+sid).InnerHTML = rspDecoded.stresp;
+							document.getElementById(id).value = 0;
 							alert("La commande à été cloturée.");
 							return;
 						}
@@ -57,7 +62,6 @@
 		      } else {
 				alert("La quantité n'est pas valide");
 		      }
-		      //alert(id + " table :" + rowTable);
 		}
 		function Verifie(rowTable, id, prod) {
 			var row = document.getElementById('result').rows[rowTable].cells;
@@ -85,13 +89,21 @@
 		}
 		</script>
 		<script type="text/javascript">
-			  $().ready(function() {
-				$('#dialog').jqm();
-			  });
+		        $(document).ready(function(){
+                                $(".Cloturer").each(function(){
+                                       var Cloturer = $(this).text();
+                                       var CleanCloturer = $.trim(Cloturer)
+                                       if (CleanCloturer == "Clôturé") {
+                                                $(this).parent().remove();
+        
+                                       }
+                                       
+                                });
+                        });
 		</script>
         </head>
 
-        <body>
+        <body onload="">
             {Header}
             
                   <h3>traitement commandes</h3>
@@ -102,57 +114,74 @@
                               <td>Bon Info</td>
                               <td>Date</td>
                               <td>Clients</td>
+                              <td>Produit</td>
+                              <td>Ref</td>
                               <td>QT commandée</td>
-                              
-                              
                               <td>QT livrée</td>
+                              <td>adresse</td>
                               <td>Transporteur</td>
                               <td>l'Heure départ</td>
-                              <td>Imperimer</td>
-                              <td>Cloturer</td>
+                              <td>Imprimer</td>
+                              <td>clôturer</td>
                         </thead>
                         <!--Beginrow_result-->
                         <tr>
                               <td>{id}</td>
                               <td>{date}</td>
                               <td>{ref_client}</td>
+                              <td>{produit}</td>
+                              <td>{ref_reference}</td>
                               <td>{qt_produit}</td>
-                              
                               
                               <td>
                                     <form name="form{id}" mehod="GET" action="{FileName}">
-                                    <input id="{id}" type="text" size="4" name="qt_liv" value="{qt_liv}" class="validate[required,custom[onlyNumber]] text-input">
+                                    déja livé : <span id="lbl_livre_{id}">{qt_liv}</span>
+                                    <input id="{id}" type="text" size="4" name="qt_liv" value="0" class="validate[required,custom[onlyNumber]] text-input">
                                     <input type="hidden" name="id" id="id" value="{id}" />
                                     <a href="javascript:" Onclick="Verifie({ordrRow}, {id}, {ref_prod})">Verifie</a>
                                     </form>
                               </td>
                               <td>
+                                <select name="ref_adresse" id="ref_adresse_{id}" class="validate[required]">
+                                <option value="">adresse :</option>
+                                <!--Beginselect_adresse-->
+                                <option value="{id_adresse}">{Value_adresse}</option>
+                                <!--Endselect_adresse--></select><br />
+                              </td>
+                              <td>
                               <div class="row vehiculeIn row{id}">
-                              <select name="ref_vehiculeIn" id="ref_vehiculeIn" class="validate[required]">
-                              <option value="">Vehicule Interne</option>
+                              <select name="ref_vehiculeIn" id="ref_vehiculeIn_{id}" class="validate[required]">
+                              <option value="">Externe</option>
                               <!--Beginselect_vehiculeIn-->
                               <option value="{Value_vehiculeIn}" {Selected}>{id_vehiculeIn}</option>
                               <!--Endselect_vehiculeIn--></select><br />
                               </div>
                               
                               <div class="row vehiculeEx row{id}">
-                              <select name="ref_vehiculeEx" id="ref_vehiculeEx" class="validate[required]">
-                              <option value="">Vehicule Externe</option>
+                              <select name="ref_vehiculeEx" id="ref_vehiculeEx_{id}" class="validate[required]">
+                              <option value="">Interne</option>
                               <!--Beginselect_vehiculeEx-->
                               <option value="{Value_vehiculeEx}" {Selected}>{id_vehiculeEx}</option>
                               <!--Endselect_vehiculeEx--></select><br />
                               <div>
                               
                               </td>
-                              <td><input type="text" size="7" value="09:00"></td>
-                              <td><a href="print_commandes.php?id={id}&date={date}&client={ref_client}&qt_produit={qt_produit}&qt_liv={qt_liv}" class="print">print</a> 
+                              <td><input id="horaire_{id}"type="text" size="12" value="09:00"></td>
+                              <td><a href="print_bl.php?id={id}" class="print botton">Imprimer</a> 
                               </td>
-                              <td><!--BeginEstCloturable--><a href="javascript:" Onclick="Cloturer({ordrRow}, {id}, {ref_prod})">Cloturer</a><!--EndEstCloturable--><!--BeginEstNonCloturable-->Cloturé<!--EndEstNonCloturable--></td>
+                              <td class="Cloturer">
+					<!--BeginEstCloturable-->
+					<a href="javascript:" Onclick="Cloturer({ordrRow}, {id}, {ref_prod})" class="botton">cl&ocirc;turer</a>
+					<!--EndEstCloturable-->
+				    <!--BeginEstNonCloturable-->
+				      Cl&ocirc;tur&eacute;
+				    <!--EndEstNonCloturable-->
+			       </td>
                         </tr>
                         <!--Endrow_result-->
                         <!--BeginNorow_result-->
                         <tr>
-                              <td colspan="7">Pas d'enregistrement</td>
+                              <td colspan="12">Pas d'enregistrement</td>
                         </tr>
                         <!--EndNorow_result-->                                    
                   </table>

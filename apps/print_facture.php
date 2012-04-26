@@ -6,34 +6,103 @@
 
       $tpl = new Template($app_path);
       $tpl->load_file($template_filename, "print_facture");
+
       
       $id=get_param("id");
-      $date=get_param("date");
-      $client=get_param("client");
-      $qt_produit=get_param("qt_prod");
-      $qt_liv=get_param("qt_liv");
-      $montant=get_param("montant");
-      $prix_uni=get_param("prix_uni");
-      $tva=get_param("tva");
-      $ttc=get_param("ttc");
-      $libreferences=get_param("refprod");
-      $libproduits=get_param("prod");
+      $send=get_param("send");
       
-      $tpl->set_var("id",$id);
-      $tpl->set_var("date",$date);
-      $tpl->set_var("client",$client);
-      $tpl->set_var("qt_produit",$qt_produit);
-      $tpl->set_var("qt_liv",$qt_liv);
-      $tpl->set_var("montant",$montant);
-      $tpl->set_var("prix_uni",$prix_uni);
-      $tpl->set_var("tva",$tva);
-      $tpl->set_var("ttc",$ttc);
-      $tpl->set_var("libreferences",$libreferences);
-      $tpl->set_var("libproduits",$libproduits);
       
+      $db->query("SELECT * FROM  commandes WHERE id=".tosql($id, "NUMBER"));
+	  $next_record = $db->next_record();
+	  while($next_record){
+		$date=$db->f("date");
+		$client=$db->f("ref_client");
+		$qt_produit=$db->f("qt_produit");
+		$qt_liv=$db->f("qt_liv");
+		$tel=$db->f("telClient");
+		$prix_uni = $db->f("prix_uni");
+		$time=$db->f("time_depart");
+		$adresse=$db->f("adresse_derniere_liv");
+		
+		$db2->query("select qt_operation from operation_produit where ref_commande = " .tosql($db->f("id"), "NUMBER"));
+		$next_record2 = $db2->next_record();
+		$somRslt = 0;
+		while($next_record2){
+			$somRslt += abs($db2->f("qt_operation"));
+			$qt_liv = abs($db2->f("qt_operation"));
+			$next_record2 = $db2->next_record();
+		}
+
+		$client = dlookup("clients", "nom_resp", "id=".tosql($db->f("ref_client"), "NUMBER")); 
+		$ref_vehicule = dlookup("vehicules", "libelle", "id=".tosql($db->f("ref_vehicule"), "NUMBER"));
+		$produits = dlookup("produits", "libelle", "id=".tosql($db->f("ref_produit"), "NUMBER"));
+		$libref = dlookup("produits", "libelle", "id=".tosql($db->f("ref_reference"), "NUMBER"));
+		$raison_social = dlookup("clients", "raison_social", "id=".tosql($db->f("ref_client"), "NUMBER"));
+		$next_record = $db->next_record();
+        }
+        
+        $prix = $qt_produit * $prix_uni;
+        $tpl->set_var("montant",$prix);
+        $tpl->set_var("prix_uni",$prix_uni);
+        $tva = $prix * 20/100;
+        $ttc = $prix + $tva;
+        
+        //var_dump($prix);
+        
+        $tpl->set_var("id",$id);
+        $tpl->set_var("date",$date);
+        $tpl->set_var("client",$raison_social);
+        $tpl->set_var("qt_produit",$qt_produit);
+        $tpl->set_var("qt_liv",$qt_liv);
+        $tpl->set_var("tva",$tva);
+        $tpl->set_var("ttc",$ttc);
+        $tpl->set_var("libreferences",$libref);
+        $tpl->set_var("libproduits",$produits);
+      
+      /*
       echo "<pre>";
       var_dump($_GET);
       echo "</pre>";
+      */
+      
+      if ($send) {
+            $date = date("Y-m-d");
+	      //echo "<h1>tessssssssst : $qt_produit </h1>";
+	      
+	      $num_commande_existe = dlookup("fact_save", "count(*)", "num_commande=".tosql($id, "NUMBER"));
+
+	      if ($num_commande_existe > 0) {
+	            echo "<script>alert('Vous essayer de soldé un bon commande $id qui éxiste déja !!!')</script>";
+	      } else {
+	            $sSQL = "INSERT INTO fact_save (" . 
+                        "clients," .
+                        "produit," .
+                        "reference," . 
+                        "num_commande," .
+                        "date_save,". 
+                        "qt_produit," . 
+                        "prix_uni," . 
+                        "montant," . 
+                        "tva," .
+                        "ttc)" .
+                  " VALUES (" . 
+                        tosql($client, "Text") . "," .
+                        tosql($libproduits, "Text") . "," .
+                        tosql($libreferences, "Text") . "," .
+                        tosql($id, "Number") . "," .
+                        tosql($date, "Text") . "," .
+                        tosql($qt_produit, "Number") . "," .
+                        tosql($prix_uni, "Number") . "," .
+                        tosql($montant, "Number") . "," .
+                        tosql($tva, "Number") . "," .
+                        tosql($ttc, "Number") . 
+                  ")";       	
+                  $db->query($sSQL);
+                  echo '<script>alert("Vous avez soldé le bon numéro : '. $id .'")</script>';
+                  
+	      }
+            
+	}
       
       $tpl->pparse("print_facture", false);   
 

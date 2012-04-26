@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "journal_achats";
       $filename = "journal_achats.php";
@@ -54,19 +54,19 @@
             $tpl->set_var("ActionPage", $sActionFileName);
             $ref_fournisseur = strip(get_param("ref_fournisseur"));
             $tpl->set_var("keyword", tohtml($keyword));
-	
-                  $from = strip(get_param("from"));
-                  $to = strip(get_param("to"));
-                  $tpl->set_var("from", tohtml($from));
-                  $tpl->set_var("to", tohtml($to));
-                  
-                  $sSQL = "SELECT * FROM  achats ";			
-                  if ($from && $to)
-                  $sSQL .= "WHERE date_regelement BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
-                  if ($ref_fournisseur)
-                  $sSQL .= " AND ref_fournisseur=".tosql($ref_fournisseur, "TEXT");
-	                  $db->query($sSQL);
-	                  $next_record = $db->next_record();
+
+			$from = strip(get_param("from"));
+			$to = strip(get_param("to"));
+			$tpl->set_var("from", tohtml($from));
+			$tpl->set_var("to", tohtml($to));
+
+			$sSQL = "SELECT * FROM  achats ";			
+			if ($from && $to)
+			$sSQL .= "WHERE date_regelement BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
+			if ($ref_fournisseur)
+			$sSQL .= " AND ref_fournisseur=".tosql($ref_fournisseur, "TEXT");
+			$db->query($sSQL);
+			$next_record = $db->next_record();
 
             $i = 1;                          
             while($next_record){ 
@@ -79,19 +79,20 @@
              	$mode_reglement = $db->f("mode_reglement");
              	$ref_bank = $db->f("ref_bank");
              	$ref_fournisseur = dlookup("fournisseurs", "nom_resp", "id=".tosql($db->f("ref_fournisseur"), "NUMBER")); 
-             	
+             	$produits = dlookup("produits", "libelle", "id=".tosql($db->f("ref_produit"), "NUMBER")); 
              	$next_record = $db->next_record();
              	
-             	$tpl->set_var("id",$id);
-             	$tpl->set_var("date",$date);
-		                  $tpl->set_var("num_facture_achat",$num_facture_achat);
-		                  $tpl->set_var("date_regelement",$date_regelement);
-		                  $tpl->set_var("ref_fournisseur",$ref_fournisseur);
-		                  $tpl->set_var("montant_achat",$montant_achat);
-		                  $tpl->set_var("etat_reglement",$etat_reglement);
-		                  $tpl->set_var("mode_reglement",$mode_reglement);
-		                  $tpl->set_var("ref_bank",$ref_bank);
-		                  $tpl->set_var("ordrRow",$i);
+                $tpl->set_var("id",$id);
+                $tpl->set_var("date",$date);
+                $tpl->set_var("num_facture_achat",$num_facture_achat);
+                $tpl->set_var("date_regelement",$date_regelement);
+                $tpl->set_var("ref_fournisseur",$ref_fournisseur);
+                $tpl->set_var("montant_achat",$montant_achat);
+                $tpl->set_var("etat_reglement",$etat_reglement);
+                $tpl->set_var("mode_reglement",$mode_reglement);
+                $tpl->set_var("ref_bank",$ref_bank);
+                $tpl->set_var("produits",$produits);
+                $tpl->set_var("ordrRow",$i);
 
 	            $tpl->parse("row_result", true);
 	            $i++;

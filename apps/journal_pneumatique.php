@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "journal_pneumatique";
       $filename = "journal_pneumatique.php";
@@ -65,17 +65,17 @@
              	
              	$next_record = $db->next_record();
              	
-                         	$tpl->set_var("id",$id);
-                         	$tpl->set_var("date",$date);
-					$tpl->set_var("num_bon",$num_bon);
-					$tpl->set_var("km_depart",$km_depart);
-					$tpl->set_var("km_arrive",$km_arrive);
-					$tpl->set_var("parcours",$parcours);
-					$tpl->set_var("marque_pneu",$marque_pneu);
-					$tpl->set_var("nbr_pneu",$nbr_pneu);
-					$tpl->set_var("observation",$observation);
-					$tpl->set_var("ref_vehicule",$libVehicule);
-					$tpl->set_var("ordrRow",$i);
+         	$tpl->set_var("id",$id);
+         	$tpl->set_var("date",$date);
+		$tpl->set_var("num_bon",$num_bon);
+		$tpl->set_var("km_depart",$km_depart);
+		$tpl->set_var("km_arrive",$km_arrive);
+		$tpl->set_var("parcours",$parcours);
+		$tpl->set_var("marque_pneu",$marque_pneu);
+		$tpl->set_var("nbr_pneu",$nbr_pneu);
+		$tpl->set_var("observation",$observation);
+		$tpl->set_var("ref_vehicule",$libVehicule);
+		$tpl->set_var("ordrRow",$i);
         
             	$tpl->parse("row_result", true);
             	$i++;

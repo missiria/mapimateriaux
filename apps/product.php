@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "product";
       $filename = "product.php";
@@ -16,30 +16,38 @@
       $tpl->set_var("FileName", $filename);
 
       $produit = get_param("produit");
-      $caracteristique = get_param("caracteristique");
-      $ref_product = get_param("ref_product");
+      $ref = get_param("ref");
       $id = get_param("id");
+      $fldcarac_prod = get_param("carac_prod");
+      $fldref_parent = get_param("ref_parent");
+      $fldtype_produit = get_param("type_produit");
       
-      if ($produit && $caracteristique && $ref_product && !$id) {
+      if ($produit && $ref && !$id & $_POST) {
             $sSQL = "INSERT INTO produits (" . 
                   "libelle," . 
-                  "caracteristique," .
-                  "ref_product)" .
+                  "caracteristique," . 
+                  "ref," . 
+                  "ref_parent," . 
+                  "type_produit)" .
             " VALUES (" . 
                   tosql($produit, "Text") . "," .
-                  tosql($caracteristique, "Text") . "," .
-                  tosql($ref_product, "Text") . 
+                  tosql($fldcarac_prod, "Text") . "," .
+                  tosql($ref, "Text") . "," .
+                  tosql($fldref_parent, "Number") . "," .
+                  tosql($fldtype_produit, "Number") . 
             ")";       	
           		$db->query($sSQL);
           		echo '<script>alert("Vous avez saisie le bon numéro : '. $produit .'")</script>';
           		
-          } else if ($id) {          	    	
+          } else if ($id && $_POST) {          	    	
           		$sSQL = "UPDATE produits SET "; 
             	$sSQL .= "libelle = " . tosql($produit, "Text");
-            	$sSQL .= ", caracteristique = " . tosql($caracteristique, "Text");
-            	$sSQL .= ", ref_product = " . tosql($ref_product, "Text");
+            	$sSQL .= ",caracteristique = " . tosql($fldcarac_prod, "Text");
+            	$sSQL .= ",ref_parent = " . tosql($fldref_parent, "Number");
+            	$sSQL .= ",type_produit = " . tosql($fldtype_produit, "Number");
+            	$sSQL .= ", ref = " . tosql($ref, "Text");
             	$sSQL .= " where id=" .tosql($id, "Number") ."";        	
-          		$db->query($sSQL);
+				$db->query($sSQL);
           		echo '<script>alert("Vous avez mis à le bon numéro")</script>';
           	}
         search();
@@ -54,7 +62,11 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
                    	
-		$sSQL = "SELECT * FROM produits ";			
+		$sSQL = "SELECT * 
+				FROM produits 
+				ORDER 
+				BY libelle 
+				ASC ";			
 		             	
 		$db->query($sSQL);
 		$next_record = $db->next_record();
@@ -66,16 +78,20 @@
             	$id = $db->f("id");
              	
              	$libelle = $db->f("libelle");
-             	$caracteristique = $db->f("caracteristique");
-             	$ref_product = $db->f("ref_product"); 
+             	$ref = $db->f("ref"); 
+             	$carac = $db->f("caracteristique"); 
+             	$parent = $db->f("ref_parent"); 
+             	$type = $db->f("type_produit"); 
              	
              	$next_record = $db->next_record();
              	
              	$tpl->set_var("id",$id);
 			
 			$tpl->set_var("libelle",$libelle);
-			$tpl->set_var("caracteristique",$caracteristique);
-			$tpl->set_var("ref_product",$ref_product);
+			$tpl->set_var("ref",$ref);
+			$tpl->set_var("carac",$carac);
+			$tpl->set_var("ref_parent",$parent);
+			$tpl->set_var("type_produit",$type);
 			
 			$tpl->set_var("produits",$produits);
 			
@@ -102,5 +118,18 @@
 	            header("location: product.php");
 	      }			
       }
+ 
+	  $lookup_produits = db_fill_array("SELECT id, libelle FROM produits");
+	  
+      if(is_array($lookup_produits)) {
+      reset($lookup_produits);
+            while(list($value, $key) = each($lookup_produits)) {
+              $tpl->set_var("Value_prod", $key);
+              $tpl->set_var("id_prod", $value);
+              $tpl->parse("select_produit", true);
+            }
+      }
+	  
+      $tpl->parse("BlockForm", false);
       $tpl->pparse("product", false);
 ?>

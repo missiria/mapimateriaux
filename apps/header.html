@@ -1,19 +1,33 @@
   <div id="wrapper">
       <div id="header">
         <h1>MAPI MATERIAUX</h1>
-
+         <a class="logout botton" href="login.php?FormAction=Logout" title="déconnecté">Déconnecté</a>
         <div id="menu">
                 <ul>
-                        <li><a href="commandes.php">Commandes</a></li>
-                        <li><a href="traitement_commandes.php">Livraison</a></li>	
+                        <li><a href="commandes.php">Commandes</a>
+							<ul>
+								<li><a href="journal_commandes.php">Journal</a></li>
+							</ul>
+							
+						</li>
+                        <li><a href="traitement_commandes.php">Livraison</a>
+							<ul>
+								<li><a href="journal_lb.php">Journal</a></li>
+							        <li><a href="journal_lb_voyage.php">Journal par voyage</a></li>
+							</ul>
+						</li>	
                         <li><a href="facture.php">Facturation</a></li>	
                         <li><a href="achats.php">Achats</a>
-                              <ul>
-                                      <li><a href="journal_achats.php">Journal</a></li>
-                              </ul>
+							<ul>
+								<li><a href="journal_achats.php">Journal</a></li>
+							</ul>
                         </li>
-                        <li><a href="stock.php" >Stock</a></li>		
-                        <li><a href="productivite.php">Productivité</a></li>	
+                        <li><a href="stock.php" >Stock</a></li>	
+                        <li><a href="productivite.php">Productivité</a>
+                        	<ul>
+										<li><a href="journal_productivite.php">Journal Productivité</a></li>
+									</ul>
+                        </li>	
                         <li><a href="transport.php">Transport</a>
                               <ul>
                                       <li><a href="gestion_gasoil.php">Gestion gasoil</a></li>
@@ -35,7 +49,9 @@
                                       <li><a href="fournisseurs.php">fournisseurs</a></li>
                               </ul>
                         </li>
+                        <div class="clear"></div>
                 </ul>
+               
         </div>
        </div>
 

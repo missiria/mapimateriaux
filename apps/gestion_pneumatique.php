@@ -1,4 +1,4 @@
- <?php
+<?php
       include ("header.php");
       $pWindow = "gestion_pneumatique";
       $filename = "gestion_pneumatique.php";
@@ -103,7 +103,7 @@
             $keyword = strip(get_param("keyword"));
             $tpl->set_var("keyword", tohtml($keyword));
 				
-				$sSQL = "SELECT * FROM suivie_pneumatique GROUP BY date";			
+				$sSQL = "SELECT * FROM suivie_pneumatique ";			
 				if (strlen(trim($keyword)) > 0)
 					$sSQL .= "WHERE num_bon LIKE '$keyword%'";
 				
