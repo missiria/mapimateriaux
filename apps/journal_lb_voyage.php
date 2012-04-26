@@ -29,18 +29,7 @@
 	$tpl->set_var("from", tohtml($from));
 	$tpl->set_var("to", tohtml($to));
 				
-	$sSQL = "SELECT 
-	        operation_produit.id as bon_info, 
-	        operation_produit.date_operation as date, 
-	        clients.raison_social as client, 
-	        produits.libelle as produit, 
-	        operation_produit.qt_operation as qt_liv, 
-	        commandes.adresse_derniere_liv as adresse, 
-	        commandes.ref_vehicule as transporteur, 
-	        commandes.qt_produit as  qt_commande, 
-	        commandes.time_depart as heure_depart, 
-	        pparent.libelle as reference ";
-	        
+	$sSQL = "SELECT commandes.id as bon_info, operation_produit.date_operation as date, clients.raison_social as client, produits.libelle as produit, operation_produit.qt_operation as qt_liv, commandes.adresse_derniere_liv as adresse, commandes.ref_vehicule as transporteur, commandes.qt_produit as  qt_commande, commandes.time_depart as heure_depart, pparent.libelle as reference ";
 	$sSQL .= "FROM operation_produit ";
 	$sSQL .= "LEFT JOIN commandes ON operation_produit.ref_commande = commandes.id ";
 	$sSQL .= "INNER JOIN produits ON commandes.ref_produit = produits.id ";
@@ -52,8 +41,8 @@
 	if ($keyword)
 	$sSQL .= " AND commandes.ref_client=".tosql($keyword, "TEXT");
 	
-	$sSQL .= " order by operation_produit.date_operation";
 		
+	$sSQL .= " order by operation_produit.date_operation";
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 
