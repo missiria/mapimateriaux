@@ -171,12 +171,12 @@
                               <td><a href="print_bl.php?id={id}" class="print botton">Imprimer</a> 
                               </td>
                               <td class="Cloturer">
-
+                                <!--BeginEstPasEncore-->
                                         <a href="?action=facturation&facturation={id}" class="botton">Facturé</a>
-
-
+                                <!--EndEstPasEncore-->
+                                <!--BeginEstFacte-->
                                         Facturé
-
+                                <!--EndEstFacte-->
 			       </td>
 			       <td class="Cloturer">
 					<!--BeginEstCloturable-->

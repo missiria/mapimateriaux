@@ -18,7 +18,10 @@
       global $db;
       global $tpl;
       global $sForm;
-      $sSQL = "SELECT * FROM commandes WHERE facturation=1";			
+      $sSQL = "SELECT * 
+                FROM commandes 
+                WHERE facturation=1 
+                AND facutShow=1";			
       $db->query($sSQL);
       $next_record = $db->next_record();
 

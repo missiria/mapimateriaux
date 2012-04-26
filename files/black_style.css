@@ -1,0 +1,12 @@
+/* CODING BY Younes MISSIRIA */
+.botton {padding:5px 10px;border:1px solid #ccc;margin:5px;background-color:#ddd;color:#333;text-decoration:none;display: block;}
+.botton:hover {text-decoration:underline;background-color:#87AE53;color:#fff;}
+table {font-family: Century Gothic!important;font-size: 18px!important;border-collapse: collapse;width:90%;}
+td {border:1px solid #666;padding:5px;}
+#wrapper-print {
+      width: 1094px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 10px;
+      position:relative;
+}
