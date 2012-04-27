@@ -26,6 +26,7 @@
                                                 <td>Numéro de bon de commande</td>
                                                 <td>Client</td>
                                                 <td>QT produit</td>
+                                                <td>QT Livré</td>
                                                 <td>Prix Unitaire</td>
                                                 <td>Montant</td>
                                           </thead>
@@ -51,7 +52,7 @@
                                     </table>
                                     <div id="outils">
                                     <a href="javascript:" class="print right botton" onClick="window.print()">Imperimer</a>
-                                    <a href="?send={id}&prod={libproduits}&refprod={libreferences}&id={id}&qt_prod={qt_produit}&prix_uni={prix_uni}&montant={montant}&tva={tva}&ttc={ttc}&client={client}" class="right botton" onClick="send({id})">Soldé</a>
+                                    <a href="?id={id}&send={id}" class="right botton" onClick="send({id})">Soldé</a>
                                     <a href="facture.php" class="right botton">Retour</a>
                                     </div>
                                                                    

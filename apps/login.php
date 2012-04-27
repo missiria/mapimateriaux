@@ -30,7 +30,9 @@
         $tpl->set_var("FileName", $filename);
         Login_show();
         $tpl->pparse("main", false);
-
+        
+        /*$md5 = "missiria";
+        echo md5($md5);*/
 
 function Login_action($sAction) {
         global $db;

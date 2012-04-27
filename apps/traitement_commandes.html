@@ -89,7 +89,7 @@
 		}
 		</script>
 		<script type="text/javascript">
-		        $(document).ready(function(){
+		        /*$(document).ready(function(){
                                 $(".Cloturer").each(function(){
                                        var Cloturer = $(this).text();
                                        var CleanCloturer = $.trim(Cloturer)
@@ -99,7 +99,7 @@
                                        }
                                        
                                 });
-                        });
+                        });*/
 		</script>
         </head>
 
@@ -167,15 +167,12 @@
                               <div>
                               
                               </td>
-                              <td><input id="horaire_{id}"type="text" size="12" value="09:00"></td>
+                              <td><input id="horaire_{id}"type="text" size="3" value="09:00"></td>
                               <td><a href="print_bl.php?id={id}" class="print botton">Imprimer</a> 
                               </td>
                               <td class="Cloturer">
 
-                                        <a href="?action=facturation&facturation={id}" class="botton">Facturé</a>
-
-
-                                        Facturé
+                                  <a href="?action=facturation&facturation={id}" class="botton">Facturé</a>
 
 			       </td>
 			       <td class="Cloturer">

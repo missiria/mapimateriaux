@@ -58,7 +58,7 @@
                 $tpl->set_var("print","print");
                 $tpl->parse("_Black", false);
                 $tpl->set_var("_Black","");
-               $tpl->set_var("style","bo_style");
+                $tpl->set_var("style","bo_style");
         }
       /*
       echo "<pre>";

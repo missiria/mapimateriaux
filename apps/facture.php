@@ -20,8 +20,7 @@
       global $sForm;
       $sSQL = "SELECT * 
                 FROM commandes 
-                WHERE facturation=1 
-                AND facutShow=1";			
+                WHERE facturation=1";			
       $db->query($sSQL);
       $next_record = $db->next_record();
 
@@ -31,6 +30,7 @@
       	//WE DISPLAY THE RESULTS
        	$id = $db->f("id");
        	$date = $db->f("date"); 
+       	$qt_liv = $db->f("qt_liv");        	
         $ref_client = $db->f("ref_client");
        	$qt_produit = $db->f("qt_produit");
        	$ref_produit = $db->f("ref_produit");
@@ -38,16 +38,31 @@
        	
        	$qt_liv = get_param("qt_liv");
        	
+       	$db2->query("SELECT qt_operation 
+       	             FROM operation_produit 
+       	             WHERE ref_commande = " .tosql($db->f("id"), "NUMBER"));
+	        $next_record2 = $db2->next_record();
+	        $somRslt = 0;
+	        while($next_record2){
+		        $somRslt += abs($db2->f("qt_operation"));
+		        $qt_liv = abs($db2->f("qt_operation"));
+		        $next_record2 = $db2->next_record();
+	        }
+       	
        	$libclients = dlookup("clients", "nom_resp", "id=".tosql($db->f("ref_client"), "NUMBER")); 
        	$libproduits = dlookup("produits", "libelle", "id=".tosql($db->f("ref_produit"), "NUMBER")); 
-       	$libreferences = dlookup("produits", "ref", "id=".tosql($db->f("ref_produit"), "NUMBER")); 
+       	$libreferences = dlookup("produits", "libelle", "id=".tosql($db->f("ref_reference"), "NUMBER")); 
        	
        	$next_record = $db->next_record();
        	$tpl->set_var("id",$id);
        	$tpl->set_var("date",$date);
+       	$tpl->set_var("qt_liv",$qt_liv);
 	$tpl->set_var("ref_client",$libclients);
 	
-	$tpl->set_var("qt_liv",$qt_liv);
+	echo "id = $id total $somRslt <br>";
+	
+	$qt_RestGlob = $qt_produit - $somRslt;
+	$tpl->set_var("qt_produit",$qt_produit);
 	
 	// WE CALCUL THE TOTAL
 	$prix = $qt_produit * $prix_uni;
@@ -60,7 +75,6 @@
 	$tpl->set_var("tva",$tva);
 	$tpl->set_var("ttc",$ttc);
 	
-	$tpl->set_var("qt_produit",$qt_produit);
 	$tpl->set_var("libproduits",$libproduits);
 	$tpl->set_var("libreferences",$libreferences);
 	$tpl->set_var("consommation",$consommation);

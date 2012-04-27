@@ -23,18 +23,6 @@
                   $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
             });
             </script>
-            <script type="text/javascript">
-                $(document).ready(function(){
-                        $(".ref_client").each(function(){
-                        var client = $(this).text();
-                                if (client == "standard") {
-                                        $(this).parent().remove();
-
-                                }
-                       
-                        });
-                });
-            </script>
         </head>
 
         <body>
@@ -49,8 +37,9 @@
                               <td>Date</td>
                               <td>Clients</td>
                               <td>produit</td>
-                              <td>QT produit</td>
                               <td>References</td>
+                              <td>QT produit</td>
+                              <td>QT livré</td>
                               <td>Montant HT</td>
                               <td>Visualiser</td>
                         </thead>
@@ -58,10 +47,11 @@
                         <tr>
                               <td>{id}</td>
                               <td>{date}</td>
-                              <td class="ref_client">{ref_client}</td>
+                              <td>{ref_client}</td>
                               <td>{libproduits}</td>
                               <td>{libreferences}</td>
                               <td>{qt_produit}</td>
+                              <td>{qt_liv}</td>
                               
                               <td>{montant} DH</td>
                               <td><a href="print_facture.php?id={id}" class="print botton">Visualiser</a> 

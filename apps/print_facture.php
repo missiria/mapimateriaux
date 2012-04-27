@@ -19,12 +19,15 @@
 		$client=$db->f("ref_client");
 		$qt_produit=$db->f("qt_produit");
 		$qt_liv=$db->f("qt_liv");
+		$qt_liv=$db->f("qt_liv");
 		$tel=$db->f("telClient");
 		$prix_uni = $db->f("prix_uni");
 		$time=$db->f("time_depart");
 		$adresse=$db->f("adresse_derniere_liv");
 		
-		$db2->query("select qt_operation from operation_produit where ref_commande = " .tosql($db->f("id"), "NUMBER"));
+		$db2->query("SELECT qt_operation 
+		             FROM operation_produit 
+		             WHERE ref_commande = " .tosql($db->f("id"), "NUMBER"));
 		$next_record2 = $db2->next_record();
 		$somRslt = 0;
 		while($next_record2){
@@ -47,27 +50,25 @@
         $tva = $prix * 20/100;
         $ttc = $prix + $tva;
         
-        //var_dump($prix);
+        //var_dump($id);
         
         $tpl->set_var("id",$id);
         $tpl->set_var("date",$date);
         $tpl->set_var("client",$raison_social);
         $tpl->set_var("qt_produit",$qt_produit);
         $tpl->set_var("qt_liv",$qt_liv);
+        $tpl->set_var("qt_liv",$qt_liv);
         $tpl->set_var("tva",$tva);
         $tpl->set_var("ttc",$ttc);
         $tpl->set_var("libreferences",$libref);
         $tpl->set_var("libproduits",$produits);
       
-      /*
-      echo "<pre>";
-      var_dump($_GET);
-      echo "</pre>";
-      */
-      
       if ($send) {
-            $date = date("Y-m-d");
-	      //echo "<h1>tessssssssst : $qt_produit </h1>";
+        global $db;
+        
+        $date = date("Y-m-d");
+        
+        //echo "<h1>tessssssssst : $libref </h1>";
 	      
 	      $num_commande_existe = dlookup("fact_save", "count(*)", "num_commande=".tosql($id, "NUMBER"));
 
@@ -81,19 +82,21 @@
                         "num_commande," .
                         "date_save,". 
                         "qt_produit," . 
+                        "qt_liv," .
                         "prix_uni," . 
                         "montant," . 
                         "tva," .
                         "ttc)" .
                   " VALUES (" . 
-                        tosql($client, "Text") . "," .
-                        tosql($libproduits, "Text") . "," .
-                        tosql($libreferences, "Text") . "," .
+                        tosql($raison_social, "Text") . "," .
+                        tosql($produits, "Text") . "," .
+                        tosql($libref, "Text") . "," .
                         tosql($id, "Number") . "," .
                         tosql($date, "Text") . "," .
                         tosql($qt_produit, "Number") . "," .
+                        tosql($qt_liv, "Number") . "," .
                         tosql($prix_uni, "Number") . "," .
-                        tosql($montant, "Number") . "," .
+                        tosql($prix, "Number") . "," .
                         tosql($tva, "Number") . "," .
                         tosql($ttc, "Number") . 
                   ")";       	
