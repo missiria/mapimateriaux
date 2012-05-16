@@ -42,7 +42,7 @@
 	$sSQL .= " AND commandes.ref_client=".tosql($keyword, "TEXT");
 	
 		
-	$sSQL .= " order by operation_produit.date_operation";
+	$sSQL .= " order by operation_produit.date_operation LIMIT 0 , 30";
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 

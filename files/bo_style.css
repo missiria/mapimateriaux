@@ -70,7 +70,7 @@ body {
       background-color:#f9f9f9;
 }
 #wrapper {
-      width: 1024px;
+      min-width: 1024px;
       margin: 0 auto;
       background-color: white;
       padding: 10px;
@@ -90,18 +90,18 @@ ul {
       list-style:none;
 }
 
-/*
-        TEEEEEEEEEEEEST PRINT
+/*/////////////////////
+/////// ZONE PRINT ///
+/////////////////////  
 */
 
 
 #wrapper-print {
-      width: 1094px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 10px;
-
-      position:relative;
+	width: 1094px;
+	margin: 0 auto;
+	background-color: white;
+	padding: 10px;
+	position:relative;
 }
 
 .print_date {width:120px;}
@@ -112,10 +112,12 @@ ul {
 .print_time_depart {width:120px;}
 .print_qt_reste {width:120px;}
 
+.prix_uni, .montant {display:none;}
 
 
-/*
-        TEEEEEEEEEEEEST PRINT
+/*/////////////////////
+/////// ZONE PRINT ///
+/////////////////////  
 */
 
 .hide {display:none;}
@@ -271,4 +273,6 @@ form label {
 .Cloturer {
 	color: green ;
 }
-
+.observation {
+	display: none;	
+}

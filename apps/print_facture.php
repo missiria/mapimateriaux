@@ -11,14 +11,12 @@
       $id=get_param("id");
       $send=get_param("send");
       
-      
       $db->query("SELECT * FROM  commandes WHERE id=".tosql($id, "NUMBER"));
 	  $next_record = $db->next_record();
 	  while($next_record){
 		$date=$db->f("date");
 		$client=$db->f("ref_client");
 		$qt_produit=$db->f("qt_produit");
-		$qt_liv=$db->f("qt_liv");
 		$qt_liv=$db->f("qt_liv");
 		$tel=$db->f("telClient");
 		$prix_uni = $db->f("prix_uni");
@@ -44,19 +42,19 @@
 		$next_record = $db->next_record();
         }
         
-        $prix = $qt_produit * $prix_uni;
+        $prix = $qt_liv * $prix_uni;
         $tpl->set_var("montant",$prix);
         $tpl->set_var("prix_uni",$prix_uni);
         $tva = $prix * 20/100;
         $ttc = $prix + $tva;
         
-        //var_dump($id);
+        //var_dump($_GET);
         
+		$qt_liv = $_GET["qt_liv"];
+		
         $tpl->set_var("id",$id);
         $tpl->set_var("date",$date);
         $tpl->set_var("client",$raison_social);
-        $tpl->set_var("qt_produit",$qt_produit);
-        $tpl->set_var("qt_liv",$qt_liv);
         $tpl->set_var("qt_liv",$qt_liv);
         $tpl->set_var("tva",$tva);
         $tpl->set_var("ttc",$ttc);

@@ -46,7 +46,7 @@
       $tpl->set_var("ActionPage", $sActionFileName);
       $id = $_GET["id"];
 
-	$sSQL = "SELECT * FROM commandes";
+	$sSQL = "SELECT * FROM commandes where etat_commande = 0";
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 
@@ -63,7 +63,6 @@
        	$qt_liv = $db->f("qt_liv");
        	$ref_prod = $db->f("ref_produit");
        	$ref_prod_ref = $db->f("ref_reference");
-       	$facutShow = $db->f("facutShow");
 
 		$db2->query("SELECT adresse, adresse2, adresse3, adresse4, adresse5 FROM  clients WHERE id=".tosql($db->f("ref_client"), "NUMBER"));
 		$next_record2 = $db2->next_record();
@@ -199,12 +198,9 @@
 		echo '{"success" : -1, "stresp" : '. $qt_liv_new .'}';
 		exit;
 	}
+
+        function save() {
         
-        function facturation() {
-                global $db;
-                $id = $_GET['facturation'];
-                //echo "<h1>test younes : $id</h1>";
-                
         }
         
         // ALL CHOOSE OF THE COSTUMER !
@@ -215,8 +211,8 @@
 		case "verif":
 			verifie();
 			break;
-	        case "facturation":
-			facturation();
+	        case "save":
+			save();
 			break;
 	}
         $tpl->pparse("traitement_commandes", false);

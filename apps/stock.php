@@ -27,7 +27,7 @@
 	$sSQL = "SELECT produits.libelle AS lib, produits.id AS idProd, SUM( qt_operation ) AS total";
 	$sSQL .= " FROM operation_produit";
 	$sSQL .= " INNER JOIN produits ON operation_produit.`ref_produit` = produits.id";
-	$sSQL .= " GROUP BY produits.libelle, produits.id";
+	$sSQL .= " GROUP BY produits.type_produit, produits.id";
 
 	$db->query($sSQL);
 	$next_record = $db->next_record();

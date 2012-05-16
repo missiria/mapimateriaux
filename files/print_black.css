@@ -2,6 +2,11 @@ table {font-family: Century Gothic!important;font-size: 18px!important;border-co
 td {width:auto!important;}
 #wrapper-print {width:960px;margin:0 auto;}
 #id:before {content: "Bon info : ";}
-#titre:after {content: " : MAPI-MATERIAUX";}
 .botton {display:none;}
 td {border:1px solid #666;padding:5px;}
+.page .result tbody tr td {font-size: 25px;}
+.height {height:400px;}
+.ref_reference {
+	  margin-bottom: 100px;
+    margin-top: -100px;
+}

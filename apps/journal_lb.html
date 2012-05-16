@@ -62,7 +62,8 @@
                               <td>QT livrée</td>
                               <td>adresse</td>
                               <td>Transporteur</td>
-                              <td>l'Heure départ</td>
+                              <td>Prix Unitaire</td>
+                              <td>Montant</td>
                               <td>Phone</td>
                               <td>etat</td>
                               <td>facturation</td>
@@ -78,12 +79,21 @@
 							<td>{qt_liv}</td>
 							<td>{adresseClient}</td>
 							<td>{ref_vehicule}</td>
-							<td>{time_depart}</td>
+							<td>{prix_uni}</td>
+							<td>{montant}</td>
 							<td>{telClient}</td>
 							<td>{cloturer}</td>
 							<td>{facturation}</td>
                         </tr>
                         <!--Endrow_result-->
+						
+						<tr>
+                              <td colspan="10"></td>
+                              <td>{sum_montant}</td>
+                              <td>{tl_casse}</td>
+                              <td>{tl_reel}</td>
+                        </tr>
+						
                         <!--BeginNorow_result-->
                         <tr>
                               <td colspan="12">Pas d'enregistrement</td>

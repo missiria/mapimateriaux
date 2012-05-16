@@ -18,10 +18,10 @@ $treeThemeXML = "<?xml version='1.0' encoding='iso-8859-1'?><tree id='0'>";
 
 include("db_mysql.php");
 
-define("DATABASE_NAME","pro_mapi");
-define("DATABASE_USER","root");
-define("DATABASE_PASSWORD","321");
-define("DATABASE_HOST","localhost");
+define("DATABASE_NAME","mapi");
+define("DATABASE_USER","mapi");
+define("DATABASE_PASSWORD","med1982aga");
+define("DATABASE_HOST","mysql1095.servage.net");
 
 $rootFR = 1;
 $rootAR = 2;

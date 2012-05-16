@@ -46,6 +46,7 @@
 	$qt_produit = get_param("qt_produit");
 	$prix_uni = get_param("prix_uni");
 	$facturation = get_param("facturation");
+	$observation = get_param("observation");
 	$id = $_POST["id"];
 	
 	//var_dump($_POST);
@@ -58,7 +59,8 @@
 			"ref_produit," . 
 			"ref_reference," . 
 			"qt_produit," . 
-			"facturation," . 
+			"facturation," .
+			 "observation," .
 			"prix_uni)" .
 		" VALUES (" . 
 			tosql($date, "Text") . "," .
@@ -67,19 +69,19 @@
 			tosql($ref_reference, "Number") . "," .
 			tosql($qt_produit, "Number") . "," .
 			tosql($facturation, "Number") . "," .
+			tosql($observation, "Text") . "," .
 			tosql($prix_uni, "text") . 
 		")";          	
 		$db->query($sSQL);
 		echo '<script>alert("Vous avez saisie : '. $qt_produit .'")</script>';
 		header("location: traitement_commandes.php");
-	} else if ($date && $ref_client && $ref_produit && $qt_produit && $prix_uni && $facturation && $id)  {
+	} else if ($id)  {
 			$sSQL = "UPDATE commandes SET "; 
 			$sSQL .="date =" . tosql($date, "Text");
-			$sSQL .=",ref_client =" . tosql($ref_client, "Number");
-			$sSQL .=",ref_produit =" . tosql($ref_produit, "Number");
-			$sSQL .= ",qt_produit =". tosql($km_depart, "Number");
-			$sSQL .= ",facturation =". tosql($facturation, "Number");
-			$sSQL .= ",prix_uni =". tosql($prix_uni, "text");
+			$sSQL .=",qt_produit =" . tosql($qt_produit, "Text");
+			$sSQL .=",ref_client =" . tosql($ref_client, "Text");
+			$sSQL .=",ref_produit =" . tosql($ref_produit, "Text");
+			$sSQL .=",prix_uni =" . tosql($prix_uni, "Text");
 			$sSQL .= " where id=" .tosql($id, "Number") ."";        	
 	$db->query($sSQL);
 	echo '<script>alert("Vous avez mis à le bon numéro : '. $id .'")</script>';
@@ -136,8 +138,8 @@
 	$i++;
 	}
 	if ($i == 1){
-			$tpl->parse("Norow_result",false);
-			$tpl->set_var("row_result","");
+		$tpl->parse("Norow_result",false);
+		$tpl->set_var("row_result","");
 	} else {
 	$tpl->set_var("Norow_result","");
 	}

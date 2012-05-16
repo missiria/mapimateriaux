@@ -1,0 +1,46 @@
+body {
+	background: white;
+	font-size: 18px;
+}
+table {
+	border-collapse: collapse;
+	width:100%;
+	font-size: 18px!important;
+}
+td {
+	padding:7px;
+	text-align:center;
+}
+.botton,thead {
+	display:none;
+}
+.page {
+        position:relative
+}
+.page2 {
+        position: relative;
+        top: 475px;
+}
+#bonCommande  table,
+#bonCommande  tr,
+#bonCommande  td {border:none!important;}
+#bonCommande  {
+	margin:100px 0 0;
+	position:relative;
+}
+#bonCommande  .id {
+	position:absolute;
+	right: 205px;
+	top: -200px;
+	font-size: 32px;
+}
+#bonCommande table.result {
+	margin:200px 0 0 0;
+}
+
+.print_date {width:120px;}
+.print_client {width:90px;}
+.print_ref {width:80px;}
+.print_qt_produit {width:80px;}
+.print_prix_uni {width:70px;text-align:left;}
+.print_etat {width:100px;text-align:left;}

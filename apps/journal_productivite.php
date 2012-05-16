@@ -84,7 +84,7 @@
                 $next_record = $db->next_record();
 
                 $tpl->set_var("date_operation",$date_operation);
-                $tpl->set_var("machine",$machine);
+
                 $tpl->set_var("ml_beton",$ml_beton);
                 $tpl->set_var("ml_sable1",$ml_sable1);
                 $tpl->set_var("ml_sable2",$ml_sable2);
@@ -93,6 +93,13 @@
                 $tpl->set_var("produit_total",$produit_total);
                 $tpl->set_var("produit_casse",$produit_casse);
                 $tpl->set_var("produit_reel",$produit_reel);
+
+		if ($machine == "A") {
+		    $tpl->set_var("machine","VP100"); 	    
+		} else if ($machine == "B") {
+		   $tpl->set_var("machine","PROFIT");      
+		}
+                
 				
 				$somme_total_prod += $produit_total;       
 				$somme_total_casse += $produit_casse;       

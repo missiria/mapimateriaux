@@ -22,7 +22,9 @@
         $tpl->set_var("date", $date);
         $date = get_param("date");
 
-		$sSQL = "SELECT produits.libelle as lib, produits.id as idProd, SUM( qt_operation ) as total";
+		$sSQL = "SELECT produits.libelle as lib, 
+		         produits.id as idProd, 
+		         SUM( qt_operation ) as total";
 		$sSQL .= " FROM operation_produit";
 		$sSQL .= " INNER JOIN produits ON operation_produit.`ref_produit` = produits.id";
 		$sSQL .= " WHERE produits.type_produit =1";
@@ -80,41 +82,9 @@
 			$tpl->parse("BlockNoProduitPrimaire", false);
 			$tpl->parse("BlockNoProduitPrimaireForm", false);
 		}
-       // $total_beton = db_fill_array("SELECT sum(beton) AS sommeBeton FROM  stock");
-      
-      // if(is_array($total_beton)) {
-      // reset($total_beton);
-            // while(list($value, $key) = each($total_beton)) {
-                  // $total_beton = $value;
-            // }
-      // }
-      
-      // $total_sable1 = db_fill_array("SELECT sum(sable_1) AS sommeBeton FROM  stock");
-      
-      // if(is_array($total_sable1)) {
-      // reset($total_sable1);
-            // while(list($value, $key) = each($total_sable1)) {
-                  // $total_sable1 = $value;
-            // }
-      // }
-      
-      // $total_sable2 = db_fill_array("SELECT sum(sable_2) AS sommeBeton FROM  stock");
-      
-      // if(is_array($total_sable2)) {
-      // reset($total_sable2);
-            // while(list($value, $key) = each($total_sable2)) {
-                  // $total_sable2 = $value;
-            // }
-      // }
-      
-        //////////////////////////////
-        // WE CALCUL THE REMAINDER///
-        ////////////////////////////
-      // $total_beton_pro = ($total_beton - $ml_beton) + $restTtotal_beton;
+
       $total_beton_pro = ($total_beton - $result[0]) + $restTtotal_beton;
       $tpl->set_var("total_beton", $total_beton_pro);
-      
-      //echo "<h1>tesssssst : $ml_beton</h1>";
       
       $total_sable1_pro = ($total_sable1 - $result[1]) + $restTtotal_sable1;
       $tpl->set_var("total_sable1", $total_sable1_pro);
@@ -136,100 +106,121 @@
             }
       }
       
-      var_dump($_POST);
+      //var_dump($_POST);
       
 	  for($i = 0; $i < count($arrProdPrim) ; $i++){
 		$reste_mat[] = $result[$i] - $arrProdPrim[$i];
 	  }
 
-      if ($date && count($arrProdPrim) && $ref_produit &&  $machine &&$produit_total && $produit_casse && $produit_reel && count($reste_mat) && !$id) 
-      { 	          	
+    if ($date && count($arrProdPrim) && $ref_produit &&  $machine &&$produit_total && $produit_casse && $produit_reel && count($reste_mat) && !$id){ 	          	
 		$sSQL = "INSERT INTO productivite (" . 
-                        "date_operation," . 
-                        "reste_beton," .
-                        "reste_sable1," .
-                        "reste_sable2," .
-                        "reste_sable3," .
-                        "ml_beton," . 
-                        "ml_sable1," .
-                        "ml_sable2," .
-                        "ml_sable3," .
-                        "ref_produit," .
-                        "machine," .
-                        "produit_total," .
-                        "produit_casse," .
-                        "produit_reel)" .
-                  " VALUES (" . 
-                        tosql($date, "Text") . "," .
-                        tosql($reste_mat[0], "Number") . "," .
-                        tosql($reste_mat[1], "Number") . "," .
-                        tosql($reste_mat[2], "Number") . "," .
-                        tosql($reste_mat[3], "Number") . "," .
-                        tosql($arrProdPrim[0], "Number") . "," .
-                        tosql($arrProdPrim[1], "Number") . "," .
-                        tosql($arrProdPrim[2], "Number") . "," .
-                        tosql($arrProdPrim[3], "Number") . "," .
-                        tosql($ref_produit, "Number") . "," .
-                        tosql($machine, "Text") . "," .
-                        tosql($produit_total, "Number") . "," .
-                        tosql($produit_casse, "Number") . "," .
-                        tosql($produit_reel, "Number") . 
-                  ")";       	
-                	$db->query($sSQL);
-					$lastId = mysql_insert_id();
-					
-					for($i = 0; $i < count($arrIdProd) ; $i++){
-						$reste_mat[] = $result[$i] - $arrProdPrim[$i];
-						$sql = "INSERT 
-							INTO operation_produit (
-							ref_produit, 
-							ref_melange, 
-							qt_operation, 
-							ref_user) values (";
-						$sql .= tosql($arrIdProd[$i], "NUMBER") . ", ";
-						$sql .= tosql($lastId, "NUMBER") . ", ";
-						$sql .= tosql("-".$arrProdPrim[$i], "NUMBER") . ", ";
-						$sql .= "1)";
-						$db->query($sql);
-					}
+			        "date_operation," . 
+			        "reste_beton," .
+			        "reste_sable1," .
+			        "reste_sable2," .
+			        "reste_sable3," .
+			        "ml_beton," . 
+			        "ml_sable1," .
+			        "ml_sable2," .
+			        "ml_sable3," .
+			        "ref_produit," .
+			        "machine," .
+			        "produit_total," .
+			        "produit_casse," .
+			        "produit_reel)" .
+			" VALUES (" . 
+			        tosql($date, "Text") . "," .
+			        tosql($reste_mat[0], "Number") . "," .
+			        tosql($reste_mat[1], "Number") . "," .
+			        tosql($reste_mat[2], "Number") . "," .
+			        tosql($reste_mat[3], "Number") . "," .
+			        tosql($arrProdPrim[0], "Number") . "," .
+			        tosql($arrProdPrim[1], "Number") . "," .
+			        tosql($arrProdPrim[2], "Number") . "," .
+			        tosql($arrProdPrim[3], "Number") . "," .
+			        tosql($ref_produit, "Number") . "," .
+			        tosql($machine, "Text") . "," .
+			        tosql($produit_total, "Text") . "," .
+			        tosql($produit_casse, "Text") . "," .
+			        tosql($produit_reel, "Text") . 
+			")";       	
+			$db->query($sSQL);
+			$lastId = mysql_insert_id();
+		
+		$arrProdOperation = array();
+		for($i = 0; $i < count($arrIdProd) ; $i++){
+			$reste_mat[] = $result[$i] - $arrProdPrim[$i];
+			$sql = "INSERT 
+				INTO operation_produit (
+				ref_produit, 
+				ref_melange, 
+				qt_operation, 
+				ref_user) values (";
+			$sql .= tosql($arrIdProd[$i], "NUMBER") . ", ";
+			$sql .= tosql($lastId, "NUMBER") . ", ";
+			$sql .= tosql("-".$arrProdPrim[$i], "NUMBER") . ", ";
+			$sql .= "1)";
+			$db->query($sql);
+			$arrProdOperation[] = mysql_insert_id();
+		}
+		
+		$sql = "insert into operation_produit (ref_produit, ref_melange, qt_operation, ref_user) values (";
+		$sql .= tosql($ref_produit, "NUMBER") . ", ";
+		$sql .= tosql($lastId, "NUMBER") . ", ";
+		$sql .= tosql($produit_reel, "NUMBER") . ", ";
+		$sql .= "1)";
+		$db->query($sql);
+		
+		$arrProdOperation[] = mysql_insert_id();
+		$db->query("update productivite set ligne_operation_prod = " . tosql(json_encode($arrProdOperation),"Text"). " Where id = " . tosql($lastId,"NUMBER"));
+		
+		echo '<script>alert("Vous avez saisie le bon numéro : '. $ref_produit .'")</script>';
+		echo '<script>window.location.href = "productivite.php";</script>';
+    } else if ($date && count($arrProdPrim) && $ref_produit && $produit_total && $produit_casse && $produit_reel && count($reste_mat) && $id) {          	    	
+		$ligne_operation_prod = json_decode(dlookup("productivite","ligne_operation_prod","id=".tosql($id, "NUMBER")));
+		$sSQL = "UPDATE productivite SET "; 
+		$sSQL .= "date_operation = " . tosql($date, "Text");
 
-					$sql = "insert into operation_produit (ref_produit, ref_melange, qt_operation, ref_user) values (";
-					$sql .= tosql($ref_produit, "NUMBER") . ", ";
-					$sql .= tosql($lastId, "NUMBER") . ", ";
-					$sql .= tosql($produit_reel, "NUMBER") . ", ";
-					$sql .= "1)";
-					$db->query($sql);
-					
-					echo '<script>alert("Vous avez saisie le bon numéro : '. $ref_produit .'")</script>';
-					echo '<script>window.location.href = "productivite.php";</script>';
-                } else if ($id) {          	    	
-                		$sSQL = "UPDATE productivite SET "; 
-                  	$sSQL .= "date_operation = " . tosql($date, "Text");
-                  	
-                  	$sSQL .=",ml_beton = " . tosql($ml_beton, "Number");
-                  	$sSQL .=",ml_sable1 =" . tosql($ml_sable1, "Number");
-                  	$sSQL .=",ml_sable2 =" . tosql($ml_sable2, "Number");
-                  	$sSQL .=",ml_sable3 =" . tosql($ml_sable3, "Number");
-                  	
-                  	$sSQL .=",reste_beton = " . tosql($reste_beton, "Number");
-                  	$sSQL .=",reste_sable1 =" . tosql($reste_sable1, "Number");
-                  	$sSQL .=",reste_sable2 =" . tosql($reste_sable2, "Number");
-                  	$sSQL .=",reste_sable3 =" . tosql($reste_sable3, "Number");
-                  	
-                  	$sSQL .=",produit_total = " . tosql($produit_total, "Number");
-                  	$sSQL .=",produit_casse =" . tosql($produit_casse, "Number");
-                  	$sSQL .=",produit_reel =" . tosql($produit_reel, "Number");
-                  	
-                  	$sSQL .= " where id=" .tosql($id, "Number") ."";        	
-                		$db->query($sSQL);
-                		echo '<script>alert("Vous avez mis à le bon numéro")</script>';
-                	}
-   $tpl->parse("BlockForm", false);
-   
-      search();
-      //==============================
-      function search() {
-      //==============================
+		$sSQL .=",ml_beton = " . tosql($arrProdPrim[0], "Number");
+		$sSQL .=",ml_sable1 =" . tosql($arrProdPrim[1], "Number");
+		$sSQL .=",ml_sable2 =" . tosql($arrProdPrim[2], "Number");
+		$sSQL .=",ml_sable3 =" . tosql($arrProdPrim[3], "Number");
+
+		$sSQL .=",reste_beton = " . tosql($reste_mat[0], "Number");
+		$sSQL .=",reste_sable1 =" . tosql($reste_mat[1], "Number");
+		$sSQL .=",reste_sable2 =" . tosql($reste_mat[2], "Number");
+		$sSQL .=",reste_sable3 =" . tosql($reste_mat[3], "Number");
+
+		$sSQL .=",produit_total = " . tosql($produit_total, "Text");
+		$sSQL .=",produit_casse =" . tosql($produit_casse, "Text");
+		$sSQL .=",produit_reel =" . tosql($produit_reel, "Text");
+		
+		$sSQL .=",ref_produit =" . tosql($ref_produit, "Number");
+		// $sSQL .=",machine =" . tosql($machine, "Text");
+	
+		$sSQL .= " where id=" .tosql($id, "Number") ."";        	
+		print_r($ligne_operation_prod);
+		echo "<br>";
+		echo "<br> sql : " . $sSQL;
+		$db->query($sSQL);
+		
+		$i=0;
+		for($i=0;$i<=3;$i++){
+			echo "<br>" . "update operation_produit set qt_operation = " . tosql("-".$arrProdPrim[$i],"NUMBER") . " where id = " . tosql($ligne_operation_prod[$i], "Number");
+			$db->query("update operation_produit set qt_operation = " . tosql("-".$arrProdPrim[$i],"NUMBER") . " where id = " . tosql($ligne_operation_prod[$i], "Number"));
+		}
+		
+		$db->query("update operation_produit set qt_operation = " . tosql($produit_reel,"NUMBER") . " where id = " . tosql($ligne_operation_prod[$i], "Number"));
+		echo "<br>" . "update operation_produit set ref_produit = ".tosql($ref_produit, "NUMBER").", qt_operation = " . tosql($produit_reel,"NUMBER") . " where id = " . tosql($ligne_operation_prod[$i], "Number");
+		exit;
+		echo '<script>alert("Vous avez mis à le bon numéro")</script>';
+    }
+    
+	$tpl->parse("BlockForm", false);
+    search();
+    //==============================
+    function search() {
+    //==============================
             global $db;
             global $tpl;
             global $sForm;
@@ -308,10 +299,17 @@
       }
       delete();
       function delete() {
+		global $db;
 	      $delete = get_param('delete');
 	      if ($delete) {
+				$ligne_operation_prod = json_decode(dlookup("productivite","ligne_operation_prod","id=".tosql($delete, "NUMBER")));
 	            $sql = sprintf("DELETE FROM productivite WHERE id = '".$delete."'");
-	            $result = mysql_query($sql);    
+	            $result = mysql_query($sql);
+				if ($result){
+					for($i=0;$i<=4;$i++){
+						$db->query("DELETE FROM operation_produit where id = " . tosql($ligne_operation_prod[$i], "Number"));
+					}
+				}
 	            header("location: productivite.php");
 	      }			
       } 

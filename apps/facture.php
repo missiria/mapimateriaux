@@ -59,7 +59,7 @@
        	$tpl->set_var("qt_liv",$qt_liv);
 	$tpl->set_var("ref_client",$libclients);
 	
-	echo "id = $id total $somRslt <br>";
+	//echo "id = $id total $somRslt <br>";
 	
 	$qt_RestGlob = $qt_produit - $somRslt;
 	$tpl->set_var("qt_produit",$qt_produit);

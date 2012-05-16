@@ -41,8 +41,8 @@
 	}
 
 	$lookup_produits = db_fill_array("SELECT id, libelle 
-										FROM produits 
-										WHERE type_produit=1");
+					FROM produits 
+					WHERE type_produit=1");
 	if(is_array($lookup_produits)) {
 	reset($lookup_produits);
 		while(list($value, $key) = each($lookup_produits)) {
@@ -65,73 +65,62 @@
 	$mode_reglement = get_param("mode_reglement");
 	$ref_bank = get_param("ref_bank");
 	$id = $_POST["id"];
-    // var_dump($_POST);
-      // if ($num_facture_achat && $date_regelement && $ref_fournisseur && $etat_reglement && $mode_reglement && $ref_bank ) {
-      if ($num_facture_achat && $date_regelement && $ref_fournisseur && $etat_reglement ) {
-            if (strlen(trim($id))==0){
-                	$num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER"));
 
-                	if ($num_bon_existe > 0) {
-                		echo "<script>alert('Vous essayer de saisir un bon numéro $num_facture_achat qui éxiste déja !!!')</script>";  
-                	} else {
-						$sSQL = "INSERT INTO achats (" . 
-							"num_facture_achat," .
-							"date_regelement," .
-							"ref_fournisseur," . 
-							"montant_achat," . 
-							"etat_reglement," .
-							"mode_reglement," . 
-							"ref_produit," . 
-							"qt_prod," . 
-							"ref_bank)" .
-						" VALUES (" . 
-							tosql($num_facture_achat, "Number") . "," .
-							tosql($date_regelement, "Text") . "," .
-							tosql($ref_fournisseur, "Number") . "," .
-							tosql($montant_achat, "Number") . "," .
-							tosql($etat_reglement, "Text") . "," . 
-							tosql($mode_reglement, "Text") . "," .
-							tosql($ref_produit, "Number") . "," .
-							tosql($qt_prod, "Number") . "," .
-							tosql($ref_bank, "Text") .
-						")";  
-							$db->query($sSQL);
-							$lastId = mysql_insert_id();
-							$sql = "insert into operation_produit (ref_produit, ref_achat, qt_operation, ref_user) values (";
-							$sql .= tosql($ref_produit, "NUMBER") . ", ";
-							$sql .= tosql($lastId, "NUMBER") . ", ";
-							$sql .= tosql($qt_prod, "NUMBER") . ", ";
-							$sql .= "1)";
-							$db->query($sql);
-						echo '<script>alert("Vous avez saisie le bon numéro : '. $num_facture_achat .'")</script>';
-                	}
-                } else {
-						$num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER")." and id <> ".tosql($id, "Number"));
-                	if ($num_bon_existe > 0) {
-                		echo "<script>alert('Vous essayer de saisir un bon numéro $num_facture_achat qui éxiste déja !!!')</script>";          	
-				      } else {          	    	
-                		$sSQL = "UPDATE achats SET "; 
-						$sSQL .= "num_facture_achat = " . tosql($num_facture_achat, "Number");
-						$sSQL .= ",date_regelement =" . tosql($date_regelement, "Text");
-						$sSQL .= ",ref_fournisseur = " .  tosql($ref_fournisseur, "Number");
-						$sSQL .= ",montant_achat =" . tosql($montant_achat, "Number");
-						$sSQL .= ",etat_reglement =" . tosql($etat_reglement, "Text");
-						$sSQL .= ",mode_reglement =" . tosql($mode_reglement, "Text");
-						$sSQL .= ",ref_bank =" . tosql($ref_bank, "Text");
-						$sSQL .= " WHERE id=" .tosql($id, "Number") ."";        	
-                		$db->query($sSQL);
-                		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_facture_achat .'")</script>';
-                	}
-                }
-            
-            } else if ($num_facture_achat && $date_regelement && $ref_fournisseur && $etat_reglement ) {
-                  if (strlen(trim($id))==0){
-                	$num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER"));
-
-                	if ($num_bon_existe > 0) {
-                		echo "<script>alert('Vous essayer de saisir un bon numéro $num_facture_achat qui éxiste déja !!!')</script>";  
-                	} else {	
-                		$sSQL = "INSERT INTO achats (" . 
+		if ($num_facture_achat && $date_regelement && $ref_fournisseur && $etat_reglement ) {
+            if (!$id){
+                $sSQL = "INSERT INTO achats (" . 
+		        "num_facture_achat," .
+		        "date_regelement," .
+		        "ref_fournisseur," . 
+		        "montant_achat," . 
+		        "etat_reglement," .
+		        "mode_reglement," . 
+		        "ref_produit," . 
+		        "qt_prod," . 
+		        "ref_bank)" .
+				" VALUES (" . 
+		        tosql($num_facture_achat, "Number") . "," .
+		        tosql($date_regelement, "Text") . "," .
+		        tosql($ref_fournisseur, "Number") . "," .
+		        tosql($montant_achat, "Number") . "," .
+		        tosql($etat_reglement, "Text") . "," . 
+		        tosql($mode_reglement, "Text") . "," .
+		        tosql($ref_produit, "Number") . "," .
+		        tosql($qt_prod, "Number") . "," .
+		        tosql($ref_bank, "Text") .
+				")";  
+				$db->query($sSQL);
+				$lastId = mysql_insert_id();
+				$sql = "INSERT INTO operation_produit (ref_produit, ref_achat, qt_operation, ref_user) values (";
+				$sql .= tosql($ref_produit, "NUMBER") . ", ";
+				$sql .= tosql($lastId, "NUMBER") . ", ";
+				$sql .= tosql($qt_prod, "NUMBER") . ", ";
+				$sql .= "1)";
+				$db->query($sql);
+				$lastIdOperation = mysql_insert_id();
+				$db->query("update achats set ligne_operation_prod = " . tosql($lastIdOperation,"NUMBER"). " Where id = " . tosql($lastId,"NUMBER"));
+				echo '<script>alert("Vous avez saisie le bon numéro : '. $num_facture_achat .'")</script>';
+                	
+            } else if ($id) {
+				$ligne_operation_prod = dlookup("achats","ligne_operation_prod","id=".tosql($id, "NUMBER"));
+               	$sSQL = "UPDATE achats SET "; 
+				$sSQL .= "num_facture_achat = " . tosql($num_facture_achat, "Number");
+				$sSQL .= ",date_regelement =" . tosql($date_regelement, "Text");
+				$sSQL .= ",ref_produit =" . tosql($ref_produit, "Text");
+				$sSQL .= ",qt_prod =" . tosql($qt_prod, "NUMBER");
+				$sSQL .= ",ref_fournisseur = " .  tosql($ref_fournisseur, "Number");
+				$sSQL .= ",montant_achat =" . tosql($montant_achat, "Number");
+				$sSQL .= ",etat_reglement =" . tosql($etat_reglement, "Text");
+				$sSQL .= ",mode_reglement =" . tosql($mode_reglement, "Text");
+				$sSQL .= ",ref_bank =" . tosql($ref_bank, "Text");
+				$sSQL .= " WHERE id=" .tosql($id, "Number") ."";        	
+            	$db->query($sSQL);
+            	$db->query("update operation_produit set ref_produit = " . tosql($ref_produit, "Text") . ", ref_achat = " .tosql($id, "Text"). ",qt_operation = " .tosql($qt_prod, "NUMBER"). " where id = " . tosql($ligne_operation_prod,"NUMBER"));
+            	echo '<script>alert("Vous avez mis à le bon numéro : '. $num_facture_achat .'")</script>';
+            }
+        } else if ($num_facture_achat && $date_regelement && $ref_fournisseur && $etat_reglement ) {
+            if (!$id){
+				$sSQL = "INSERT INTO achats (" . 
                         "num_facture_achat," .
                         "date_regelement," .
                         "ref_fournisseur," . 
@@ -139,39 +128,40 @@
                         "ref_produit," . 
                         "qt_prod," . 
                         "etat_reglement)" .
-                  " VALUES (" . 
+						" VALUES (" . 
                         tosql($num_facture_achat, "Number") . "," .
                         tosql($date_regelement, "Text") . "," .
                         tosql($ref_fournisseur, "Number") . "," .
                         tosql($montant_achat, "Number") . "," .
                         tosql($ref_produit, "Number") . "," .
-                        tosql($qt_prod, "Number") . "," .
+                        tosql($qt_prod, "NUMBER") . "," .
                         tosql($etat_reglement, "Text") .
-                  ")";       	
+						")";       	
                 		$db->query($sSQL);
+						$lastIdOperation = mysql_insert_id();
+						$db->query("update achats set ligne_operation_prod = " . tosql($lastIdOperation,"NUMBER"). " Where id = " . tosql($lastId,"NUMBER"));
                 		echo '<script>alert("Vous avez saisie le bon numéro : '. $num_facture_achat .'")</script>';
-                	}
-                } else {
-				      $num_bon_existe = dlookup("achats", "count(*)", "num_facture_achat=".tosql($num_facture_achat, "NUMBER")." and id <> ".tosql($id, "Number"));
-                	if ($num_bon_existe > 0) {
-                		echo "<script>alert('Vous essayer de saisir un bon numéro $num_facture_achat qui éxiste déja !!!')</script>";          	
-				      } else {          	    	
-                		$sSQL = "UPDATE achats SET "; 
-						$sSQL .= "num_facture_achat = " . tosql($num_facture_achat, "Number");
-						$sSQL .= ",date_regelement =" . tosql($date_regelement, "Text");
-						$sSQL .= ",ref_fournisseur = " .  tosql($ref_fournisseur, "Number");
-						$sSQL .= ",montant_achat =" . tosql($montant_achat, "Number");
-						$sSQL .= ",etat_reglement =" . tosql($etat_reglement, "Text");
-						$sSQL .= " WHERE id=" .tosql($id, "Number") ."";        	
-                		$db->query($sSQL);
-                		echo '<script>alert("Vous avez mis à le bon numéro : '. $num_bon .'")</script>';
-                	}
-                } 
-            
+            } else {          	    	
+				$ligne_operation_prod = dlookup("achats","ligne_operation_prod","id=".tosql($id, "NUMBER"));
+        		$sSQL = "UPDATE achats SET "; 
+				$sSQL .= "num_facture_achat = " . tosql($num_facture_achat, "Number");
+				$sSQL .= ",date_regelement =" . tosql($date_regelement, "Text");
+				$sSQL .= ",ref_produit =" . tosql($ref_produit, "Text");
+				$sSQL .= ",qt_prod =" . tosql($qt_prod, "NUMBER");
+				$sSQL .= ",ref_fournisseur = " .  tosql($ref_fournisseur, "Number");
+				$sSQL .= ",montant_achat =" . tosql($montant_achat, "Number");
+				$sSQL .= ",etat_reglement =" . tosql($etat_reglement, "Text");
+				$sSQL .= " WHERE id=" .tosql($id, "Number") ."";        	
+				$db->query($sSQL);
+            	$db->query("update operation_produit set ref_produit = " . tosql($ref_produit, "Text") . ", ref_achat = " .tosql($id, "Text"). ",qt_operation = " .tosql($qt_prod, "NUMBER"). " where id = " . tosql($ligne_operation_prod,"NUMBER"));
+				echo '<script>alert("Vous avez mis à le bon numéro : '. $num_bon .'")</script>';
             }
-   $tpl->parse("BlockForm", false);
-      search();
-      //==============================
+        }	 
+            
+            
+	$tpl->parse("BlockForm", false);
+    search();
+    //==============================
     function search() {
       //==============================
 		global $db;
@@ -232,10 +222,14 @@
 
 	delete();
 	function delete() {
+	global $db;
 		$delete = get_param('delete');
+		//var_dump($_GET);
 		if ($delete) {
+			$ligne_operation_prod = dlookup("achats","ligne_operation_prod","id=".tosql($delete, "NUMBER"));
 			$sql = sprintf("DELETE FROM achats WHERE id = '".$delete."'");
-			$result = mysql_query($sql);    
+			$result = $db->query($sql);    
+			$result = $db->query("delete from operation_produit where id = " . tosql($ligne_operation_prod, "NUMBER"));    
 			header("location: achats.php");
 		}			
 	}   

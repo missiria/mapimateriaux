@@ -36,12 +36,15 @@
 	if ($keyword)
 	$sSQL .= " AND ref_client=".tosql($keyword, "TEXT");
 	
+	$sSQL .= " LIMIT 0 , 30";
+	
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 
 	//var_dump($_GET);
 
       $i = 1;
+	  $sum_montant = 0;
     while($next_record){
 
       	//WE DISPLAY THE RESULTS
@@ -53,7 +56,7 @@
        	$ref_prod = $db->f("ref_produit");
        	$ref_prod_ref = $db->f("ref_reference");
        	$ref_vehicule = $db->f("ref_vehicule");
-       	$time_depart = $db->f("time_depart");
+       	$prix_uni = $db->f("prix_uni");
        	$etat_commande = $db->f("etat_commande");
        	$facturation = $db->f("facturation");
 		
@@ -63,7 +66,6 @@
        	$produit_ref = dlookup("produits", "libelle", "id=".tosql($db->f("ref_reference"), "Text"));
        	$telClient = dlookup("clients", "tel", "id=".tosql($db->f("ref_client"), "NUMBER"));
        	$adresseClient = dlookup("clients", "adresse", "id=".tosql($db->f("ref_client"), "Text"));
-       	$ref_vehicule = dlookup("vehicules", "libelle", "id=".tosql($db->f("ref_vehicule"), "Text"));
 
        	// WE RECORD THE SQL
        	$next_record = $db->next_record();
@@ -77,8 +79,14 @@
 		$tpl->set_var("telClient",$telClient);
 		$tpl->set_var("adresseClient",$adresseClient);
 		$tpl->set_var("qt_liv",$qt_liv);
+		
+		$montant = $qt_liv * $prix_uni;
+		$sum_montant += $montant;
+
+		$tpl->set_var("montant",$montant);
+		$tpl->set_var("sum_montant",$sum_montant);
 		$tpl->set_var("qt_produit",$qt_produit);
-		$tpl->set_var("time_depart",$time_depart);
+		$tpl->set_var("prix_uni",$prix_uni);
 		$tpl->set_var("ref_vehicule",$ref_vehicule);
 		$tpl->set_var("ref_prod",$ref_prod_ref);
 		

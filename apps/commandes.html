@@ -58,10 +58,16 @@
 					return;
 				});
 				$("#ref_reference option").each(function(){
-					if ($(this).text() == row[4].innerHTML)
-					$(this).attr("selected","selected");
+				        
+					if ($(this).text() == row[4].innerHTML) {
+					        $(this).attr("selected","selected");
+					} else {
+					    //alert(row[4].innerHTML);
+					    var refValue = row[4].innerHTML
+					    $(this).attr("value",""+refValue)
+					}
 					return;
-				});
+				}); 
 		}       
 		</script>
         </head>
@@ -95,7 +101,7 @@
                         <label>References :</label><br />
                         <select type="select-one" name="ref_reference" id="ref_reference" class="validate[required]">
                         <option value="">Selectioné un reference</option>
-						</select><br />
+			</select><br />
                         
                         <label>Quantité :</label><br />
                         <input type="text" name="qt_produit" id="qt_produit" class="validate[required,custom[onlyNumber]] text-input"><br />
@@ -103,12 +109,14 @@
                         <label>Prix Unitaire :</label><br />
                         <input type="text" name="prix_uni" id="prix_uni" class="validate[required,custom[number]] text-input"><br />
                         
-						<label>Facturé :</label><br />
+			<label>Facturé :</label><br />
                         <input type="radio" name="facturation" id="facturation" value="1">OUI<br />
                         <input type="radio" name="facturation" id="facturation" value="0">NON<br />
                         
+                        <label>Observation :</label><br />
+                        <textarea name="observation" id="observation" ></textarea><br />
 						
-						<input type="hidden" name="id" id="id" value="" />
+			<input type="hidden" name="id" id="id" value="" />
                         <input type="submit" value="Valider"> <input type="reset" value="Annuler">
                   </form>
 				  <!--EndformAction-->
@@ -126,17 +134,17 @@
                         
                   <table id="result" border=1>
                         <thead>
-                              <td>N° bon</td>
-                              <td>Date</td>
-                              <td>Client</td>
-                              <td>Produit</td>
-							  <td>reference</td>
-                              <td>QT</td>
-                              <td>Prix unitaire</td>
-                              <td>Etat</td>
-                              <td>Print</td>
-                              <!-- <td>Edit</td>
-                              <td>Delete</td> -->
+                        <td>N° bon</td>
+                        <td>Date</td>
+                        <td>Client</td>
+                        <td>Produit</td>
+                        <td>reference</td>
+                        <td>QT</td>
+                        <td>Prix unitaire</td>
+                        <td>Etat</td>
+                        <td>Print</td>
+                        <td>Edit</td>
+                        <!--<td>Delete</td> -->
                         </thead>
                         <!--Beginrow_result-->
                         <tr>
@@ -149,8 +157,8 @@
                               <td>{prix_uni}</td>
                               <td>{etat_commande}</td>
                               <td><a href="print_commandes.php?id={id}" class="botton">Imprimer</a></td>
-                              <!-- <td><a onClick="Edite({ordrRow},{id})" href="javascript:;" class="edit">{id}</a></td>
-                              <td><a onClick="Delete({id})" href="javascript:;" class="delete">{id}</a></td>-->
+                              <td><a onClick="Edite({ordrRow},{id})" href="javascript:;" class="edit">{id}</a></td>
+                              <!--<td><a onClick="Delete({id})" href="javascript:;" class="delete">{id}</a></td>-->
 						</tr>
                         <!--Endrow_result-->
                         <!--BeginNorow_result-->
