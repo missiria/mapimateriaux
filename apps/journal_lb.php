@@ -29,15 +29,18 @@
 	$tpl->set_var("from", tohtml($from));
 	$tpl->set_var("to", tohtml($to));
 			
-			
-	$sSQL = "SELECT * FROM commandes ";
+	$cur_month = date('m');
+	
+	$sSQL = "SELECT * FROM commandes 
+                 WHERE MONTH( date ) = ".tosql($cur_month, "TEXT");
+
 	if ($from && $to)
-	$sSQL .= "WHERE date BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
+	$sSQL = "SELECT * FROM commandes 
+	                       WHERE date 
+	                       BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
 	if ($keyword)
-	$sSQL .= " AND ref_client=".tosql($keyword, "TEXT");
-	
-	$sSQL .= " LIMIT 0 , 30";
-	
+	$sSQL .= " WHERE =".tosql($keyword, "TEXT");
+
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 

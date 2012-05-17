@@ -28,21 +28,24 @@
 	$to = strip(get_param("to"));
 	$tpl->set_var("from", tohtml($from));
 	$tpl->set_var("to", tohtml($to));
-				
+	$cur_month = date('m');
+			
 	$sSQL = "SELECT commandes.id as bon_info, operation_produit.date_operation as date, clients.raison_social as client, produits.libelle as produit, operation_produit.qt_operation as qt_liv, commandes.adresse_derniere_liv as adresse, commandes.ref_vehicule as transporteur, commandes.qt_produit as  qt_commande, commandes.time_depart as heure_depart, pparent.libelle as reference ";
 	$sSQL .= "FROM operation_produit ";
 	$sSQL .= "LEFT JOIN commandes ON operation_produit.ref_commande = commandes.id ";
 	$sSQL .= "INNER JOIN produits ON commandes.ref_produit = produits.id ";
 	$sSQL .= "INNER JOIN produits AS pparent ON commandes.ref_reference = pparent.id ";
-	$sSQL .= "INNER JOIN clients ON commandes.ref_client = clients.id";
+	$sSQL .= "INNER JOIN clients ON commandes.ref_client = clients.id ";
+	$sSQL .= "WHERE MONTH( date ) = ".tosql($cur_month, "TEXT");
 	
 	if ($from && $to)
-	$sSQL .= " WHERE operation_produit.date_operation BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
+	$sSQL .= " AND operation_produit.date_operation BETWEEN ".tosql($from, "TEXT")." AND ".tosql($to, "TEXT");
 	if ($keyword)
 	$sSQL .= " AND commandes.ref_client=".tosql($keyword, "TEXT");
 	
 		
-	$sSQL .= " order by operation_produit.date_operation LIMIT 0 , 30";
+	$sSQL .= " order by operation_produit.date_operation ";
+	//echo $sSQL;
 	$db->query($sSQL);
 	$next_record = $db->next_record();
 
